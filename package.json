@@ -11,6 +11,7 @@
     "eyes": "latest",
     "jade": "latest",
     "less": "latest",
+    "iconv": "latest",
     "moment": "latest",
     "mongoose": "latest",
     "now": "latest",
