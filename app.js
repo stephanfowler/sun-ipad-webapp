@@ -1,10 +1,12 @@
+
 	var feeds = [
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/breaking_news/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/news/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/showbiz/?iPadApp=true',
 	];
 
-	var edition = "20120224";
+	var edition = "20120224",
+		articles = {};
 
 	var express = require('express'),
 		mongoose = require('mongoose'),
@@ -35,11 +37,13 @@
 	});
 
 	// Mongo setup
-	mongoose.connect( 'mongodb://localhost/thesun' + edition );
+	mongoose.connect( 'mongodb://localhost/thesun_' + edition );
 	Schema = mongoose.Schema; 
 	var ArticleSchema = new Schema({
-		uri             : { type: String, index: { unique: true } }, 
+		uri             : { type: String, index: { unique: true } },
+		id              : { type: Number },
 		section         : String,
+		sectionOrder    : { type: Number },
 		title           : String,
 		sectionheadline : String,
 		tickerheadline  : String,
@@ -48,26 +52,21 @@
 		byline          : String,
 		timestamp       : String,
 		articlebody     : String,
-		image          : [AttachmentSchema],
-		video          : [AttachmentSchema],
-		article        : [AttachmentSchema],
+		attachments     : {}
 	});
-	var AttachmentSchema = new Schema({
-		caption         : String,
-		uri             : String
-	});
-
 	var MyArticleModel = mongoose.model( 'ArticleModel', ArticleSchema );
 
 	// HTTP client setup
 	var client = http.createClient(80, 'www.thesun.co.uk');
 
+	// HTTP and XML utils
 	var getHost = function(url) {
 		var m = url.match(/http:\/\/([^\/]+).*/);
 		if ( m[1] ) {
 			return m[1]
 		}
 	};
+
 	var getPath = function(url) {
 		var m = url.match(/http:\/\/[^\/]+(.*)/);
 		if ( m[1] ) {
@@ -75,9 +74,6 @@
 		}
 	};
 	
-	// Grab the feeds...
-	var articles = {};
-
 	var getXmlAsJson = function( url, callback ) {
 		if ( getHost(url) && getPath(url) ) {
 			var request = client.request('GET', getPath(url), {'host': getHost(url)});
@@ -98,18 +94,20 @@
 		};
 	};
 
-	var parseIndexFeed = function( url, json ) {
+	var parseIndexFeed = function( url, json ) { 
+		var sectionOrder = 0;
 		for ( i in json.article ) {
 			var a = json.article[i];
-			console.log( 'CHECKING: ' + a.uri );
+			//console.log( 'CHECKING: ' + a.uri );
 			var parseIfNew = function( a ) {
 				MyArticleModel.count( { uri: a.uri }, function( err, result ){
 					if ( result ) {	
 						console.log( 'EXISTS ALREADY: ' + result + ' ' + a.uri );
 					}
 					else {
-						console.log( 'FETCHING: ' + result + ' ' + a.uri );
+						//console.log( 'FETCHING: ' + result + ' ' + a.uri );
 						var am = new MyArticleModel();
+						am.sectionOrder     = sectionOrder;
 						am.uri             = conv.convert(a.uri);
 						am.section         = conv.convert(json.section);
 						am.title           = conv.convert(a.title);
@@ -119,6 +117,7 @@
 						am.teaserImg       = conv.convert(a.teaserImg);
 						articles[a.uri]    = am;
 						getXmlAsJson( a.uri, parseArticleFeed );
+						sectionOrder++;
 					}
 				});
 			}
@@ -129,30 +128,40 @@
 	var parseArticleFeed = function( url, json ) {
 		if ( json.article_content ) {
 			var a = json.article_content;
-			articles[url].byline      = conv.convert(a.byline); 
-			articles[url].timestamp   = conv.convert(a.timestamp); 
-			articles[url].articlebody = conv.convert(a.articlebody); 
-
-			for ( i in a.attachments.attachment ) {
-				var at = a.attachments.attachment[i];
-				var attachment = { caption: conv.convert(at.caption), uri: conv.convert(at.uri) } ;
-				if ( typeof articles[url][at.type] == 'undefined' ) {
-					articles[url][at.type] = [];
-				};
-				articles[url][at.type].push( attachment );
+			if ( 1 ) {
+				articles[url].id	      = a.id; 
+				articles[url].byline      = conv.convert(a.byline); 
+				articles[url].timestamp   = conv.convert(a.timestamp); 
+				articles[url].articlebody = conv.convert(a.articlebody); 
+				articles[url].attachments = [];
+				// a fix for when attachments has only one attachemt child. What's a better way?
+				var attachments = typeof a.attachments.attachment[1] == 'undefined' ? a.attachments : a.attachments.attachment;
+				for ( i in attachments ) {
+					var at = attachments[i];
+					var attSpec = { uri: at.uri }
+					if ( typeof at.caption === 'string') {
+						// This is producing bin data. TBC.
+						attSpec.caption = conv.convert(at.caption);
+					}
+					var attachment = {};
+					attachment[at.type] = attSpec;
+					articles[url].attachments.push( attachment );
+				}
+				articles[url].save(function (err){});
+				console.log( "ADDED : " + articles[url].uri );
 			}
-			articles[url].save(function (err){});
-			console.log( "\n\nSAVED : " + articles[url].uri );
 		}
 	};
 
-	for ( i in feeds ) {
-		getXmlAsJson( feeds[i], parseIndexFeed );
-	};
-
-    app.get('/', function(req, res){
-		res.end('Updated Edition: ' + edition );
+    app.get('/refresh', function(req, res){
+		res.write('Edition: ' + edition + "\n");
+		for ( i in feeds ) {
+			getXmlAsJson( feeds[i], parseIndexFeed );
+			res.write('Refreshing from feed: ' + feeds[i] + "\n" );
+		};
+		res.end();
 	});
 
 	app.listen(8080);
+	console.log("Listening on port %d in %s mode", app.address().port, app.settings.env);
 
