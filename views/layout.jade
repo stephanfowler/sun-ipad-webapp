@@ -1,32 +1,19 @@
 !!! 5
 html(lang="en")
 	head
-		title Chatty
+		title TheSun iPad Edition
 		link(type='text/css', rel='stylesheet/less', href='/stylesheets/main.less')
 		script(type='text/javascript', src='/common/js/jquery-1.7.min.js') 
-		script(type='text/javascript', src='/nowjs/now.js')
 		script(type='text/javascript', src='/common/js/less-1.1.5.min.js')
 		script(type='text/javascript', src='/common/js/knockout-2.0.0rc.js')
 		script(type='text/javascript', src='/javascripts/main.js')
-
 	body
 
-		.join(data-bind="ifnot: user")
-			form(data-bind="submit: setUser")
-				div Join as: 
-				input(id="username-input")
-				input(type="submit", value="Join")
-		
-		.chat(data-bind="if: user")
-			form(data-bind="submit: sendMessage")
-				div Joined as 
-					span(data-bind="text: user", class="user")
-				input(id="text-input")
-				input(type="submit", value="Post")
-
-		#messages(data-bind="foreach: messages")
+		#sections(data-bind="foreach: sections")
 			div 
-				a(href="#", data-bind="click: ditch") x&nbsp;
-				span(data-bind="text: name", class="user")
-				span(data-bind="if: message")
-					span(data-bind="text: message", class="message")
+				h1(data-bind="text: name")
+
+		#articles(data-bind="foreach: articles")
+			div 
+				span.id(data-bind="text: id")
+				span.title(data-bind="text: title")

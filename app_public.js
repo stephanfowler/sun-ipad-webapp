@@ -1,11 +1,12 @@
 
-	var edition = "20120224";
+	var edition  = "20120224";
 
-	var express = require('express'),
+	var express  = require('express'),
 		mongoose = require('mongoose'),
-		us = require('underscore');
+		us       = require('underscore'),
+		nowjs    = require("now");
 
-	var models = require('./models');
+	var models   = require('./models');
 
 	var app = module.exports = express.createServer();
 
@@ -29,6 +30,11 @@
 	mongoose.connect( 'mongodb://localhost/thesun_' + edition );
 	var Article = require('mongoose').model('Article');
 
+	// Routes
+	app.get('/', function(req, res){
+		res.render('index.jade');
+	});
+
 	app.get('/api/article/:id', function (req, res) {
 		Article.findOne({ id: Number(req.params.id) }, function( err, doc ){
 			if (err) res.writeHead(500, err.message)
@@ -43,7 +49,7 @@
 		});
 	});
 
-   app.get('/api/articles', function (req, res) {
+   app.get('/api/sections', function (req, res) {
         Article.find({}, ['title', 'id', 'section'], function(err, results){
             if (err) res.writeHead(500, err.message)
             else if( !results.length ) {
@@ -64,7 +70,7 @@
         }).limit(500);
     });
 
-   app.get('/api/articles/:section', function (req, res) {
+   app.get('/api/section/:section', function (req, res) {
         Article.find({ section: req.params.section }, ['title', 'id'], function(err, results){
             if (err) res.writeHead(500, err.message)
             else if( !results.length ) {
@@ -83,4 +89,5 @@
     });
 
 	app.listen(8080);
-	console.log('listening...')
+	console.log('listening...');
+
