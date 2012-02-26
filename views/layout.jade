@@ -2,18 +2,22 @@
 html(lang="en")
 	head
 		title TheSun iPad Edition
-		link(type='text/css', rel='stylesheet/less', href='/stylesheets/main.less')
-		script(type='text/javascript', src='/common/js/jquery-1.7.min.js') 
-		script(type='text/javascript', src='/common/js/less-1.1.5.min.js')
-		script(type='text/javascript', src='/common/js/knockout-2.0.0rc.js')
-		script(type='text/javascript', src='/javascripts/main.js')
+		link(type='text/css', rel='stylesheet/less', href='/assets/css/style.less')
+		script(type='text/javascript', data-main='scripts/main', src='/scripts/require-jquery.js')
 	body
 
-		#sections(data-bind="foreach: sections")
-			div 
-				h1(data-bind="text: name")
+		ul#tabSelector(data-bind="foreach: sections", class='base-tabs')
+			li(data-bind="text: name")
 
-		#articles(data-bind="foreach: articles")
-			div 
-				span.id(data-bind="text: id")
-				span.title(data-bind="text: title")
+		#tabs(data-bind="template: { name: 'articles-template' }")
+
+		script#articles-template(type="text/html")
+			ul(data-bind="foreach: articles")
+				li
+					img.teaser(data-bind="attr: {src: $data.teaserImg}")
+					h2(data-bind="text: title")
+					.teaser(data-bind="text: teaser")
+					//div(data-bind="foreach: $data.attachments")
+						div(data-bind="with: $data.image")
+							img(data-bind="attr: { src: uri }")
+

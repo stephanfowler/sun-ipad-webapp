@@ -50,7 +50,7 @@
 	});
 
    app.get('/api/sections', function (req, res) {
-        Article.find({}, ['title', 'id', 'section'], function(err, results){
+        Article.find({}, {'title':1 , 'id':1 , 'section':1 , 'teaser':1 , 'teaserImg':1, 'attachments':1, _id:0 }, function(err, results){
             if (err) res.writeHead(500, err.message)
             else if( !results.length ) {
                 res.writeHead(404);
@@ -62,8 +62,8 @@
                 results.forEach(function(doc){
 					if( typeof articles[doc.section] == 'undefined' ) {
 						articles[doc.section] = [];
-					}
-					articles[doc.section].push( { id: doc.id, title: doc.title} );
+					};
+					articles[doc.section].push( doc );
                 });
                 res.end( JSON.stringify( articles ) );  
             };

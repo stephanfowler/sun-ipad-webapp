@@ -99,7 +99,7 @@
 						am.sectionheadline = conv.convert(a.sectionheadline);
 						am.tickerheadline  = conv.convert(a.tickerheadline);
 						am.teaser          = conv.convert(a.teaser);
-						am.teaserImg       = conv.convert(a.teaserImg);
+						am.teaserImg       = conv.convert(a.image);
 						articles[a.uri]    = am;
 						getXmlAsJson( a.uri, parseArticleFeed );
 						sectionOrder++;
