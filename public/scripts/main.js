@@ -10,6 +10,6 @@ $(document).ready( function() {
 
 	ko.applyBindings( viewModel );
 
-	setTimeout(function() { bindSwipes('tabs' , 'tabSelector' ); }, 50 );
+	setTimeout(function() { bindSwipes('tabs' , 'tabSelector' ); }, 1000 );
 
 });

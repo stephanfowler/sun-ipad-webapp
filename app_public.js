@@ -63,9 +63,10 @@
 					if( typeof sections[doc.section] == 'undefined' ) {
 						sections[doc.section] = [];
 					};
-					// Reduce the attachmebnts to a single image 
+					// Reduce the attachments to a single image 
 					if ( doc.attachments.image ) {
 						doc.attachments = { image: [ doc.attachments.image[0] ] };
+						//doc.attachments.image[0].uri = doc.attachments.image[0].uri.replace(/a.jpg/, 'w.jpg' )
 					}
 					else {
 						delete doc.attachments;

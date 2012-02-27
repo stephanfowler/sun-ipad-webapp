@@ -1,5 +1,6 @@
 
 	var feeds = [
+		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/top_stories/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/breaking_news/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/news/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/sport/?iPadApp=true',
@@ -90,7 +91,7 @@
 			var parseIfNew = function( a ) {
 				Article.count( { uri: a.uri }, function( err, result ){
 					if ( result ) {	
-						console.log( 'EXISTS ALREADY: ' + result + ' ' + a.uri );
+						//console.log( 'EXISTS ALREADY: ' + result + ' ' + a.uri );
 					}
 					else {
 						//console.log( 'FETCHING: ' + result + ' ' + a.uri );
@@ -144,9 +145,16 @@
 		}
 	};
 
-	for ( i in feeds ) {
-		getXmlAsJson( feeds[i], parseIndexFeed );
+	var scrape = function() { 
+		console.log( "SCRAPING..." );
+		for ( i in feeds ) {
+			getXmlAsJson( feeds[i], parseIndexFeed );
+		};
 	};
 
-	app.listen(8080);
+	scrape();
+
+	setInterval( scrape, 60000 ); // every minute
+
+	app.listen(8081);
 

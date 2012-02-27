@@ -3,7 +3,18 @@ html(lang="en")
 	head
 		title TheSun iPad Edition
 		link(type='text/css', rel='stylesheet/less', href='/assets/css/style.less')
-		//script(type='text/javascript', data-main='scripts/main', src='/scripts/require-jquery.js')
+
+		meta(name='description', content='')
+		meta(name='keywords', content='')
+		meta(http-equiv="Content-Type", content="text/html; charset=utf-8")
+		meta(name='HandheldFriendly', content='True')
+		meta(name='MobileOptimized', content='320')
+		meta(name='format-detection', content='telephone=no')
+		meta(name='viewport', content='width=device-width, minimum-scale=1.0, maximum-scale=1.0')
+		meta(http-equiv='cleartype', content='on')
+		meta(name="apple-mobile-web-app-capable", content="yes")
+		meta(name="apple-mobile-web-app-status-bar-style", content="black")
+
 		script(type='text/javascript', src='/scripts/jquery.js') 
 		script(type='text/javascript', src='/scripts/knockout.js')
 		script(type='text/javascript', src='/scripts/knockout.mapping.js')
@@ -12,6 +23,9 @@ html(lang="en")
 		script(type='text/javascript', src='/scripts/swiper.js')
 		script(type='text/javascript', src='/scripts/main.js')
 	body
+
+		header
+			.logo
 
 		ul#tabSelector(data-bind="foreach: sections", class='base-tabs')
 			li(data-bind="text: name")
@@ -27,5 +41,4 @@ html(lang="en")
 							.sizedImg(data-bind="style: { background: 'url(' + uri() + ')' }")
 							// /ko
 							.title(data-bind="text: title")
-							//.teaser(data-bind="text: teaser")
 
