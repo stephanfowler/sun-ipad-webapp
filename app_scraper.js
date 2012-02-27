@@ -2,7 +2,10 @@
 	var feeds = [
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/breaking_news/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/news/?iPadApp=true',
+		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/sport/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/showbiz/?iPadApp=true',
+		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/tv/?iPadApp=true',
+		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/woman/?iPadApp=true'
 	];
 
 	var edition = "20120224",
@@ -118,20 +121,23 @@
 				articles[url].byline      = conv.convert(a.byline); 
 				articles[url].timestamp   = conv.convert(a.timestamp); 
 				articles[url].articlebody = conv.convert(a.articlebody); 
-				articles[url].attachments = [];
 				// a fix for when attachments has only one attachemt child. What's a better way?
+				var ats = {};
 				var attachments = typeof a.attachments.attachment[1] == 'undefined' ? a.attachments : a.attachments.attachment;
 				for ( i in attachments ) {
 					var at = attachments[i];
+					if ( typeof ats[at.type] == 'undefined' ) {
+						ats[at.type] = [];
+					}
 					var attSpec = { uri: at.uri }
 					if ( typeof at.caption === 'string') {
 						// This is producing bin data. TBC.
-						attSpec.caption = conv.convert(at.caption);
+						attSpec.caption = at.caption
 					}
-					var attachment = {};
-					attachment[at.type] = attSpec;
-					articles[url].attachments.push( attachment );
+					ats[at.type].push( attSpec );
 				}
+				//console.log( JSON.stringify(ats) + "\n\n" )
+				articles[url].attachments = ats;
 				articles[url].save(function (err){});
 				console.log( "ADDED : " + articles[url].uri );
 			}

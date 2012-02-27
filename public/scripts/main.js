@@ -1,39 +1,15 @@
-require(['jquery', 'knockout-2.0.0', 'less-1.1.5.min', 'swipe.min', 'swiper' ], function($) {
-        
-	(function() {
+$(document).ready( function() {
 
-		var viewModel = {
+	var viewModel = {
+		sections: ko.mapping.fromJS([])
+	};
 
-			sections : ko.observableArray(),
-			addSection : function ( s ) {
-				if ( typeof this.sections[s] === 'undefined' ) {
-					this.sections.push( { name: s } );
-				};
-			},
+	$.getJSON( '/api/sections', function(json){
+		ko.mapping.fromJS( json.sections, viewModel.sections );
+	});
 
-			articles : ko.observableArray(),
-			addArticle : function ( a ) {
-				this.articles.push( a );
-			},
-		}
+	ko.applyBindings( viewModel );
 
-		var getSections = function() { 
-			$.getJSON( '/api/sections', function(json){
-				$.each( json, function( name, articles ){
-					viewModel.addSection( name );
-					$.each( articles, function( i, article ){
-						viewModel.addArticle( article );
-					});
-				});
-			});
-		};
+	setTimeout(function() { bindSwipes('tabs' , 'tabSelector' ); }, 50 );
 
-		getSections();
-
-		ko.applyBindings( viewModel );
-
-		setTimeout(function() { bindSwipes('tabs' , 'tabSelector' ); }, 50 );
-
-	})();
 });
-

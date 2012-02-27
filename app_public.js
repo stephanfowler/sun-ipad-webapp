@@ -50,22 +50,35 @@
 	});
 
    app.get('/api/sections', function (req, res) {
-        Article.find({}, {'title':1 , 'id':1 , 'section':1 , 'teaser':1 , 'teaserImg':1, 'attachments':1, _id:0 }, function(err, results){
+        Article.find({}, {'title':1 , 'id':1 , 'section':1 , 'teaser':1 , 'teaserImg':1, 'attachments.image':1, _id:0 }, function(err, results){
             if (err) res.writeHead(500, err.message)
             else if( !results.length ) {
                 res.writeHead(404);
                 res.end();
             }
             else {
-				var articles = {};
+				var sections = {};
                 res.writeHead( 200, { 'Content-Type': 'application/json' });
                 results.forEach(function(doc){
-					if( typeof articles[doc.section] == 'undefined' ) {
-						articles[doc.section] = [];
+					if( typeof sections[doc.section] == 'undefined' ) {
+						sections[doc.section] = [];
 					};
-					articles[doc.section].push( doc );
+					// Reduce the attachmebnts to a single image 
+					if ( doc.attachments.image ) {
+						doc.attachments = { image: [ doc.attachments.image[0] ] };
+					}
+					else {
+						delete doc.attachments;
+					}
+					sections[doc.section].push( doc );
                 });
-                res.end( JSON.stringify( articles ) );  
+                res.end( JSON.stringify( 
+					{ 
+						sections: us.map( sections, function( articles, section ) {
+							return { name: section, articles: articles };
+						}) 
+					}) 
+				);  
             };
         }).limit(500);
     });

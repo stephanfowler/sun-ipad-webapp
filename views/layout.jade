@@ -3,7 +3,14 @@ html(lang="en")
 	head
 		title TheSun iPad Edition
 		link(type='text/css', rel='stylesheet/less', href='/assets/css/style.less')
-		script(type='text/javascript', data-main='scripts/main', src='/scripts/require-jquery.js')
+		//script(type='text/javascript', data-main='scripts/main', src='/scripts/require-jquery.js')
+		script(type='text/javascript', src='/scripts/jquery.js') 
+		script(type='text/javascript', src='/scripts/knockout.js')
+		script(type='text/javascript', src='/scripts/knockout.mapping.js')
+		script(type='text/javascript', src='/scripts/less.js')
+		script(type='text/javascript', src='/scripts/swipe.js')
+		script(type='text/javascript', src='/scripts/swiper.js')
+		script(type='text/javascript', src='/scripts/main.js')
 	body
 
 		ul#tabSelector(data-bind="foreach: sections", class='base-tabs')
@@ -12,12 +19,13 @@ html(lang="en")
 		#tabs(data-bind="template: { name: 'articles-template' }")
 
 		script#articles-template(type="text/html")
-			ul(data-bind="foreach: articles")
+			ul(data-bind="foreach: sections")
 				li
-					img.teaser(data-bind="attr: {src: $data.teaserImg}")
-					h2(data-bind="text: title")
-					.teaser(data-bind="text: teaser")
-					//div(data-bind="foreach: $data.attachments")
-						div(data-bind="with: $data.image")
-							img(data-bind="attr: { src: uri }")
+					.teasers(data-bind="foreach: articles")
+						.teaser
+							// ko foreach: $data.attachments.image
+							.sizedImg(data-bind="style: { background: 'url(' + uri() + ')' }")
+							// /ko
+							.title(data-bind="text: title")
+							//.teaser(data-bind="text: teaser")
 

@@ -1,0 +1,1 @@
+versions/swipe.min.js
