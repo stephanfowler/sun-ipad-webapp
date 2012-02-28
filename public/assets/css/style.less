@@ -35,6 +35,7 @@ body {
 
 a {
 	color:#cd0000;
+	text-decoration: none;
 }
 
 p {
@@ -42,15 +43,20 @@ p {
 }
 
 header {
+	position: relative;
 	background: #cd0000;
-
-	h1 {
-		display: none;
+	a, a:visited {
+		color: #fff;
 	}
 	.logo {
 		width: 166px;
 		height: 63px;
 		background-image: url('/assets/images/sprite_01.png');
+	}
+	.nav {
+		position: absolute;
+		top: 10px;
+		right: 10px;
 	}
 }
 
@@ -58,9 +64,7 @@ header {
 	background:#F5F6F7;
 	border-bottom:4px #cd0000 solid;
 	padding:5px 4px 0;
-	/*height:32px*/
-}
-	.base-tabs li {
+	li {
 		position:relative;
 		top:1px;
 		font-size:13px;
@@ -72,22 +76,20 @@ header {
 		font-weight:bold;
 		display:inline-block;
 	}
-		.base-tabs li.on {
-			background: #cd0000;
-			padding:6px 12px;
-			color:#fff;
-		}
-
+	li.on {
+		background: #cd0000;
+		padding:6px 12px;
+		color:#fff;
+	}
+}
 
 
 p {
 	font-size: 14px;
 }
 
-#tabSelector {
+#navContentPages {
 	border-top:0;
-}
-#tabs li div {
 }
 
 h2 {
@@ -97,40 +99,51 @@ h2 {
 
 /* TEASER */
 
-@lenTeaserSq: 256px;
-
 .teasers {
+	@lenTeaserSq: 256px;
 	padding: 0;
+	.teaser {
+		position: relative;
+		float: left;
+		width: @lenTeaserSq;
+		height: @lenTeaserSq;
+	}
+	.sizedImg {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: @lenTeaserSq;
+		height: @lenTeaserSq;
+		background-repeat: no-repeat;
+		background-color: #EEE;
+		-webkit-background-size: auto @lenTeaserSq;
+	}
+	.title {
+		position: absolute;
+		bottom: 0;
+		left: right;
+		padding: 10px;
+		text-align: right;
+		font-size: 26px;
+		line-height: 24px;
+		color: #fff;
+		font-weight: bold;
+		background: rgba(0,0,0, 0.4);
+	}
 }
 
-.teaser {
-	position: relative;
-	float: left;
-	width: @lenTeaserSq;
-	height: @lenTeaserSq;
+/* ARTICLE */
+.article {
+	@lenTeaserSq: 256px;
+	padding: 10px;
+	p {
+	}
+	.title {
+		padding: 10px 0;
+		font-size: 36px;
+		font-weight: bold;
+	}
+	.images img{
+		display: block;
+	}
 }
-
-.teasers .sizedImg {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: @lenTeaserSq;
-	height: @lenTeaserSq;
-	background-repeat: no-repeat;
-	background-color: #EEE;
-	-webkit-background-size: auto @lenTeaserSq;
-}
-
-.teasers .title {
-	position: absolute;
-	bottom: 0;
-	left: right;
-	padding: 8px;
-	text-align: right;
-	font-size: 26px;
-	line-height: 24px;
-	color: #fff;
-	font-weight: bold;
-	background: rgba(0,0,0, 0.4);
-}
-

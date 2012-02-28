@@ -1,12 +1,9 @@
 var bindSwipes = function( ID, selectorID ) {
 
-	ID = 'tabs';
-	selectorID = 'tabSelector';
-
 	var initial = 0, index = 0;
 
 	// tabs
-	tabs = new Swipe(document.getElementById( ID ), {
+	var tabs = new Swipe(document.getElementById( ID ), {
 		startSlide: initial,
 		callback: function(event,index,elem) {
 			setTab(selectors[index]);
@@ -14,7 +11,7 @@ var bindSwipes = function( ID, selectorID ) {
 		}
 	})
 
-	selectors = document.getElementById( selectorID ).children;
+	var selectors = document.getElementById( selectorID ).children;
 
 	for (var i = 0; i < selectors.length; i++) {
 		var elem = selectors[i];

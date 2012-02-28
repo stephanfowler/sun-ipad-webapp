@@ -26,13 +26,15 @@ html(lang="en")
 
 		header
 			.logo
+			.nav
+				a(data-bind="click: hidePages", href='#') HIDE&nbsp;|&nbsp;
+				a(data-bind="click: showPages", href='#') SHOW
 
-		ul#tabSelector(data-bind="foreach: sections", class='base-tabs')
+		ul#navContentPages(data-bind="foreach: sections", class='base-tabs')
 			li(data-bind="text: name")
 
-		#tabs(data-bind="template: { name: 'articles-template' }")
-
-		script#articles-template(type="text/html")
+		#seqContentPages(data-bind="template: { name: 'tmplSeqContentPages' }")
+		script#tmplSeqContentPages(type="text/html")
 			ul(data-bind="foreach: sections")
 				li
 					.teasers(data-bind="foreach: articles")
@@ -42,3 +44,15 @@ html(lang="en")
 							// /ko
 							.title(data-bind="text: title")
 
+		ul#navArticles(data-bind="foreach: articles", class='base-tabs')
+			li
+				img(data-bind="attr: { src: teaserImg }")
+
+		#seqArticles(data-bind="template: { name: 'tmplSeqArticles' }")
+		script#tmplSeqArticles(type="text/html")
+			ul(data-bind="foreach: articles")
+				li.article
+					.title(data-bind="text: title")
+					//.images(data-bind="foreach: $data.attachments.image")
+						img(data-bind="attr: { src: uri }")
+					.articlebody(data-bind="html: articlebody")

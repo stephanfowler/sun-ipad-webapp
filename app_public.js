@@ -85,7 +85,7 @@
     });
 
    app.get('/api/section/:section', function (req, res) {
-        Article.find({ section: req.params.section }, ['title', 'id'], function(err, results){
+        Article.find({ section: req.params.section }, function(err, results){
             if (err) res.writeHead(500, err.message)
             else if( !results.length ) {
                 res.writeHead(404);
@@ -95,9 +95,10 @@
 				var articles = [];
                 res.writeHead( 200, { 'Content-Type': 'application/json' });
                 results.forEach(function(doc){
-					articles.push( { id: doc.id, title: doc.title} );
+					articles.push( doc );
                 });
-                res.end( JSON.stringify( articles ) );  
+                res.end( JSON.stringify( { name: req.params.section, articles: articles } ) );  
+                //console.log( JSON.stringify( articles, null, '\t' ) );  
             };
         }).limit(500);
     });
