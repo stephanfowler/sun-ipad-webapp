@@ -1,23 +1,44 @@
-var bindSwipes = function( ID, selectorID ) {
+var bindSwipes = function( ID, selectorID, initial ) {
 
-	var initial = 0, index = 0;
+	if ( typeof initial == 'undefined' ) initial = 0;
 
 	// tabs
-	var tabs = new Swipe(document.getElementById( ID ), {
+	var tabs = new Swipe( $(ID).get(0), {
 		startSlide: initial,
 		callback: function(event,index,elem) {
-			setTab(selectors[index]);
-			visiblePage = index;
+			setTab(index);
 		}
 	})
 
-	var selectors = document.getElementById( selectorID ).children;
+	var selectors = $(selectorID).children();
+
+	selectors.each( function( i ) {
+		$(this).attr( 'data-tab', i );
+		$(this).click( function(e) {
+			e.preventDefault();
+			$( ID + ':hidden' ).slideDown();
+			setTab(i);
+			tabs.slide( $(this).attr('data-tab'), 500 );
+		});
+	});
+
+	var setTab = function(i) {
+		$(selectorID).find('.on').addClass('won');
+		selectors.removeClass('on');
+		selectors.eq(i).addClass('on');
+	}
+
+	setTab(initial);
+
+/*
+	var selectors = $(selectorID).get(0).children;
 
 	for (var i = 0; i < selectors.length; i++) {
 		var elem = selectors[i];
 		elem.setAttribute('data-tab', i);
 		elem.onclick = function(e) {
 			e.preventDefault();
+			$(ID).slideToggle();
 			setTab(this);
 			tabs.slide(parseInt(this.getAttribute('data-tab'),10),300);
 		}
@@ -31,6 +52,7 @@ var bindSwipes = function( ID, selectorID ) {
 	}
 
 	setTab(selectors[initial]);
+*/
 
 	return $(this);
 
