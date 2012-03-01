@@ -35,6 +35,10 @@
 		res.render('index.jade');
 	});
 
+	var IDalize = function( str ) {
+		return str.toLowerCase().replace(/^\s+|\s+$/g, '').replace( /\s+/g, '-' ).replace( /[^a-z-]+/, '' );
+	};
+
 	app.get('/api/article/:id', function (req, res) {
 		Article.findOne({ id: Number(req.params.id) }, function( err, doc ){
 			if (err) res.writeHead(500, err.message)
@@ -76,7 +80,7 @@
                 res.end( JSON.stringify( 
 					{ 
 						sections: us.map( sections, function( articles, section ) {
-							return { name: section, articles: articles };
+							return { name: section, id: IDalize(section), articles: articles };
 						}) 
 					}) 
 				);  

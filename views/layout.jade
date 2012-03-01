@@ -25,35 +25,36 @@ html(lang="en")
 	body
 
 		header
-			.logo
-			.nav
-				a(data-bind="click: hidePages", href='#') HIDE&nbsp;|&nbsp;
-				a(data-bind="click: showPages", href='#') SHOW&nbsp;|&nbsp;
-				a(data-bind="click: sectionShift", href="#") SHIFT
+			a.logo(href="/#") &nbsp;
+			.status
+				span(data-bind="text: section") 
+				&nbsp;
+				span(data-bind="text: article") 
 
 		ul#navContentPages(data-bind="foreach: sections")
-			li(data-bind="text: name, css: { on: index() == $parent.sectionOn() }")
+			li(data-bind="attr: { id: id }") 
+				a(data-bind="text: name, attr: { href: '#/' + id() }")
 
-		#seqContentPages(data-bind="template: { name: 'tmplSeqContentPages' }")
-		script#tmplSeqContentPages(type="text/html")
+		#seqContentPages
 			ul(data-bind="foreach: sections")
-				li(data-bind="visible: ( index() == $parent.sectionOn() )" ) 
+				li 
 					.teasers(data-bind="foreach: articles")
 						.teaser
-							// ko foreach: $data.attachments.image
-							.sizedImg(data-bind="style: { background: 'url(' + uri() + ')' }")
-							// /ko
-							.title(data-bind="text: title")
+							a(data-bind="attr: { href: '#/' + $parent.name() + '/' + id() }")
+								// ko foreach: $data.attachments.image
+								.sizedImg(data-bind="style: { background: 'url(' + uri() + ')' }")
+								// /ko
+								.title(data-bind="text: title")
 
 		ul#navArticles(data-bind="foreach: articles", class='base-tabs')
-			li
-				.thumb(data-bind="style: { background: 'url(' + teaserImg() + ')' }")
+			li(data-bind="attr: { id: id }") 
+				a.thumb(data-bind="attr: { href: '#/' + section() + '/' + id() }, style: { background: 'url(' + teaserImg() + ')' }" )
 
-		#seqArticles(data-bind="template: { name: 'tmplSeqArticles' }")
-		script#tmplSeqArticles(type="text/html")
+		#seqArticles
 			ul(data-bind="foreach: articles")
 				li.article
 					.title(data-bind="text: title")
 					.images(data-bind="foreach: $data.attachments.image")
 						img(data-bind="attr: { src: uri }")
 					.articlebody(data-bind="html: articlebody")
+
