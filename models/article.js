@@ -8,6 +8,7 @@ const Article = module.exports = new Schema({
 	title           : String, 
 	sectionheadline : String, 
 	tickerheadline  : String, 
+	mainImg         : String, 
 	teaser          : String, 
 	teaserImg       : String, 
 	byline          : String, 

@@ -53,52 +53,6 @@
 		});
 	});
 
-   app.get('/api/all', function (req, res) {
-        Article.find({}, function(err, results){
-            if (err) res.writeHead(500, err.message)
-            else if( !results.length ) {
-                res.writeHead(404);
-                res.end();
-            }
-            else {
-				var sections = {};
-                res.writeHead( 200, { 'Content-Type': 'application/json' });
-                results.forEach(function(doc){
-					if( typeof sections[doc.section] == 'undefined' ) {
-						sections[doc.section] = [];
-					};
-					// Reduce the attachments to a single image 
-					/*
-					if ( doc.attachments.image ) {
-						doc.attachments = { image: [ doc.attachments.image[0] ] };
-						//doc.attachments.image[0].uri = doc.attachments.image[0].uri.replace(/a.jpg/, 'w.jpg' )
-					}
-					else {
-						delete doc.attachments;
-					}
-					*/
-					if ( doc.teaserImg ) {
-						doc.teaserImg = doc.teaserImg.replace( /[a-z]{1,1}.jpg/, 'w.jpg' )
-						doc.mainImg   = doc.teaserImg.replace( /[a-z]{1,1}.jpg/, 'k.jpg' )
-					}
-					else {
-						doc.mainImg = '';
-					}
-					/*
-					*/
-					sections[doc.section].push( doc );
-                });
-                res.end( JSON.stringify( 
-					{ 
-						sections: us.map( sections, function( articles, section ) {
-							return { name: section, id: IDalize(section), articles: articles };
-						}) 
-					}) 
-				);  
-            };
-        }).limit(500);
-    });
-
    app.get('/api/sections', function (req, res) {
         Article.find({}, {'title':1 , 'id':1 , 'section':1 , 'teaser':1 , 'teaserImg':1, 'attachments.image':1, _id:0 }, function(err, results){
             if (err) res.writeHead(500, err.message)

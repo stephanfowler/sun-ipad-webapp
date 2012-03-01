@@ -26,7 +26,7 @@ $(document).ready( function() {
 		return str.toLowerCase().replace( /[^a-z]+/, '' );
 	};
 
-	$.getJSON( '/api/all', function(json){
+	$.getJSON( '/api/sections', function(json){
 		ko.mapping.fromJS( json.sections, viewModel.sections );
 	});
 
@@ -36,15 +36,6 @@ $(document).ready( function() {
 
 	viewModel.sections.subscribe(function() {
 		setTimeout( function() { bindSwipes('#seqContentPages' , '#navContentPages' ); }, 0 );
-		var flow = function() {
-			$('.teasers').each( function() {
-				$(this).masonry({
-					itemSelector: '.teaser',
-					columnWidth: 256
-				});
-			});
-		};
-		setTimeout( flow );
 	}, viewModel);
 
 	viewModel.articles.subscribe(function() {

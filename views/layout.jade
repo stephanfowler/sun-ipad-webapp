@@ -21,6 +21,7 @@ html(lang="en")
 		script(type='text/javascript', src='/scripts/less.js')
 		script(type='text/javascript', src='/scripts/swipe.js')
 		script(type='text/javascript', src='/scripts/swiper.js')
+		script(type='text/javascript', src='/scripts/jquery.masonry.min.js')
 		script(type='text/javascript', src='/scripts/main.js')
 	body
 
@@ -41,10 +42,12 @@ html(lang="en")
 					.teasers(data-bind="foreach: articles")
 						.teaser
 							a(data-bind="attr: { href: '#/' + $parent.name() + '/' + id() }")
+								img(data-bind="attr: { src: teaserImg }")
 								// ko foreach: $data.attachments.image
-								.sizedImg(data-bind="style: { background: 'url(' + uri() + ')' }")
+								//.sizedImg(data-bind="style: { background: 'url(' + uri() + ')' }")
 								// /ko
 								.title(data-bind="text: title")
+								.text(data-bind="text: teaser")
 
 		ul#navArticles(data-bind="foreach: articles", class='base-tabs')
 			li(data-bind="attr: { id: id }") 
