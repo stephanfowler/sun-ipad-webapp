@@ -1,41 +1,21 @@
 $(document).ready( function() {
 
 	var viewModel = {
-
 		sections: ko.mapping.fromJS([]),
-		section:  ko.observable('news'),
-
-		articles: ko.mapping.fromJS([]),
-		article:  ko.observable(),
-	};
-
-	/*
-	var addIndexes = function( tasks ) {
-		for (var i = 0, j = tasks.length; i < j; i++) {
-		   var task = tasks[i];
-			if (!task.index) {
-			   task.index = ko.observable(i);  
-			} else {
-			   task.index(i);   
-			}
-		}
-	};
-	*/
-
-	var IDalize = function( str ) {
-		return str.toLowerCase().replace( /[^a-z]+/, '' );
 	};
 
 	$.getJSON( '/api/all', function(json){
 		ko.mapping.fromJS( json.sections, viewModel.sections );
 	});
 
-	$.getJSON( '/api/section/News', function(json){
-		ko.mapping.fromJS( json.articles, viewModel.articles );
-	});
+	ko.applyBindings( viewModel );
 
 	viewModel.sections.subscribe(function() {
+
+		// Bind swipe events to content pages
 		setTimeout( function() { bindSwipes('#seqContentPages' , '#navContentPages' ); }, 0 );
+
+		// Apply masonry layout to content page teasers
 		var flow = function() {
 			$('.teasers').each( function() {
 				$(this).masonry({
@@ -45,44 +25,35 @@ $(document).ready( function() {
 			});
 		};
 		setTimeout( flow );
-	}, viewModel);
 
-	viewModel.articles.subscribe(function() {
-		setTimeout( function() { bindSwipes('#seqArticles' , '#navArticles' ); } );
 	}, viewModel);
-
-	ko.applyBindings( viewModel );
 
     $(window).bind( 'hashchange', function(e) {
-		var hash = location.hash;
+		var hash = location.hash,
+			section, article;
+
 		if ( hash ) {
 			var bits = hash.split( '/' );
 			var section = bits[1];
 			var article = bits[2];
-			if ( section ) {
-
-				if ( viewModel.section() != section ) {
-					//viewModel.section(section);
-					//setTimeout( function() { bindSwipes('#seqContentPages' , '#navContentPages', section ); } );
-					// NOW LOAD THAT SECTION'S ARTICLES...
-				}
-
-				if ( article && viewModel.article() != article ) {
-					//viewModel.article(article);
-					//$( '#seqContentPages:visible' ).slideUp();
-					setTimeout(function() { bindSwipes('#seqArticles' , '#navArticles', article ); } );
-				}
-				
-				if ( article ) {
-					$( '#seqContentPages:visible' ).slideUp();
-					$( '#seqArticles:hidden'      ).slideDown();
-				}
-				else {
-					$( '#seqContentPages:hidden' ).slideDown();
-					$( '#seqArticles:visible'    ).slideUp();
-				}
-			}
 		}
+
+		if ( article ) {
+			$( '#seqContentPages:visible' ).slideUp();
+			$( '#wrap_' + section + ':hidden' ).slideDown( resetScroll );
+			setTimeout(function() { bindSwipes('#cont_' + section , '#navi_' + section, article ); } );
+		}
+		else {
+			$( '#seqContentPages:hidden' ).slideDown();
+			$( '.wrap_articles:visible' ).slideUp();
+			setTimeout( function() { bindSwipes('#seqContentPages' , '#navContentPages', section ); }, 0 );
+			resetScroll();
+		}
+		// TODO Set up an array of tab swipe objects, so that they don't have to be re-bound on each hashchange.
+		// Then test how swiping changes the hash.
     });
 
+	var resetScroll = function(){
+		window.scrollTo(0,0);
+	};
 });

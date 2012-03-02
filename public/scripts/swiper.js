@@ -22,14 +22,10 @@ var bindSwipes = function( paneID, selectorID, initialID ) {
 	selectors.each( function( i ) {
 		$(this).attr( 'data-tab', i );
 		$(this).click( function(e) {
-			//e.preventDefault();
-			//$( paneID + ':hidden' ).slideDown();
 			setTab(i);
 			tabs.slide( $(this).attr('data-tab'), 500 );
 		});
 	});
-	/*
-	*/
 
 	var setTab = function(i) {
 		$(selectorID).find('.on').addClass('won');

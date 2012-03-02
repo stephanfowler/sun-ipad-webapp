@@ -67,25 +67,14 @@
 					if( typeof sections[doc.section] == 'undefined' ) {
 						sections[doc.section] = [];
 					};
-					// Reduce the attachments to a single image 
-					/*
-					if ( doc.attachments.image ) {
-						doc.attachments = { image: [ doc.attachments.image[0] ] };
-						//doc.attachments.image[0].uri = doc.attachments.image[0].uri.replace(/a.jpg/, 'w.jpg' )
-					}
-					else {
-						delete doc.attachments;
-					}
-					*/
 					if ( doc.teaserImg ) {
-						doc.teaserImg = doc.teaserImg.replace( /[a-z]{1,1}.jpg/, 'w.jpg' )
+						doc.teaserImg = doc.teaserImg.replace( /[a-z]{1,1}.jpg/, 'a.jpg' )
 						doc.mainImg   = doc.teaserImg.replace( /[a-z]{1,1}.jpg/, 'k.jpg' )
 					}
 					else {
-						doc.mainImg = '';
+						doc.teaserImg = ''; 
+						doc.mainImg   = '';
 					}
-					/*
-					*/
 					sections[doc.section].push( doc );
                 });
                 res.end( JSON.stringify( 
@@ -116,7 +105,6 @@
 					// Reduce the attachments to a single image 
 					if ( doc.attachments.image ) {
 						doc.attachments = { image: [ doc.attachments.image[0] ] };
-						//doc.attachments.image[0].uri = doc.attachments.image[0].uri.replace(/a.jpg/, 'w.jpg' )
 					}
 					else {
 						delete doc.attachments;

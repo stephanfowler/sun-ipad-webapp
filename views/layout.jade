@@ -27,10 +27,6 @@ html(lang="en")
 
 		header
 			a.logo(href="/#") &nbsp;
-			.status
-				span(data-bind="text: section") 
-				&nbsp;
-				span(data-bind="text: article") 
 
 		ul#navContentPages(data-bind="foreach: sections")
 			li(data-bind="attr: { id: id }") 
@@ -41,23 +37,25 @@ html(lang="en")
 				li 
 					.teasers(data-bind="foreach: articles")
 						.teaser
-							a(data-bind="attr: { href: '#/' + $parent.name() + '/' + id() }")
+							a(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }")
 								img(data-bind="attr: { src: teaserImg }")
-								// ko foreach: $data.attachments.image
-								//.sizedImg(data-bind="style: { background: 'url(' + uri() + ')' }")
-								// /ko
 								.title(data-bind="text: title")
 								.text(data-bind="text: teaser")
 
-		ul#navArticles(data-bind="foreach: articles", class='base-tabs')
-			li(data-bind="attr: { id: id }") 
-				a.thumb(data-bind="attr: { href: '#/' + section() + '/' + id() }, style: { background: 'url(' + teaserImg() + ')' }" )
+		#expSections(data-bind="foreach: sections")
 
-		#seqArticles
-			ul(data-bind="foreach: articles")
-				li.article
-					.title(data-bind="text: title")
-					.images(data-bind="foreach: $data.attachments.image")
-						img(data-bind="attr: { src: uri }")
-					.articlebody(data-bind="html: articlebody")
+			.wrap_articles(data-bind="attr: { id: 'wrap_' + id() }, visible: false")
+				
+				ul(data-bind="attr: { id: 'navi_' + id() }, foreach: articles", class='navi_articles')	
+					li(data-bind="attr: { id: id }") 
+						a.thumb(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }, style: { background: 'url(' + teaserImg() + ')' }" )
+
+				div(data-bind="attr: { id: 'cont_' + id() }")
+					ul(data-bind="foreach: articles")
+						li.article
+							.title(data-bind="text: title")
+							.images(data-bind="foreach: $data.attachments.image")
+								img(data-bind="attr: { src: uri }")
+							.articlebody(data-bind="html: articlebody")
+
 
