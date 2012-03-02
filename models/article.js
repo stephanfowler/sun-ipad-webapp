@@ -2,15 +2,10 @@ const Schema = require('mongoose').Schema;
 
 const Article = module.exports = new Schema({ 
 	uri             : { type: String, index: { unique: true } }, 
-	id              : { type: Number }, 
+	id              : { type: Number, index: { unique: true } }, 
 	section         : String, 
-	sectionOrder    : { type: Number }, 
-	title           : String, 
-	sectionheadline : String, 
-	tickerheadline  : String, 
-	mainImg         : String, 
+	headline        : String, 
 	teaser          : String, 
-	teaserImg       : String, 
 	byline          : String, 
 	timestamp       : String, 
 	articlebody     : String, 
