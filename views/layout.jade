@@ -38,7 +38,9 @@ html(lang="en")
 					.teasers(data-bind="foreach: articles")
 						.teaser
 							a(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }")
-								img(data-bind="attr: { src: teaserImg }")
+								// ko if: $data.image
+								img(data-bind="attr: { src: $data.image }")
+								// /ko
 								.title(data-bind="text: title")
 								.text(data-bind="text: teaser")
 
@@ -48,7 +50,12 @@ html(lang="en")
 				
 				ul(data-bind="attr: { id: 'navi_' + id() }, foreach: articles", class='navi_articles')	
 					li(data-bind="attr: { id: id }") 
-						a.thumb(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }, style: { background: 'url(' + teaserImg() + ')' }" )
+						// ko if: $data.image
+						a.thumb(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }, style: { background: 'url(' + $data.image() + ')' }" )
+						// /ko
+						// ko ifnot: $data.image
+						a.thumb(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }" )
+						// /ko
 
 				div(data-bind="attr: { id: 'cont_' + id() }")
 					ul(data-bind="foreach: articles")

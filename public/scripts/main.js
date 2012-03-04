@@ -4,7 +4,7 @@ $(document).ready( function() {
 		sections: ko.mapping.fromJS([]),
 	};
 
-	$.getJSON( '/api/all', function(json){
+	$.getJSON( '/api/edition', function(json){
 		ko.mapping.fromJS( json.sections, viewModel.sections );
 	});
 
