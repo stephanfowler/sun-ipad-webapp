@@ -61,11 +61,12 @@ html(lang="en")
 			ul(data-bind="foreach: sections")
 				li 
 					.teasers(data-bind="foreach: articles")
-						.teaser
+						.teaser(data-bind="css: { top: role() == 'top' }")
 							a(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }")
 								// ko if: $data.image
 								img(data-bind="attr: { src: $data.image }")
 								// /ko
-								.title(data-bind="text: title")
-								.text(data-bind="text: teaser")
+								.text
+									.title(data-bind="text: title")
+									.excerpt(data-bind="text: teaser")
 

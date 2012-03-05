@@ -153,29 +153,64 @@ h2 {
 	padding: 0;
 	.teaser {
 		margin: 10px 0 0 0;
-		position: relative;
 		float: left;
 		width: @lenTeaserSq;
+		img {
+			width: 246px;
+		}
+		.text {
+			border-left: 1px solid #ccc;
+			.title {
+				margin: -3px 0 0 0;
+				font-size: 22px;
+				letter-spacing: -1px;
+				line-height: 20px;
+				padding: 5px 5px 10px 10px;
+				color: #000;
+				font-weight: bold;
+			}
+			.excerpt {
+				font-size: 15px;
+				line-height: 15px;
+				padding: 0 10px 20px 10px;
+				color: #333;
+			}
+		}
 	}
-	img {
-		width: 246px;
-	}
-	.title {
-		margin: -3px 0 0 0;
-		font-size: 22px;
-		letter-spacing: -1px;
-		line-height: 20px;
-		padding: 5px 5px 10px 10px;
-		color: #000;
-		font-weight: bold;
-		border-left: 1px solid #ccc;
-	}
-	.text {
-		font-size: 15px;
-		line-height: 15px;
-		padding: 0 10px 20px 10px;
-		color: #333;
-		border-left: 1px solid #ccc;
+	.top {
+		width: @lenTeaserSq * 2;
+		a {
+			display: block;
+			position: relative;
+			height: 333px;
+			overflow: hidden;
+		}
+		img {
+			width: @lenTeaserSq * 2 - 10;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		.text {
+			border-left: none;
+			position: absolute;
+			bottom: 0px;
+			left: 0;
+			padding: 5px 0 0 10px;
+			width: @lenTeaserSq * 2 - 20;
+			background-color: rgba(0,0,0,.4);
+			.title {
+				font-size: 40px;
+				line-height: 34px;
+				letter-spacing: -2px;
+				padding: 10px 5px 10px 10px;
+				color: #fff;
+			}
+			.excerpt {
+				color: #fff;
+				padding: 0 10px 10px 10px;
+			}
+		}
 	}
 }
 
@@ -188,8 +223,9 @@ h2 {
 		margin: 0 0 10px 0;
 	}
 	.title {
-		margin: 0 0 10px 0;
+		margin: 0 0 20px 0;
 		font-size: 40px;
+		line-height: 34px;
 		letter-spacing: -2px;
 		font-weight: bold;
 	}
@@ -204,6 +240,7 @@ h2 {
 	.col2{
 		border-top: 1px solid #ccc;
 		float:left;
+		width: 190px;
 	}
 	.byline {
 		padding: 10px 0;
