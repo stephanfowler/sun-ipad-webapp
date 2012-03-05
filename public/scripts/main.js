@@ -13,7 +13,7 @@ $(document).ready( function() {
 	viewModel.sections.subscribe(function() {
 
 		// Bind swipe events to content pages
-		setTimeout( function() { bindSwipes('#seqContentPages' , '#navContentPages' ); }, 0 );
+		setTimeout( function() { bindSwipes('#seqContentPages' , '#navContentPages' ); } );
 
 		// Apply masonry layout to content page teasers
 		var flow = function() {

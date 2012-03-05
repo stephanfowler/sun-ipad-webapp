@@ -1,4 +1,7 @@
 
+	with (new Date()) var editionID = ( getFullYear()*100 + getMonth()+1 )*100 + getDate();
+	//var editionID = 123456;
+
 	var express  = require('express'),
 		mongoose = require('mongoose'),
 		us       = require('underscore'),
@@ -38,9 +41,7 @@
 	};
 
 	app.get('/api/edition', function (req, res) {
-		//with (new Date()) var editionID = ( getFullYear()*100 + getMonth()+1 )*100 + getDate();
-		var editionID = 123456;
-		Edition.findOne({ id: editionID }, function( err, doc ){
+		Edition.findOne({ id: editionID }, {_id:0}, function( err, doc ){
 			if (err) res.writeHead(500, err.message)
 			else if( !doc ) {
 				res.writeHead(404);

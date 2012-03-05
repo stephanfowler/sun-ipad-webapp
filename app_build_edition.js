@@ -1,7 +1,10 @@
 
+	with (new Date()) var editionID = ( getFullYear()*100 + getMonth()+1 )*100 + getDate();
+	//var editionID = 123456;
+
 	var feeds = [
+		//'http://www.thesun.co.uk/sol/homepage/feeds/iPad/top_stories/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/news/?iPadApp=true',
-		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/top_stories/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/breaking_news/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/sport/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/showbiz/?iPadApp=true',
@@ -134,8 +137,6 @@
 	};
 
 	var scrape = function() { 
-		//with (new Date()) var editionID = ( getFullYear()*100 + getMonth()+1 )*100 + getDate();
-		var editionID = 123456;
 		Edition.findOne( { id: editionID }, function( err, doc ) {
 			if ( doc ) {
 				console.log( 'Edition ' + doc.id + ' already exists!' );
@@ -198,12 +199,6 @@
 																			article.timestamp   = doc.timestamp;
 																			article.articlebody = doc.articlebody;
 																			article.attachments = doc.attachments;
-																			if ( typeof article.image == 'string' ) {
-																				article.image = article.image.replace( /[a-z]{1,1}.jpg/, 'a.jpg' )
-																			}
-																			else {
-																				delete article.image;
-																			}
 																		}
 																	}
 																}
@@ -235,6 +230,29 @@
 							}
 						);
 					},
+
+
+					function( edition, callback ) {
+						var topStories = edition.sections
+						console.log( "Cleaning up edition... " );
+						var id = 0;
+						for ( s in edition.sections ) {
+							var articles = edition.sections[s].articles;
+							for ( a in articles ) {
+								var article = articles[a];
+								delete article.uri; // No longer needed?
+								article.id = id;
+								if ( typeof article.image == 'string' ) {
+									article.image = article.image.replace( /[a-z]{1,1}.jpg/, 'a.jpg' )
+								}
+								else {
+									delete article.image;
+								}
+								id++;
+							}
+						}
+						callback( null, edition );
+					}
 
 				], function (err, edition ) {
 

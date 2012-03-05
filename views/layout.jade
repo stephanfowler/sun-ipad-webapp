@@ -32,18 +32,6 @@ html(lang="en")
 			li(data-bind="attr: { id: id }") 
 				a(data-bind="text: name, attr: { href: '#/' + id() }")
 
-		#seqContentPages
-			ul(data-bind="foreach: sections")
-				li 
-					.teasers(data-bind="foreach: articles")
-						.teaser
-							a(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }")
-								// ko if: $data.image
-								img(data-bind="attr: { src: $data.image }")
-								// /ko
-								.title(data-bind="text: title")
-								.text(data-bind="text: teaser")
-
 		#expSections(data-bind="foreach: sections")
 
 			.wrap_articles(data-bind="attr: { id: 'wrap_' + id() }, visible: false")
@@ -63,6 +51,21 @@ html(lang="en")
 							.title(data-bind="text: title")
 							.images(data-bind="foreach: $data.attachments.image")
 								img(data-bind="attr: { src: uri }")
-							.articlebody(data-bind="html: articlebody")
+							.col2
+								// ko if: $data.byline
+								.byline(data-bind="html: byline")
+								// /ko
+								.articlebody(data-bind="html: articlebody")
 
+		#seqContentPages
+			ul(data-bind="foreach: sections")
+				li 
+					.teasers(data-bind="foreach: articles")
+						.teaser
+							a(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }")
+								// ko if: $data.image
+								img(data-bind="attr: { src: $data.image }")
+								// /ko
+								.title(data-bind="text: title")
+								.text(data-bind="text: teaser")
 

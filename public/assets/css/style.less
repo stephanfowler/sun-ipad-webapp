@@ -80,7 +80,7 @@ header {
 		display:inline-block;
 	}
 	li.won {
-		background: lighten( @colorMain, 50% );
+		background: #ddd;
 	}
 	li.on {
 		background: @colorMain;
@@ -124,7 +124,7 @@ header {
 
 	li.won {
 		opacity: 0.4;
-		background-color: lighten( @colorMain, 40% );
+		background-color: #999;
 	}
 	li.on {
 		opacity: 1;
@@ -163,6 +163,7 @@ h2 {
 	.title {
 		margin: -3px 0 0 0;
 		font-size: 22px;
+		letter-spacing: -1px;
 		line-height: 20px;
 		padding: 5px 5px 10px 10px;
 		color: #000;
@@ -170,10 +171,10 @@ h2 {
 		border-left: 1px solid #ccc;
 	}
 	.text {
-		font-size: 14px;
-		line-height: 14px;
+		font-size: 15px;
+		line-height: 15px;
 		padding: 0 10px 20px 10px;
-		color: #666;
+		color: #333;
 		border-left: 1px solid #ccc;
 	}
 }
@@ -183,18 +184,36 @@ h2 {
 	@lenTeaserSq: 256px;
 	padding: 10px;
 	p {
+		font-size: 16px;
+		margin: 0 0 10px 0;
 	}
 	.title {
-		padding: 10px 0;
-		font-size: 36px;
+		margin: 0 0 10px 0;
+		font-size: 40px;
+		letter-spacing: -2px;
 		font-weight: bold;
 	}
+	.images{
+		display: inline-block;
+		float:left;
+		width: 550px;
+	}
 	.images img{
-		display: block;
+		margin: 0 0 20px 0;
+	}
+	.col2{
+		border-top: 1px solid #ccc;
+		float:left;
+	}
+	.byline {
+		padding: 10px 0;
+		margin: 0 0 20px 0;
+		color: #999;
+		font-size: 12px;
 	}
 }
 
-/*
+
 .masonry,
 .masonry .masonry-brick {
   -webkit-transition-duration: 0.7s;
@@ -216,4 +235,16 @@ h2 {
        -o-transition-property: left, right, top;
           transition-property: left, right, top;
 }
-*/
+
+@media only screen and (max-device-width: 1024px) and (orientation:portrait) { 
+	.article .col2 {
+		width: 190px;
+	}
+}
+@media only screen and (max-device-width: 1024px) and (orientation:landscape) { 
+	.article .col2 {
+		width: 440px;
+	}
+}
+
+
