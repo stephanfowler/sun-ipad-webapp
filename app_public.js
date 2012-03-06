@@ -1,7 +1,4 @@
 
-	with (new Date()) var editionID = ( getFullYear()*100 + getMonth()+1 )*100 + getDate();
-	//var editionID = 123456;
-
 	var express  = require('express'),
 		mongoose = require('mongoose'),
 		us       = require('underscore'),
@@ -33,15 +30,15 @@
 
 	// Routes
 	app.get('/', function(req, res){
-		res.render('index.jade');
+		// Find previous 3 edition IDs
+		Edition.find( {}, { id:1, _id:0 }, { limit:3, sort:{ id: -1 } }, function( err, doc ) {
+			res.render('index.jade', { editions: doc } );
+		});
 	});
 
-	var IDalize = function( str ) {
-		return str.toLowerCase().replace(/^\s+|\s+$/g, '').replace( /\s+/g, '-' ).replace( /[^a-z-]+/, '' );
-	};
-
 	app.get('/api/edition', function (req, res) {
-		Edition.findOne({ id: editionID }, {_id:0}, function( err, doc ){
+		// Get latest stored edition
+		Edition.findOne({}, {_id:0}, { sort:{ id: -1 } }, function( err, doc ) {
 			if (err) res.writeHead(500, err.message)
 			else if( !doc ) {
 				res.writeHead(404);
@@ -49,7 +46,6 @@
 			}
 			else {
 				res.writeHead( 200, { 'Content-Type': 'application/json' });
-				//res.end( JSON.stringify( doc, null, 2 )  );
 				res.end( JSON.stringify( doc )  );
 			};
 		});

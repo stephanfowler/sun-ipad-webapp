@@ -2,11 +2,22 @@ $(document).ready( function() {
 
 	var viewModel = {
 		sections: ko.mapping.fromJS([]),
+		getEdition: function( id ) {
+			if ( id ) {
+				// get it	
+				$.getJSON( '/api/edition/' + id , function(json){
+					ko.mapping.fromJS( json.sections, viewModel.sections );
+				});
+			}
+			else { 
+				$.getJSON( '/api/edition', function(json){
+					ko.mapping.fromJS( json.sections, viewModel.sections );
+				});
+			}
+		}
 	};
 
-	$.getJSON( '/api/edition', function(json){
-		ko.mapping.fromJS( json.sections, viewModel.sections );
-	});
+	viewModel.getEdition();
 
 	ko.applyBindings( viewModel );
 
@@ -42,6 +53,9 @@ $(document).ready( function() {
 			$( '#seqContentPages:visible' ).slideUp();
 			$( '#wrap_' + section + ':hidden' ).slideDown( resetScroll );
 			setTimeout(function() { bindSwipes('#cont_' + section , '#navi_' + section, article ); } );
+		}
+		else if ( /^[0-9]+$/.test( section ) ) {
+			viewModel.getEdition( section );
 		}
 		else {
 			$( '#seqContentPages:hidden' ).slideDown();

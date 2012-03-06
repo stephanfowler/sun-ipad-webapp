@@ -27,6 +27,10 @@ html(lang="en")
 
 		header
 			a.logo(href="/#") &nbsp;
+			.nav
+				- each ed in editions
+					a(href='#/' + ed.id) Edition #{ed.id}
+					br
 
 		ul#navContentPages(data-bind="foreach: sections")
 			li(data-bind="attr: { id: id }") 

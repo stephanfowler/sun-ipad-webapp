@@ -5,11 +5,11 @@
 	var feeds = [
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/top_stories/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/news/?iPadApp=true',
-		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/breaking_news/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/sport/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/showbiz/?iPadApp=true',
+		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/woman/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/tv/?iPadApp=true',
-		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/woman/?iPadApp=true'
+		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/breaking_news/?iPadApp=true',
 	];
 
 	var articles = {};
@@ -138,155 +138,149 @@
 
 	var scrape = function() { 
 		Edition.findOne( { id: editionID }, function( err, doc ) {
-			if ( doc ) {
-				console.log( 'Edition ' + doc.id + ' already exists!' );
-				process.exit(1);
-			}
-			else { 
-				console.log( "Creating new edition...\n" );
-				async.waterfall([
+			async.waterfall([
 
-					// Create an empty edition
-					function(callback){
-						edition = new Edition({ id: editionID});
-						callback( null, edition );
-					},
+				// Create an empty edition
+				function(callback){
+					edition = new Edition({ id: editionID});
+					callback( null, edition );
+				},
 
-					// Iterate over index feeds
-					function( edition, callbackAfterFeeds ){
-						async.forEach( 
-							feeds, 
-							function( url, callbackFeedDone ) {
+				// Iterate over index feeds
+				function( edition, callbackAfterFeeds ){
+					async.forEach( 
+						feeds, 
+						function( url, callbackFeedDone ) {
 
-								console.log( 'Fetching section : ' + url );
-								async.waterfall(
-									[
-										// Get & parse the index feed
-										function( callback ) {
-											getXmlAsJson( url, parseIndexFeed, callback );
-										},
+							//console.log( 'Fetching section : ' + url );
+							async.waterfall(
+								[
+									// Get & parse the index feed
+									function( callback ) {
+										getXmlAsJson( url, parseIndexFeed, callback );
+									},
 
-										// Iterate over article feeds
-										function( articles, callbackAfterArticles ){
-											async.forEach(
-												us.pluck( articles, 'uri' ),
-												function( url, callbackArticleDone ) {
+									// Iterate over article feeds
+									function( articles, callbackAfterArticles ){
+										async.forEach(
+											us.pluck( articles, 'uri' ),
+											function( url, callbackArticleDone ) {
 
-													async.waterfall(
-														[
-															function( callback ) {
-																Article.findOne( { uri: url }, function( err, doc ){
-																	if ( doc ) {	
-																		console.log( 'Already in store : ' + doc.headline );
-																		callback( null, doc );
-																	}
-																	else {
-																		console.log( 'Fetching article : ' + url );
-																		getXmlAsJson( url, parseArticleFeed, callback );
-																	}
-																});
-															},
+												async.waterfall(
+													[
+														function( callback ) {
+															Article.findOne( { uri: url }, function( err, doc ){
+																if ( doc ) {	
+																	//console.log( 'Already in store : ' + doc.headline );
+																	callback( null, doc );
+																}
+																else {
+																	console.log( 'Fetching article : ' + url );
+																	getXmlAsJson( url, parseArticleFeed, callback );
+																}
+															});
+														},
 
-															function( doc, callback ) {
-																console.log( "Add to edition   : " + doc.headline );
-																for ( s in edition.sections ) {
-																	var articles = edition.sections[s].articles;
-																	for ( a in articles ) {
-																		var article = articles[a];
-																		if ( url === article.uri ) {
-																			article.id          = doc.id;
-																			article.byline      = doc.byline;
-																			article.timestamp   = doc.timestamp;
-																			article.articlebody = doc.articlebody;
-																			article.attachments = doc.attachments;
-																		}
+														function( doc, callback ) {
+															//console.log( "Add to edition   : " + doc.headline );
+															for ( s in edition.sections ) {
+																var articles = edition.sections[s].articles;
+																for ( a in articles ) {
+																	var article = articles[a];
+																	if ( url === article.uri ) {
+																		article.id          = doc.id;
+																		article.byline      = doc.byline;
+																		article.timestamp   = doc.timestamp;
+																		article.articlebody = doc.articlebody;
+																		article.attachments = doc.attachments;
 																	}
 																}
-																callback();
 															}
-														],
-														function(){
-															callbackArticleDone();	
+															callback();
 														}
-													);
+													],
+													function(){
+														callbackArticleDone();	
+													}
+												);
 
-												},
-												function(){
-													callbackAfterArticles();	
-												}
-											)
-										}
-
-									], 
-									function(){
-										callbackFeedDone();	
+											},
+											function(){
+												callbackAfterArticles();	
+											}
+										)
 									}
-								);
-								
-							},
-							function() {
-								console.log("FEEDS DONE\n")
-								callbackAfterFeeds( null, edition );
-							}
-						);
-					},
 
-
-					function( edition, callback ) {
-						// Get a list of the top stories
-						var topStories = us.find( edition.sections, function(s){ return s.id === 'top-stories'} );
-						if( topStories ) {
-							topStories = us.pluck( topStories.articles, 'uri' )
-							// Remove the actual Top Stories section (the articles all appear elsewhere) (hopefully!)
-							edition.sections  = us.reject( edition.sections, function(s){ return s.id === 'top-stories'}  );
-						}
-						console.log( "Cleaning up edition... " );
-						var id = 0;
-						for ( s in edition.sections ) {
+								], 
+								function(){
+									callbackFeedDone();	
+								}
+							);
 							
-							var articles = edition.sections[s].articles;
-							for ( a in articles ) {
-								var article = articles[a];
-								// Mark top stories
-								if ( us.indexOf( topStories, article.uri ) > -1 ) {
-									article.role = 'top';
-								}
-								else {
-									article.role = '';
-								}
-								delete article.uri; // No longer needed?
-								article.id = id;
-								if ( typeof article.image == 'string' ) {
-									article.image = article.image.replace( /[a-z]{1,1}.jpg/, 'a.jpg' )
-								}
-								else {
-									delete article.image;
-								}
-								id++;
-							}
+						},
+						function() {
+							//console.log("FEEDS DONE\n")
+							callbackAfterFeeds( null, edition );
 						}
-						callback( null, edition );
+					);
+				},
+
+
+				function( edition, callback ) {
+					// Get a list of the top stories
+					var topStories = us.find( edition.sections, function(s){ return s.id === 'top-stories'} );
+					if( topStories ) {
+						topStories = us.pluck( topStories.articles, 'uri' )
+						// Remove the actual Top Stories section (the articles all appear elsewhere) (hopefully!)
+						edition.sections  = us.reject( edition.sections, function(s){ return s.id === 'top-stories'}  );
 					}
-
-				], function (err, edition ) {
-
-					edition.save(function (err){
-						if ( err ) {
-							console.log( "ERROR SAVING EDITION: " + err );
+					//console.log( "Cleaning up edition... " );
+					var id = 0;
+					for ( s in edition.sections ) {
+						
+						var articles = edition.sections[s].articles;
+						for ( a in articles ) {
+							var article = articles[a];
+							// Mark top stories
+							if ( us.indexOf( topStories, article.uri ) > -1 ) {
+								article.role = 'top';
+							}
+							else {
+								article.role = '';
+							}
+							delete article.uri; // No longer needed?
+							article.id = id;
+							if ( typeof article.image == 'string' ) {
+								article.image = article.image.replace( /[a-z]{1,1}.jpg/, 'a.jpg' )
+							}
+							else {
+								delete article.image;
+							}
+							id++;
 						}
-						else {
-							console.log( "Saved edition " + edition.id );	
-						}
-						//console.log( JSON.stringify( edition, null, 4 ) );
-						process.exit(0);
-					});
+					}
+					callback( null, edition );
+				}
 
+			], function (err, edition ) {
+				var edo = edition.toObject();
+				delete edo._id;
+				Edition.update( { id:editionID }, edo, {upsert: true}, function (err){
+					if ( err ) {
+						console.log( "ERROR SAVING EDITION: " + err );
+					}
+					else {
+						console.log( "Saved edition " + edition.id );	
+					}
+					//process.exit(0);
 				});
-			
-			}
+
+			});
+		
 		});
 	};
 
 	scrape();
+	setInterval( scrape, 600000 );
 
 	app.listen(8081);
