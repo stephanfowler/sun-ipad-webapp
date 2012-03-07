@@ -75,12 +75,13 @@
 		if ( getHost(url) && getPath(url) ) {
 			var request = client.request('GET', getPath(url), {'host': getHost(url)});
 			request.on('response', function (response) {
+                response.setEncoding("binary");
 				var data = '';
 				response.on('data', function(chunk){ 
 					data += chunk; 
 				});
 				response.on('end', function(){
-					var parser = new xml2js.Parser('UTF-8');
+					var parser = new xml2js.Parser();
 					parser.on('end', function( json ) {
 						schemaProcessor( url, json, callback ) 
 					});

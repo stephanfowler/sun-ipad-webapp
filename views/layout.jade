@@ -15,6 +15,9 @@ html(lang="en")
 		meta(name="apple-mobile-web-app-capable", content="yes")
 		meta(name="apple-mobile-web-app-status-bar-style", content="black")
 
+		script(type="text/javascript", src="http://use.typekit.com/vvj2ldj.js")
+		script(type="text/javascript") try{Typekit.load();}catch(e){}
+
 		script(type='text/javascript', src='/scripts/jquery.js') 
 		script(type='text/javascript', src='/scripts/knockout.js')
 		script(type='text/javascript', src='/scripts/knockout.mapping.js')
@@ -71,6 +74,6 @@ html(lang="en")
 								img(data-bind="attr: { src: $data.image }")
 								// /ko
 								.text
-									.title(data-bind="text: title")
+									.title(data-bind="text: sectionheadline")
 									.excerpt(data-bind="text: teaser")
 
