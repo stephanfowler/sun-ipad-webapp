@@ -273,7 +273,7 @@
 					else {
 						console.log( "Saved edition " + edition.id );	
 					}
-					//process.exit(0);
+					process.exit(0);
 				});
 
 			});
@@ -282,6 +282,6 @@
 	};
 
 	scrape();
-	setInterval( scrape, 600000 );
+	//setInterval( scrape, 600000 );
 
 	app.listen(8081);
