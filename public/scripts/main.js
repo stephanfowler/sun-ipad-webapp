@@ -31,11 +31,13 @@ $(document).ready( function() {
 			$('.teasers').each( function() {
 				$(this).masonry({
 					itemSelector: '.teaser',
-					columnWidth: 256
+					columnWidth: 249
 				});
 			});
 		};
-		setTimeout( flow );
+		setTimeout( flow, 500 );
+
+		$('#loading').hide();
 
 	}, viewModel);
 
@@ -70,4 +72,5 @@ $(document).ready( function() {
 	var resetScroll = function(){
 		window.scrollTo(0,0);
 	};
+
 });

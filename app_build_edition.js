@@ -252,7 +252,7 @@
 							delete article.uri; // No longer needed?
 							article.id = id;
 							if ( typeof article.image == 'string' ) {
-								article.image = article.image.replace( /[a-z]{1,1}.jpg/, 'a.jpg' )
+								article.image = article.image.replace( /[a-z]{1,1}\.(jpg|png)$/, "a.jpg" )
 							}
 							else {
 								delete article.image;

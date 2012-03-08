@@ -30,50 +30,71 @@ html(lang="en")
 
 		header
 			a.logo(href="/#") &nbsp;
+			ul#navContentPages(data-bind="foreach: sections")
+				li(data-bind="attr: { id: id }") 
+					a(data-bind="text: name, attr: { href: '#/' + id() }")
 			.nav
 				- each ed in editions
-					a(href='#/' + ed.id) Edition #{ed.id}
+					a(href='#/' + ed.id) #{ed.name}
 					br
+		
+		#headerShadow
+		
+		#wrap
+			#expSections(data-bind="foreach: sections")
 
-		ul#navContentPages(data-bind="foreach: sections")
-			li(data-bind="attr: { id: id }") 
-				a(data-bind="text: name, attr: { href: '#/' + id() }")
+				.wrap_articles(data-bind="attr: { id: 'wrap_' + id() }, visible: false")
+					
+					ul.navi_articles(data-bind="attr: { id: 'navi_' + id() }, foreach: articles")	
+						li(data-bind="attr: { id: id }") 
+							// ko if: $data.image
+							a.thumb(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }, style: { background: 'url(' + $data.image() + ')' }" )
+							// /ko
+							// ko ifnot: $data.image
+							a.thumb(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }" )
+							// /ko
 
-		#expSections(data-bind="foreach: sections")
-
-			.wrap_articles(data-bind="attr: { id: 'wrap_' + id() }, visible: false")
-				
-				ul(data-bind="attr: { id: 'navi_' + id() }, foreach: articles", class='navi_articles')	
-					li(data-bind="attr: { id: id }") 
-						// ko if: $data.image
-						a.thumb(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }, style: { background: 'url(' + $data.image() + ')' }" )
-						// /ko
-						// ko ifnot: $data.image
-						a.thumb(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }" )
-						// /ko
-
-				div(data-bind="attr: { id: 'cont_' + id() }")
-					ul(data-bind="foreach: articles")
-						li.article
-							.title(data-bind="text: title")
-							.images(data-bind="foreach: $data.attachments.image")
-								img(data-bind="attr: { src: uri }")
-							.col2
-								// ko if: $data.byline
-								.byline(data-bind="html: byline")
-								// /ko
+					div(data-bind="attr: { id: 'cont_' + id() }")
+						ul(data-bind="foreach: articles")
+							li.article
+								.title(data-bind="text: title")
+								.images(data-bind="foreach: $data.attachments.image")
+									.imageWrap
+										img(data-bind="attr: { src: uri }")
+										// ko if: $data.caption
+										.caption(data-bind="text: caption")
+										// /ko
+								.col2
+									// ko if: $data.byline
+									.byline(data-bind="html: byline")
+									// /ko
+									.images(data-bind="foreach: $data.attachments.image")
+										.imageWrap
+											img(data-bind="attr: { src: uri }")
+											// ko if: $data.caption
+											.caption(data-bind="text: caption")
+											// /ko
+									.relateds(data-bind="foreach: $data.attachments.article")
+										// ko if: $data.caption 
+										p
+											a(data-bind="text: caption, attr: { href: '#' }")
+										// /ko
 								.articlebody(data-bind="html: articlebody")
 
-		#seqContentPages
-			ul(data-bind="foreach: sections")
-				li 
-					.teasers(data-bind="foreach: articles")
-						.teaser(data-bind="css: { top: role() == 'top' }")
-							a(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }")
-								// ko if: $data.image
-								img(data-bind="attr: { src: $data.image }")
-								// /ko
-								.text
-									.title(data-bind="text: sectionheadline")
-									.excerpt(data-bind="text: teaser")
+			#seqContentPages
+				ul(data-bind="foreach: sections")
+					li 
+						.teasers
+							.badge
+							// ko foreach: articles
+							.teaser(data-bind="css: { top: role() == 'top' }")
+								a(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }")
+									// ko if: $data.image
+									img(data-bind="attr: { src: $data.image }")
+									// /ko
+									.text
+										.title(data-bind="text: sectionheadline")
+										.excerpt(data-bind="text: teaser")
+							// /ko
 
+			#loading Loading today's Sun...

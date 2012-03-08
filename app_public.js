@@ -30,9 +30,10 @@
 
 	// Routes
 	app.get('/', function(req, res){
-		// Find previous 3 edition IDs
-		Edition.find( {}, { id:1, _id:0 }, { limit:3, sort:{ id: -1 } }, function( err, doc ) {
-			res.render('index.jade', { editions: doc } );
+		// Find previous 2 edition IDs
+		Edition.find( {}, { id:1, _id:0 }, { limit:2, sort:{ id: -1 } }, function( err, doc ) {
+			var editions = [ { name: 'Today', id: doc[0].id }, { name:'Yesterday', id: doc[1].id } ];
+			res.render('index.jade', { editions: editions } );
 		});
 	});
 
