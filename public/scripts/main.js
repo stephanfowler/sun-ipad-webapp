@@ -37,7 +37,8 @@ $(document).ready( function() {
 		};
 		setTimeout( flow, 500 );
 
-		$('#loading').hide();
+		$('.hideOnLoad').hide();
+		$('.showOnLoad').show();
 
 	}, viewModel);
 

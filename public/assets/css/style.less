@@ -44,14 +44,6 @@ p {
 	margin-bottom:10px;
 }
 
-#loading {
-	font-size: 22px;
-	font-weight: 700;
-	font-style: normal;
-	color:@colorMain;
-	margin: 20px;
-}
-
 header {
 	background: @colorMain;
 	clear: both;
@@ -73,25 +65,24 @@ header {
 		margin: 0 10px 0 5px;
 		background-image: url('/assets/images/thesun.png');
 	}
-	.nav {
-		position: absolute;
-		top: 5px;
-		right: 6px;
+	.progress {
+		display: block;
+		float: left;
+		font-size: 22px;
+		font-weight: 700;
+		font-style: normal;
 		color: #fff;
-		text-align: right;
-		text-transform: uppercase;
-		font-size: 14px;
-		line-height: 17px;
+		padding: 10px 0 0 140px;
 	}
 	#navContentPages {
-		padding: 10px 0 0 0;
+		padding: 5px 0 0 0;
 		li {
 			position:relative;
 			font-size: 22px;
 			font-weight: 700;
 			font-style: normal;
 			color:@colorMain;
-			padding: 5px 20px 3px 19px;
+			padding: 2px 20px 1px 19px;
 			font-weight:bold;
 			display:inline-block;
 		}
@@ -103,6 +94,17 @@ header {
 				color:@colorMain;
 			}
 		}
+	}
+	.editionPicker {
+		display: none;
+		position: absolute;
+		top: 5px;
+		right: 6px;
+		color: #fff;
+		text-align: right;
+		text-transform: uppercase;
+		font-size: 14px;
+		line-height: 17px;
 	}
 }
 
@@ -223,8 +225,9 @@ h2 {
 		a {
 			display: block;
 			position: relative;
-			height: 325px;
+			height: 337px;
 			overflow: hidden;
+			background-color: #000;
 		}
 		img {
 			width: @gridColumn * 2 + 10;
@@ -286,6 +289,8 @@ h2 {
 		.imageWrap {
 			display: none;
 			position: relative;
+			max-height: 860px;
+			overflow: hidden;
 			img {
 				width: @gridColumn * 3;
 			}
@@ -402,6 +407,14 @@ h2 {
 				padding: 5px 10px 3px 8px;
 			}
 		}
+		.progress {
+			padding-left: 140px;
+		}
+	}
+	#splash {
+		background-image: url('http://imageserver.tmpurl.net/portrait.jpg');
+		width: 768px;
+		height: 978px;
 	}
 	.article {
 		.articlebody {
@@ -413,6 +426,16 @@ h2 {
 }
 
 @media only screen and (max-device-width: 1024px) and (orientation:landscape) { 
+	header {
+		.progress {
+			padding-left: 250px;
+		}
+	}
+	#splash {
+		background-image: url('http://imageserver.tmpurl.net/landscape.jpg');
+		width: 1024px;
+		height: 722px;
+	}
 	.article {
 		.images, .articlebody {
 			padding-right: 20px;
@@ -420,5 +443,4 @@ h2 {
 		}
 	}
 }
-
 

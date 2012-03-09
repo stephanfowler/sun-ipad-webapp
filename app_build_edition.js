@@ -228,6 +228,7 @@
 
 
 				function( edition, callback ) {
+					// Now massage the edition...
 					// Get a list of the top stories
 					var topStories = us.find( edition.sections, function(s){ return s.id === 'top-stories'} );
 					if( topStories ) {
@@ -235,21 +236,12 @@
 						// Remove the actual Top Stories section (the articles all appear elsewhere) (hopefully!)
 						edition.sections  = us.reject( edition.sections, function(s){ return s.id === 'top-stories'}  );
 					}
-					//console.log( "Cleaning up edition... " );
 					var id = 0;
 					for ( s in edition.sections ) {
-						
+						var ordered = [];	
 						var articles = edition.sections[s].articles;
 						for ( a in articles ) {
 							var article = articles[a];
-							// Mark top stories
-							if ( us.indexOf( topStories, article.uri ) > -1 ) {
-								article.role = 'top';
-							}
-							else {
-								article.role = '';
-							}
-							delete article.uri; // No longer needed?
 							article.id = id;
 							if ( typeof article.image == 'string' ) {
 								article.image = article.image.replace( /[a-z]{1,1}\.(jpg|png)$/, "a.jpg" )
@@ -257,8 +249,18 @@
 							else {
 								delete article.image;
 							}
+							// Mark top stories, and move the to the top
+							if ( us.indexOf( topStories, article.uri ) > -1 ) {
+								article.role = 'top';
+								ordered.unshift( article );
+							}
+							else {
+								article.role = '';
+								ordered.push( article );
+							}
 							id++;
 						}
+						edition.sections[s].articles = ordered;
 					}
 					callback( null, edition );
 				}

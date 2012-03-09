@@ -28,12 +28,17 @@ html(lang="en")
 		script(type='text/javascript', src='/scripts/main.js')
 	body
 
+		// Preloads
+		img(src="http://imageserver.tmpurl.net/portrait.jpg",  style="display:none")
+		img(src="http://imageserver.tmpurl.net/landscape.jpg", style="display:none")
+
 		header
 			a.logo(href="/#") &nbsp;
+			span.progress.hideOnLoad Loading today's edition...
 			ul#navContentPages(data-bind="foreach: sections")
 				li(data-bind="attr: { id: id }") 
 					a(data-bind="text: name, attr: { href: '#/' + id() }")
-			.nav
+			.editionPicker.showOnLoad
 				- each ed in editions
 					a(href='#/' + ed.id) #{ed.name}
 					br
@@ -41,6 +46,9 @@ html(lang="en")
 		#headerShadow
 		
 		#wrap
+
+			#splash.hideOnLoad 
+
 			#expSections(data-bind="foreach: sections")
 
 				.wrap_articles(data-bind="attr: { id: 'wrap_' + id() }, visible: false")
@@ -97,4 +105,3 @@ html(lang="en")
 										.excerpt(data-bind="text: teaser")
 							// /ko
 
-			#loading Loading today's Sun...
