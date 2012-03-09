@@ -75,7 +75,7 @@ header {
 		padding: 10px 0 0 140px;
 	}
 	#navContentPages {
-		padding: 5px 0 0 0;
+		padding: 8px 0 0 0;
 		li {
 			position:relative;
 			font-size: 22px;
@@ -298,7 +298,7 @@ h2 {
 				position: absolute;
 				bottom: 5px;
 				right: 0;
-				width: 180px;
+				max-width: 40%;
 				padding: 8px 10px 12px 10px;
 				background-color: rgba(0,0,0,.5);
 				font-size: 16px;
@@ -374,6 +374,10 @@ h2 {
 			font-weight: 400;
 			font-style: normal;
 		}
+		p:first-child {
+			font-weight: 700;
+			margin-bottom: 5px;
+		}
 	}
 }
 
@@ -418,9 +422,12 @@ h2 {
 	}
 	.article {
 		.articlebody {
-			width: @gridColumn * 2 - 20;
+			width: @gridColumn * 2 - 35;
 			padding-right: 20px;
 			border-right: 1px solid #ccc;
+		}
+		.col2{
+			margin-right: 15px;
 		}
 	}
 }

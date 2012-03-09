@@ -8,6 +8,8 @@
 
 	var app = module.exports = express.createServer();
 
+	allowAnyBrowser = true;
+
 	// Configuration
 	app.configure(function(){
 	  app.set('views', __dirname + '/views');
@@ -30,11 +32,16 @@
 
 	// Routes
 	app.get('/', function(req, res){
-		// Find previous 2 edition IDs
-		Edition.find( {}, { id:1, _id:0 }, { limit:2, sort:{ id: -1 } }, function( err, doc ) {
-			var editions = [ { name: 'Today', id: doc[0].id }, { name:'Yesterday', id: doc[1].id } ];
-			res.render('index.jade', { editions: editions } );
-		});
+		if ( allowAnyBrowser || ( req.headers['user-agent'] && /ipad/i.test(req.headers['user-agent']) ) ) {
+			// Find previous 2 edition IDs
+			Edition.find( {}, { id:1, _id:0 }, { limit:2, sort:{ id: -1 } }, function( err, doc ) {
+				var editions = [ { name: 'Today', id: doc[0].id }, { name:'Yesterday', id: doc[1].id } ];
+				res.render('index.jade', { editions: editions } );
+			});
+		}
+		else { 
+			res.end('Sorry... this URL only works on iPads!')
+		}
 	});
 
 	app.get('/api/edition', function (req, res) {
