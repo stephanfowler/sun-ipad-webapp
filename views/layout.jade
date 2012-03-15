@@ -3,6 +3,8 @@ html(lang="en")
 	head
 		title TheSun iPad Edition
 		link(type='text/css', rel='stylesheet/less', href='/assets/css/style.less')
+		- if ( locals.template )
+			link(type='text/css', rel='stylesheet/less', href='/assets/css/' + locals.template + '.less')
 
 		meta(name='description', content='')
 		meta(name='keywords', content='')
@@ -23,85 +25,6 @@ html(lang="en")
 		script(type='text/javascript', src='/scripts/knockout.mapping.js')
 		script(type='text/javascript', src='/scripts/less.js')
 		script(type='text/javascript', src='/scripts/swipe.js')
-		script(type='text/javascript', src='/scripts/swiper.js')
 		script(type='text/javascript', src='/scripts/jquery.masonry.min.js')
-		script(type='text/javascript', src='/scripts/main.js')
 	body
-
-		// Preloads
-		img(src="http://imageserver.tmpurl.net/portrait.jpg",  style="display:none")
-		img(src="http://imageserver.tmpurl.net/landscape.jpg", style="display:none")
-
-		header
-			a.logo(href="/#") &nbsp;
-			span.progress.hideOnLoad Loading today's edition...
-			ul#navContentPages(data-bind="foreach: sections")
-				li(data-bind="attr: { id: id }") 
-					a(data-bind="text: name, attr: { href: '#/' + id() }")
-			.editionPicker.showOnLoad
-				- each ed in editions
-					a(href='#/' + ed.id) #{ed.name}
-					br
-		
-		#headerShadow
-		
-		#wrap
-
-			#splash.hideOnLoad 
-
-			#expSections(data-bind="foreach: sections")
-
-				.wrap_articles(data-bind="attr: { id: 'wrap_' + id() }, visible: false")
-					
-					ul.navi_articles(data-bind="attr: { id: 'navi_' + id() }, foreach: articles")	
-						li(data-bind="attr: { id: id }") 
-							// ko if: $data.image
-							a.thumb(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }, style: { background: 'url(' + $data.image() + ')' }" )
-							// /ko
-							// ko ifnot: $data.image
-							a.thumb(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }" )
-							// /ko
-
-					div(data-bind="attr: { id: 'cont_' + id() }")
-						ul(data-bind="foreach: articles")
-							li.article
-								.title(data-bind="text: title")
-								.images(data-bind="foreach: $data.attachments.image")
-									.imageWrap
-										img(data-bind="attr: { src: uri }")
-										// ko if: $data.caption
-										.caption(data-bind="text: caption")
-										// /ko
-								.col2
-									// ko if: $data.byline
-									.byline(data-bind="html: byline")
-									// /ko
-									.images(data-bind="foreach: $data.attachments.image")
-										.imageWrap
-											img(data-bind="attr: { src: uri }")
-											// ko if: $data.caption
-											.caption(data-bind="text: caption")
-											// /ko
-									.relateds(data-bind="foreach: $data.attachments.article")
-										// ko if: $data.caption 
-										p
-											a(data-bind="text: caption, attr: { href: '#' }")
-										// /ko
-								.articlebody(data-bind="html: articlebody")
-
-			#seqContentPages
-				ul(data-bind="foreach: sections")
-					li 
-						.teasers
-							.badge
-							// ko foreach: articles
-							.teaser(data-bind="css: { top: role() == 'top' }")
-								a(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }")
-									// ko if: $data.image
-									img(data-bind="attr: { src: $data.image }")
-									// /ko
-									.text
-										.title(data-bind="text: sectionheadline")
-										.excerpt(data-bind="text: teaser")
-							// /ko
-
+		!=body

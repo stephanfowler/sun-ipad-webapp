@@ -1,0 +1,13 @@
+link(type='text/css', rel='stylesheet/less', href='/assets/css/01.less')
+.articleWrap
+	.article
+		.hero
+			img(src=article.attachments.image[0].uri)
+			.deck
+				.strapline=article.strapline
+				.title=article.headline
+				.subdeck=article.subdeck
+		.bylinewrap
+			img.bylineimage(src=article.bylineimage)
+			.byline=article.byline
+		.articlebody!=article.articlebody
