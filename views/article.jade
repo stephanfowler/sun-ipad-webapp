@@ -1,0 +1,48 @@
+script(type='text/javascript')
+	$(document).ready( function() {
+		var viewModel = {
+			article: !{JSON.stringify(article)}
+		};
+		ko.applyBindings( viewModel );
+	});
+
+.articleWrap(data-bind="with: article")
+	.article(data-bind="css: { article_top: typeof isTop !== 'undefined' && isTop }")
+		.hero
+			.deck
+				.strapline(data-bind="text: $data.strapline")
+				.title(data-bind="text: $data.headline")
+				.subdeck(data-bind="text: $data.subdeck")
+			.imgWrap
+				img(data-bind="attr: { src: $data.image }")
+		.colRight
+
+			// ko if: $data.bylineimage
+			.bylineWrap
+				img.bylineimage(data-bind="attr: { src: $data.bylineimage }" )
+				.byline(data-bind="text: $data.byline")
+			// /ko
+			// ko ifnot: $data.bylineimage
+			.byline(data-bind="text: $data.byline")
+			// /ko
+
+			// ko if: $data.quote
+			.quote(data-bind="text: $data.quote")
+			// /ko
+
+			.images(data-bind="foreach: $data.attachments.image")
+				.imageWrap
+					img(data-bind="attr: { src: uri }")
+					// ko if: $data.caption
+					.caption(data-bind="text: caption")
+					// /ko
+			.relateds(data-bind="foreach: $data.attachments.article")
+				// ko if: $data.caption
+				p
+					a(data-bind="text: caption, attr: { href: '#' }")
+				// /ko
+		.colLeft
+			.articlebody(data-bind="html: $data.articlebody")
+			.videos(data-bind="foreach: $data.attachments.video")
+				.videoWrap
+					script(data-bind="attr: { src: 'http://player.ooyala.com/player.js?embedCode=' + uri + '&deepLinkEmbedCode=' + uri }" )

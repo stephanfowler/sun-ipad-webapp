@@ -24,28 +24,39 @@ header
 		.wrap_articles(data-bind="attr: { id: 'wrap_' + id() }, visible: false")
 			
 			ul.navi_articles(data-bind="attr: { id: 'navi_' + id() }, foreach: articles")	
-				li(data-bind="attr: { id: id }") 
+				li(data-bind="attr: { id: euid }") 
 					// ko if: $data.image
-					a.thumb(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }, style: { background: 'url(' + $data.image() + ')' }" )
+					a.thumb(data-bind="attr: { href: '#/' + $parent.id() + '/' + euid() }, style: { background: 'url(' + $data.image() + ')' }" )
 					// /ko
 					// ko ifnot: $data.image
-					a.thumb(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }" )
+					a.thumb(data-bind="attr: { href: '#/' + $parent.id() + '/' + euid() }" )
 					// /ko
 
 			div(data-bind="attr: { id: 'cont_' + id() }")
 				ul(data-bind="foreach: articles")
-					li.article
-						.title(data-bind="text: title")
-						.images(data-bind="foreach: $data.attachments.image")
-							.imageWrap
-								img(data-bind="attr: { src: uri }")
-								// ko if: $data.caption
-								.caption(data-bind="text: caption")
-								// /ko
-						.col2
-							// ko if: $data.byline
-							.byline(data-bind="html: byline")
+					li.article(data-bind="css: { article_top: isTop }")
+						.hero
+							.deck
+								.strapline(data-bind="text: $data.strapline")
+								.title(data-bind="text: $data.headline")
+								.subdeck(data-bind="text: $data.subdeck")
+							.imgWrap
+								img(data-bind="attr: { src: $data.image }")
+						.colRight
+
+							// ko if: $data.bylineimage
+							.bylineWrap
+								img.bylineimage(data-bind="attr: { src: $data.bylineimage }" )
+								.byline(data-bind="text: $data.byline")
 							// /ko
+							// ko ifnot: $data.bylineimage
+							.byline(data-bind="text: $data.byline")
+							// /ko
+							
+							// ko if: $data.quote
+							.quote(data-bind="text: $data.quote")
+							// /ko
+							
 							.images(data-bind="foreach: $data.attachments.image")
 								.imageWrap
 									img(data-bind="attr: { src: uri }")
@@ -53,11 +64,12 @@ header
 									.caption(data-bind="text: caption")
 									// /ko
 							.relateds(data-bind="foreach: $data.attachments.article")
-								// ko if: $data.caption 
+								// ko if: $data.caption
 								p
 									a(data-bind="text: caption, attr: { href: '#' }")
 								// /ko
-						.articlebody(data-bind="html: articlebody")
+						.colLeft
+							.articlebody(data-bind="html: $data.articlebody")
 
 	#seqContentPages
 		ul(data-bind="foreach: sections")
@@ -65,13 +77,13 @@ header
 				.teasers
 					.badge
 					// ko foreach: articles
-					.teaser(data-bind="css: { top: role() == 'top' }")
-						a(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }")
+					.teaser(data-bind="css: { top: isTop }")
+						a(data-bind="attr: { href: '#/' + $parent.id() + '/' + euid() }")
 							// ko if: $data.image
 							img(data-bind="attr: { src: $data.image }")
 							// /ko
 							.text
-								.title(data-bind="text: sectionheadline")
+								.title(data-bind="text: headline")
 								.excerpt(data-bind="text: teaser")
 					// /ko
 

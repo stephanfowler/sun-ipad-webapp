@@ -1,6 +1,5 @@
 
 	with (new Date()) var editionID = ( getFullYear()*100 + getMonth()+1 )*100 + getDate();
-	//var editionID = 123456;
 
 	var feeds = [
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/top_stories/?iPadApp=true',
@@ -12,22 +11,21 @@
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/breaking_news/?iPadApp=true',
 	];
 
-	var articles = {};
-
 	var express = require('express'),
 		mongoose = require('mongoose'),
 		xml2js = require('xml2js'),
 		http = require('http'),
 		us = require('underscore'),
 		async = require('async'),
-		Iconv = require('iconv').Iconv;
-
-	var models = require('./models');
+		Iconv = require('iconv').Iconv,
+		models = require('./models');
 
 	var app = module.exports = express.createServer();
 
 	var conv = new Iconv('UTF-8', 'ASCII//IGNORE');
-	
+
+	var allowAnyBrowser = true;
+
 	// Configuration
 	app.configure(function(){
 		app.set('views', __dirname + '/views');
@@ -45,7 +43,7 @@
 	});
 
 	// Mongo setup
-	mongoose.connect( 'mongodb://localhost/thesun_02' );
+	mongoose.connect( 'mongodb://localhost/thesun_03' );
 	var Edition = require('mongoose').model('Edition');
 	var Article  = require('mongoose').model('Article');
 
@@ -121,6 +119,12 @@
 				}
 				ats[at.type].push( attSpec );
 			}
+			if ( ats.image && ats.image[0] ) {
+				article.image = ats.image[0].uri.replace( /[a-z]{1,1}\.(jpg|png)$/, "a.jpg" )
+				if ( ats.image[0].caption ) {
+					article.subdeck = ats.image[0].caption;
+				}
+			}
 			article.attachments = ats;
             article.save(function (err){
                 if ( err ) {
@@ -137,7 +141,7 @@
 		}
 	};
 
-	var scrape = function() { 
+	var buildEdition = function() { 
 		Edition.findOne( { id: editionID }, function( err, doc ) {
 			async.waterfall([
 
@@ -149,8 +153,9 @@
 
 				// Iterate over index feeds
 				function( edition, callbackAfterFeeds ){
-					async.forEach( 
-						feeds, 
+					async.forEachLimit( 
+						feeds,
+						10,
 						function( url, callbackFeedDone ) {
 
 							//console.log( 'Fetching section : ' + url );
@@ -163,8 +168,9 @@
 
 									// Iterate over article feeds
 									function( articles, callbackAfterArticles ){
-										async.forEach(
+										async.forEachLimit(
 											us.pluck( articles, 'uri' ),
+											10,
 											function( url, callbackArticleDone ) {
 
 												async.waterfall(
@@ -172,7 +178,6 @@
 														function( callback ) {
 															Article.findOne( { uri: url }, function( err, doc ){
 																if ( doc ) {	
-																	//console.log( 'Already in store : ' + doc.headline );
 																	callback( null, doc );
 																}
 																else {
@@ -183,17 +188,11 @@
 														},
 
 														function( doc, callback ) {
-															//console.log( "Add to edition   : " + doc.headline );
 															for ( s in edition.sections ) {
-																var articles = edition.sections[s].articles;
-																for ( a in articles ) {
-																	var article = articles[a];
-																	if ( url === article.uri ) {
-																		article.id          = doc.id;
-																		article.byline      = doc.byline;
-																		article.timestamp   = doc.timestamp;
-																		article.articlebody = doc.articlebody;
-																		article.attachments = doc.attachments;
+																for ( a in edition.sections[s].articles ) {
+																	if ( url === edition.sections[s].articles[a].uri ) {
+																		doc.uri = url;
+																		edition.sections[s].articles[a] = doc;
 																	}
 																}
 															}
@@ -236,29 +235,23 @@
 						// Remove the actual Top Stories section (the articles all appear elsewhere) (hopefully!)
 						edition.sections  = us.reject( edition.sections, function(s){ return s.id === 'top-stories'}  );
 					}
-					var id = 0;
+					var euid = 0;
 					for ( s in edition.sections ) {
 						var ordered = [];	
 						var articles = edition.sections[s].articles;
 						for ( a in articles ) {
 							var article = articles[a];
-							article.id = id;
-							if ( typeof article.image == 'string' ) {
-								article.image = article.image.replace( /[a-z]{1,1}\.(jpg|png)$/, "a.jpg" )
-							}
-							else {
-								delete article.image;
-							}
-							// Mark top stories, and move the to the top
-							if ( us.indexOf( topStories, article.uri ) > -1 ) {
-								article.role = 'top';
+							article.euid = euid;
+							// Mark top stories and move them to the top
+							if ( article.isTop || us.indexOf( topStories, article.uri ) > -1 ) {
+								article.isTop = true;
 								ordered.unshift( article );
 							}
 							else {
-								article.role = '';
+								article.isTop = false;
 								ordered.push( article );
 							}
-							id++;
+							euid++;
 						}
 						edition.sections[s].articles = ordered;
 					}
@@ -275,7 +268,7 @@
 					else {
 						console.log( "Saved edition " + edition.id );	
 					}
-					process.exit(0);
+					//process.exit(0);
 				});
 
 			});
@@ -283,7 +276,124 @@
 		});
 	};
 
-	scrape();
-	//setInterval( scrape, 600000 );
+	// Routes
+	app.get('/', function(req, res){
+		if ( allowAnyBrowser || ( req.headers['user-agent'] && /ipad/i.test(req.headers['user-agent']) ) ) {
+			// Find previous 2 edition IDs
+			Edition.find( {}, { id:1, _id:0 }, { limit:2, sort:{ id: -1 } }, function( err, doc ) {
+				//var editions = [ { name: 'Today', id: doc[0].id }, { name:'Yesterday', id: doc[1].id } ];
+				var editions = [ { name: 'Today', id: doc[0].id }, { name:'Yesterday', id: 0 } ];
+				res.render('index', { editions: editions } );
+			});
+		}
+		else { 
+			res.end('Sorry... this URL only works on iPads!')
+		}
+	});
 
-	app.listen(8081);
+	app.get('/edit/:article?', function(req,res){
+		Edition.findOne( {}, {}, { sort:{ id: -1 } }, function( err, docEdition ) {
+			if (err) res.writeHead(500, err.message)
+			else if( !docEdition ) {
+				res.send('No edition found..');
+			}
+			else {
+				Article.findOne({id:req.params.article}, {_id:0}, function( err, docArticle ) {
+					if (err) res.writeHead(500, err.message)
+					else if( !docArticle ) {
+						res.render( 'edit', { edition: docEdition, headline: '', json: '' } );
+					}
+					else {
+						res.render( 'edit', { edition: docEdition, id: req.params.article, headline: docArticle.headline, json: JSON.stringify( docArticle,null,2 ) } );
+					};
+				});
+			};
+		});
+	});
+
+	app.post('/edit/:article', function(req,res){
+		var edited = JSON.parse(req.body.articleJson);
+		//console.log( JSON.stringify(edited));	
+		Article.update( { id:req.params.article }, edited, {upsert: true}, function (err){
+			if ( err ) {
+				console.log( "ERROR SAVING ARTICLE: " + err );
+			}
+			else {
+				buildEdition();
+				res.statusCode = 301;
+				res.setHeader("Location", '/edit/' + req.params.article + '#saved');
+				res.end();
+			}
+		});
+	});
+
+	// Template tests
+	app.get('/article/:a', function(req, res){
+		Article.findOne({id:req.params.a}, {_id:0}, function( err, article ) {
+			if ( err ) {
+				console.log( err );
+			}
+			else if ( ! article ) {
+				res.end('That article doesn\'t exist!')
+			}
+			else {
+				res.render( 'article', { article: article } );
+			}
+		});
+	});
+
+	app.get('/api/article/:a', function(req, res){
+		Article.findOne({id:req.params.a}, {_id:0}, function( err, doc ) {
+			if (err) res.writeHead(500, err.message)
+			else if( !doc ) {
+				res.writeHead(404);
+				res.end();
+			}
+			else {
+				res.writeHead( 200, { 'Content-Type': 'application/json' });
+				res.end( JSON.stringify( doc )  );
+			};
+		});
+	});
+
+    app.get('/api/edition/build', function(req,res){
+		buildEdition();
+		res.writeHead( 200, { 'Content-Type': 'text/html' });
+		res.end('Building a new edition.');
+	});
+
+	app.get('/api/edition', function (req, res) {
+		// Get latest stored edition
+		Edition.findOne({}, {_id:0}, { sort:{ id: -1 } }, function( err, doc ) {
+			if (err) res.writeHead(500, err.message)
+			else if( !doc ) {
+				res.writeHead(404);
+				res.end();
+			}
+			else {
+				res.writeHead( 200, { 'Content-Type': 'application/json' });
+				res.end( JSON.stringify( doc )  );
+			};
+		});
+	});
+
+	app.get('/api/edition/:id', function (req, res) {
+		Edition.findOne({ id: Number(req.params.id) }, function( err, doc ){
+			if (err) res.writeHead(500, err.message)
+			else if( !doc ) {
+				res.writeHead(404);
+				res.end();
+			}
+			else {
+				res.writeHead( 200, { 'Content-Type': 'application/json' });
+				res.end( JSON.stringify( doc)  );
+			};
+		});
+	});
+
+	app.listen(8080);
+	console.log('listening...');
+
+	buildEdition();
+	//setInterval( buildEdition, 5000 );
+    
