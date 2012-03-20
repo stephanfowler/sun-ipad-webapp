@@ -1,6 +1,8 @@
 
 	with (new Date()) var editionID = ( getFullYear()*100 + getMonth()+1 )*100 + getDate();
 
+	var allowAnyBrowser = true;
+	
 	var feeds = [
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/top_stories/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/news/?iPadApp=true',
@@ -18,13 +20,15 @@
 		us = require('underscore'),
 		async = require('async'),
 		Iconv = require('iconv').Iconv,
-		models = require('./models');
+		im = require('imagemagick'),
+		models = require('./models'), 
+		fs = require('fs');
 
 	var app = module.exports = express.createServer();
-
 	var conv = new Iconv('UTF-8', 'ASCII//IGNORE');
 
-	var allowAnyBrowser = true;
+	im.identify.path = "/usr/bin/identify";
+	im.convert.path  = "/usr/bin/convert";
 
 	// Configuration
 	app.configure(function(){
@@ -98,7 +102,7 @@
 		callback( null, json.article );
 	};
 
-	var parseArticleFeed = function( url, json, callback ) {
+	var parseArticleFeed = function( url, json, callbackFinal ) {
 		if ( json.article_content ) {
 			var a = json.article_content;
 			var article = new Article( a );
@@ -126,19 +130,50 @@
 				}
 			}
 			article.attachments = ats;
-            article.save(function (err){
-                if ( err ) {
-                    console.log( "Duplicate?       : " + article.uri );
-                }
-                else {
-                    console.log( "Saved article    : " + article.uri );
-                }
-				callback( null, article );
-            });
+			async.waterfall(
+				[
+					function( callback ) {
+						if ( article.image ) {
+							im.identify( article.image, function(err, spec){
+								if (err) {
+									// Oh well. Couldn't retreive image?
+								}
+								else {
+									article.imagelarge     = spec.width > 250;
+									article.imageportrait  = spec.width < spec.height;
+									//console.log( "width:" + spec.width + " height:" + spec.height )
+								}
+								callback( null )
+							})
+						}
+						else {
+							callback( null )
+						}
+					},
+					function() {
+						article.save(function (err){
+							if ( err ) {
+								console.log( "Duplicate?       : " + article.uri );
+							}
+							else {
+								console.log( "Saved article    : " + article.uri );
+							}
+							callbackFinal( null, article );
+						});
+					}
+				] 
+			);
 		}
 		else {
-			callback( null, null );
+			callbackFinal( null, null );
 		}
+	};
+
+	var getImage = function( url ) {
+		im.identify(url, function(err, spec){
+			if (err) throw err
+			console.log( "width:" + spec.width + " height:" + spec.height )
+		})
 	};
 
 	var buildEdition = function() { 
@@ -389,6 +424,12 @@
 				res.end( JSON.stringify( doc)  );
 			};
 		});
+	});
+
+    app.get('/imagetest', function(req,res){
+		getImage('http://img.thesun.co.uk/multimedia/archive/01473/kate-middleton-MAI_1473772a.jpg');
+		res.writeHead( 200, { 'Content-Type': 'text/html' });
+		res.end('Getting image..');
 	});
 
 	app.listen(8080);

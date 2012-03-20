@@ -6,6 +6,8 @@ const Article = module.exports = new Schema({
 	euid            : Number,
 	isTop           : Boolean,
 	image           : String,
+	imagelarge      : Boolean,
+	imageportrait   : Boolean,
 	headline        : String, 
 	strapline       : String, 
 	subdeck         : String,

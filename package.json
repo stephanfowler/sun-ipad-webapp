@@ -12,6 +12,7 @@
     "jade": "latest",
     "less": "latest",
     "iconv": "latest",
+	"imagemagick": "latest",
     "moment": "latest",
     "mongoose": "latest",
     "now": "latest",

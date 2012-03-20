@@ -1,0 +1,47 @@
+.article(data-bind="css: { article_top: $data.imageportrait }")
+	// ko if: $data.imagelarge
+	.hero
+		.deck
+			.strapline(data-bind="text: $data.strapline")
+			.title(data-bind="text: $data.headline")
+			.subdeck(data-bind="text: $data.subdeck")
+		.imgWrap
+			img(data-bind="attr: { src: $data.image }")
+	// /ko
+	.colRight
+
+		// ko if: $data.bylineimage
+		.bylineWrap
+			img.bylineimage(data-bind="attr: { src: $data.bylineimage }" )
+			.byline(data-bind="text: $data.byline")
+		// /ko
+		// ko ifnot: $data.bylineimage
+		.byline(data-bind="text: $data.byline")
+		// /ko
+		
+		// ko if: $data.quote
+		.quote(data-bind="text: $data.quote")
+		// /ko
+		
+		.images(data-bind="foreach: $data.attachments.image")
+			.imageWrap
+				img(data-bind="attr: { src: uri }")
+				// ko if: $data.caption
+				.caption(data-bind="text: caption")
+				// /ko
+		.relateds(data-bind="foreach: $data.attachments.article")
+			// ko if: $data.caption
+			p
+				a(data-bind="text: caption, attr: { href: '#' }")
+			// /ko
+
+	.colLeft
+		.articlecontent
+			// ko ifnot: $data.imagelarge
+			img(data-bind="attr: { src: $data.image }")
+			.deck
+				.strapline(data-bind="text: $data.strapline")
+				.title(data-bind="text: $data.headline")
+				.subdeck(data-bind="text: $data.subdeck")
+			// /ko
+			.articlebody(data-bind="html: $data.articlebody")

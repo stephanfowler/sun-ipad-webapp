@@ -11,12 +11,14 @@ $(document).ready( function() {
 			}
 			else { 
 				$.getJSON( '/api/edition', function(json){
+					$('#debug').append('Rendering. ');
 					ko.mapping.fromJS( json.sections, viewModel.sections );
 				});
 			}
 		}
 	};
 
+	$('#debug').append('Loading. ');
 	viewModel.getEdition();
 
 	ko.applyBindings( viewModel );
@@ -28,6 +30,7 @@ $(document).ready( function() {
 
 		// Apply masonry layout to content page teasers
 		var flow = function() {
+			$('#debug').append('Flowing. ');
 			$('.teasers').each( function() {
 				$(this).masonry({
 					itemSelector: '.teaser',
@@ -35,7 +38,7 @@ $(document).ready( function() {
 				});
 			});
 		};
-		setTimeout( flow, 500 );
+		setTimeout( flow, 1000 );
 
 		$('.hideOnLoad').hide();
 		$('.showOnLoad').show();
