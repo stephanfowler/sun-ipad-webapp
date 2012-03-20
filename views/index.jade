@@ -4,7 +4,7 @@ img(src="http://imageserver.tmpurl.net/landscape.jpg", style="display:none")
 
 header
 	a.logo(href="/#") &nbsp;
-	span.progress.hideOnLoad Loading today's edition...
+	span.progress.hideOnLoad Downloading today's edition...
 	ul#navContentPages(data-bind="foreach: sections")
 		li(data-bind="attr: { id: id }") 
 			a(data-bind="text: name, attr: { href: '#/' + id() }")

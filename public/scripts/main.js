@@ -11,14 +11,14 @@ $(document).ready( function() {
 			}
 			else { 
 				$.getJSON( '/api/edition', function(json){
-					$('#debug').append('Rendering. ');
+					$('#debug').html('Rendering...');
 					ko.mapping.fromJS( json.sections, viewModel.sections );
 				});
 			}
 		}
 	};
 
-	$('#debug').append('Loading. ');
+	$('#debug').html('Downloading...');
 	viewModel.getEdition();
 
 	ko.applyBindings( viewModel );
@@ -30,15 +30,18 @@ $(document).ready( function() {
 
 		// Apply masonry layout to content page teasers
 		var flow = function() {
-			$('#debug').append('Flowing. ');
-			$('.teasers').each( function() {
-				$(this).masonry({
-					itemSelector: '.teaser',
-					columnWidth: 249
+			$('#seqContentPages').waitForImages(function() {
+				$('#debug').empty();
+				$('.teasers').each( function() {
+					$(this).masonry({
+						itemSelector: '.teaser',
+						columnWidth: 249
+					});
 				});
 			});
+
 		};
-		setTimeout( flow, 1000 );
+		setTimeout( flow, 0 );
 
 		$('.hideOnLoad').hide();
 		$('.showOnLoad').show();
