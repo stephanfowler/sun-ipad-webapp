@@ -45,7 +45,7 @@
 	});
 
 	// Mongo setup
-	mongoose.connect( 'mongodb://localhost/thesun_03' );
+	mongoose.connect( 'mongodb://localhost/thesun_04' );
 	var Edition = require('mongoose').model('Edition');
 	var Article  = require('mongoose').model('Article');
 
@@ -199,7 +199,7 @@
 												async.waterfall(
 													[
 														function( callback ) {
-															Article.findOne( { uri: url }, function( err, doc ){
+															Article.findOne( { uri: url }, { _id:0 }, function( err, doc ){
 																if ( doc ) {	
 																	callback( null, doc );
 																}
@@ -246,9 +246,7 @@
 					);
 				},
 
-
 				function( edition, callback ) {
-					// Now massage the edition...
 					// Get a list of the top stories
 					var topStories = us.find( edition.sections, function(s){ return s.id === 'top-stories'} );
 					if( topStories ) {
@@ -256,40 +254,55 @@
 						// Remove the actual Top Stories section (the articles all appear elsewhere) (hopefully!)
 						edition.sections  = us.reject( edition.sections, function(s){ return s.id === 'top-stories'}  );
 					}
-					var euid = 0;
+					// Shuffle up top stories within their sections
 					for ( s in edition.sections ) {
 						var ordered = [];	
 						var articles = edition.sections[s].articles;
 						for ( a in articles ) {
 							var article = articles[a];
-							article.euid = euid;
+							article = article.toObject();
+							article.section = edition.sections[s].id;
 							// Mark top stories and move them to the top
 							if ( article.isTop || us.indexOf( topStories, article.uri ) > -1 ) {
-								article.isTop = true;
+								article.isTop = 1;
 								ordered.unshift( article );
 							}
 							else {
-								article.isTop = false;
+								article.isTop = 0;
 								ordered.push( article );
 							}
-							euid++;
 						}
 						edition.sections[s].articles = ordered;
 					}
+					// Create a front section, using articles for all sections
+					var front = { name: "Front", id: "front", articles: [] };
+					for ( var a = 0; a < 3; a++ ) {
+						for ( var s = 0; s < edition.sections.length; s++ ) {
+							var plucked = us.clone( edition.sections[s].articles[a] );
+							// Add article to front if not already in there
+							if ( ! us.include( us.pluck(front.articles, 'id'), plucked.id ) ) {
+								if ( a == 0 && s == 0 ) {
+									plucked.isTop = 2;
+								}
+								else if ( a == 0 && s == 1 ) {
+									plucked.isTop = 1;
+								}
+								else {
+									plucked.isTop = 0;
+								}
+								delete plucked.articlebody;
+								front.articles.push( plucked );
+							}
+						}
+					}
+					edition.sections.unshift( front );
 					callback( null, edition );
 				}
 
 			], function (err, edition ) {
-				var edo = edition.toObject();
-				delete edo._id;
-				Edition.update( { id:editionID }, edo, {upsert: true}, function (err){
-					if ( err ) {
-						//console.log( "ERROR SAVING EDITION: " + err );
-					}
-					else {
-						//console.log( "Saved edition " + edition.id );	
-					}
-					//process.exit(0);
+				fs.writeFile( __dirname + '/public/editions/latest.json', JSON.stringify(edition), 'utf8', function(){
+					console.log('Saved latest to file');	
+					process.exit(code=0)
 				});
 
 			});
@@ -300,7 +313,7 @@
 	// Routes
 
 	app.get('/:article?', function(req,res){
-		Edition.findOne( {}, {}, { sort:{ id: -1 } }, function( err, docEdition ) {
+		fs.readFile( __dirname + '/public/editions/latest.json', function( err, docEdition ) {
 			if (err) res.writeHead(500, err.message)
 			else if( !docEdition ) {
 				res.send('No edition found..');
@@ -309,10 +322,10 @@
 				Article.findOne({id:req.params.article}, {_id:0}, function( err, docArticle ) {
 					if (err) res.writeHead(500, err.message)
 					else if( !docArticle ) {
-						res.render( 'edit', { edition: docEdition, headline: '', json: '' } );
+						res.render( 'edit', { edition: JSON.parse(docEdition), headline: '', json: '' } );
 					}
 					else {
-						res.render( 'edit', { edition: docEdition, id: req.params.article, headline: docArticle.headline, json: JSON.stringify( docArticle,null,2 ) } );
+						res.render( 'edit', { edition: JSON.parse(docEdition), id: req.params.article, headline: docArticle.headline, json: JSON.stringify( docArticle,null,2 ) } );
 					};
 				});
 			};
@@ -350,7 +363,7 @@
 
 	app.listen(8081);
 	console.log('Listening...');
+	//setInterval( buildEdition, 600000 ); // 10 minutes
 
 	buildEdition();
-	setInterval( buildEdition, 600000 ); // 10 minutes
     

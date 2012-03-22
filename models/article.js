@@ -4,7 +4,7 @@ const Article = module.exports = new Schema({
 	uri             : { type: String, index: { unique: true } }, 
 	id              : { type: Number, index: { unique: true } },
 	euid            : Number,
-	isTop           : Boolean,
+	isTop           : Number,
 	image           : String,
 	imagelarge      : Boolean,
 	imageportrait   : Boolean,

@@ -1,57 +1,59 @@
 // Preloads
-img(src="http://imageserver.tmpurl.net/portrait.jpg",  style="display:none")
-img(src="http://imageserver.tmpurl.net/landscape.jpg", style="display:none")
+//img(src="http://imageserver.tmpurl.net/portrait.jpg",  style="display:none")
+//img(src="http://imageserver.tmpurl.net/landscape.jpg", style="display:none")
 
-header
-	a.logo(href="/#") &nbsp;
-	span.progress.hideOnLoad Downloading today's edition...
-	ul#navContentPages(data-bind="foreach: sections")
-		li(data-bind="attr: { id: id }") 
-			a(data-bind="text: name, attr: { href: '#/' + id() }")
-	#debug
-	//.editionPicker.showOnLoad
-		- each ed in editions
-			a(href='#/' + ed.id) #{ed.name}
-			br
+#pageWrap.front
 
-#headerShadow
+	header
+		a.logo(href="/") &nbsp;
+		span.progress.hideOnLoad Downloading today's edition...
+		ul#navContentPages(data-bind="foreach: sections")
+			li(data-bind="attr: { id: id, 'class': id }") 
+				a(data-bind="text: name, attr: { href: '#/' + id() }")
+		#debug
 
-#wrap
+	#headerShadow
 
-	#splash.hideOnLoad 
+	#wrap
 
-	#expSections(data-bind="foreach: sections")
+		//#splash.hideOnLoad 
 
-		.wrap_articles(data-bind="attr: { id: 'wrap_' + id() }, visible: false")
-			
-			ul.navi_articles(data-bind="attr: { id: 'navi_' + id() }, foreach: articles")	
-				li(data-bind="attr: { id: euid }") 
-					// ko if: $data.image
-					a.thumb(data-bind="attr: { href: '#/' + $parent.id() + '/' + euid() }, style: { background: 'url(' + $data.image() + ')' }" )
-					// /ko
-					// ko ifnot: $data.image
-					a.thumb(data-bind="attr: { href: '#/' + $parent.id() + '/' + euid() }" )
-					// /ko
+		#expSections(data-bind="foreach: sections")
+			// ko ifnot: id() == 'front'
+			.wrap_articles(data-bind="attr: { id: 'wrap_' + id() }, visible: false")
+				
+				ul.navi_articles(data-bind="attr: { id: 'navi_' + id() }, foreach: articles")	
+					li(data-bind="attr: { id: $parent.id() + '/' + id() }") 
+						// ko if: $data.image
+						a.thumb(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }, style: { background: 'url(' + $data.image() + ')' }" )
+						// /ko
+						// ko ifnot: $data.image
+						a.thumb(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }" )
+						// /ko
 
-			div(data-bind="attr: { id: 'cont_' + id() }")
-				ul(data-bind="foreach: articles")
-					li!=partial('partialArticle')
+				div(data-bind="attr: { id: 'cont_' + id() }")
+					ul(data-bind="foreach: articles")
+						li!=partial('partialArticle')
+			// /ko
 
-	#seqContentPages
-		ul(data-bind="foreach: sections")
-			li 
-				.teasers
-					.badge
-					// ko foreach: articles
-					.teaser(data-bind="css: { top: isTop }")
-						a(data-bind="attr: { href: '#/' + $parent.id() + '/' + euid() }")
-							// ko if: $data.image
-							img(data-bind="attr: { src: $data.image }")
-							// /ko
-							.text
-								.title(data-bind="text: headline")
-								.excerpt(data-bind="text: teaser")
-					// /ko
+		#seqContentPages
+			ul(data-bind="foreach: sections")
+				li.teasers
+					div(data-bind="attr: { 'class': id }")
+						// ko foreach: articles
+						.teaser(data-bind="css: { top: isTop() == 1, toptop: isTop() == 2 }")
+							div(data-bind="attr: { 'class': section }")
+								a(data-bind="attr: { href: '#/' + section() + '/' + id() }")
+									// ko if: section() == 'breaking-news'
+									.breaking-news-extra
+									// /ko
+									// ko if: $data.image
+									img(data-bind="attr: { src: $data.image }")
+									// /ko
+									.text
+										.title(data-bind="text: headline")
+										.excerpt(data-bind="text: teaser")
+						// /ko
 
 script(type='text/javascript', src='/scripts/swiper.js')
 script(type='text/javascript', src='/scripts/main.js')
