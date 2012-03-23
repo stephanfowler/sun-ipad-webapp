@@ -261,6 +261,8 @@
 						for ( a in articles ) {
 							var article = articles[a];
 							article = article.toObject();
+							// strip links from articlebody;
+							article.articlebody = article.articlebody.replace(/<a\/?[^>]*>/g,'')
 							article.section = edition.sections[s].id;
 							// Mark top stories and move them to the top
 							if ( article.isTop || us.indexOf( topStories, article.uri ) > -1 ) {
@@ -274,7 +276,7 @@
 						}
 						edition.sections[s].articles = ordered;
 					}
-					// Create a front section, using articles for all sections
+					// Create a front section, using 3 interleaved articles for each section
 					var front = { name: "Front", id: "front", articles: [] };
 					for ( var a = 0; a < 3; a++ ) {
 						for ( var s = 0; s < edition.sections.length; s++ ) {
