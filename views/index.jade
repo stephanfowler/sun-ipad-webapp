@@ -1,72 +1,60 @@
-// Preloads
-//img(src="http://imageserver.tmpurl.net/portrait.jpg",  style="display:none")
-//img(src="http://imageserver.tmpurl.net/landscape.jpg", style="display:none")
-
 #addToHomeScreen
-
 #pageWrap.front
-
 	header
 		a.logo(href="/") &nbsp;
-		span.progress.hideOnLoad Downloading today's edition...
-		ul#navContentPages(data-bind="foreach: sections")
-			li(data-bind="attr: { id: id, 'class': id }") 
-				a(data-bind="text: name, attr: { href: '#/' + id() }")
+		#navi_articles
+		#currentPage Page&nbsp;
+			span#num 1
 		#debug
-
 	#headerShadow
-
-
-	#wrap.showOnLoad
-
-		//#splash.hideOnLoad 
-
-		#expSections(data-bind="foreach: sections")
-			// ko ifnot: id() == 'front'
-			.wrap_articles(data-bind="attr: { id: 'wrap_' + id() }, visible: false")
-				
-				ul.navi_articles(data-bind="attr: { id: 'navi_' + id() }, foreach: articles")	
-					li(data-bind="attr: { id: $parent.id() + '/' + id() }") 
-						// ko if: $data.image
-						a.thumb(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }, style: { background: 'url(' + $data.image() + ')' }" )
-						// /ko
-						// ko ifnot: $data.image
-						a.thumb(data-bind="attr: { href: '#/' + $parent.id() + '/' + id() }" )
-						// /ko
-
-				div(data-bind="attr: { id: 'cont_' + id() }")
-					ul(data-bind="foreach: articles")
-						li!=partial('partialArticle')
-			// /ko
-
-		#seqContentPages
-			ul(data-bind="foreach: sections")
-				li.teasers
-					div(data-bind="attr: { 'class': id }")
-						// ko foreach: articles
-						.teaser(data-bind="css: { top: isTop() == 1, toptop: isTop() == 2 }")
-							div(data-bind="attr: { 'class': section }")
-								a(data-bind="attr: { href: '#/' + section() + '/' + id() }")
-									// ko if: section() == 'breaking-news'
-									.breaking-news-extra
-									// /ko
-									// ko if: $data.image
-									img(data-bind="attr: { src: $data.image }")
-									// /ko
-									.text
-										.strapline(data-bind="text: $data.strapline")
-										.title(data-bind="text: headline")
-										.excerpt(data-bind="text: teaser")
-						// /ko
-
-script(type="text/javascript")
-	var _gaq = _gaq || [];
-	_gaq.push(['_setAccount', 'UA-30294741-1']);
-	_gaq.push(['_trackPageview']);
-	(function() {
-		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	})();
-script(type='text/javascript', src='/scripts/swiper.js')
-script(type='text/javascript', src='/scripts/main.js')
+	#wrap
+		script#tmplNavi(type="text/x-handlebars-template")
+			.navi_articles
+				{{#each articles}}
+				a(href="#/{{section}}/{{id}}", class="{{#if menuid}}won{{/if}}")
+					div(class="{{section}} {{#if menuid}}sectionStart{{/if}}") {{menuname}}
+				{{/each}}
+		script#tmplArticle(type="text/x-handlebars-template")
+			div(class="article{{#if imageportrait}} article_top{{/if}}")
+				{{#if imagelarge}}
+				.hero
+					.deck	
+						.strapline {{strapline}}
+						.title {{headline}}
+						.subdeck {{subdeck}}
+					.imgWrap
+						img(src="{{image}}")
+				{{/if}}
+				.colRight
+					{{#if bylineimage}}
+					.bylineWrap
+							img.bylineimage(src="{{bylineimage}}")
+							.byline {{byline}}
+					{{else}}
+					{{#if byline}}
+					.byline {{byline}}
+					{{/if}}
+					{{/if}}
+					{{#if quote}}
+					.quote {{quote}}
+					{{/if}}
+					.images
+						{{#each attachments.image}}
+						.imageWrap
+								img(src="{{uri}}")
+								{{#if caption}}
+								.caption(data-bind="text: caption")
+								{{/if}}
+						{{/each}}
+				.colLeft
+					.articlecontent
+						{{#unless imagelarge}}
+						img(src="{{image}}")
+						.deck	
+							.strapline {{strapline}}
+							.title {{headline}}
+							.subdeck {{subdeck}}
+						{{/unless}}
+						.articlebody {{{articlebody}}}
+		#wrapper
+		script(type="text/javascript", src="./scripts/swipeview-main.js")

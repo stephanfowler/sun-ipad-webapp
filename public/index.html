@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>SwipeView</title>
+	<link href="./assets/css/swipeview.css" rel="stylesheet" type="text/css">
+	<link type="text/css" rel="stylesheet/less" href="./assets/css/style.less">
+	<script type="text/javascript" src="./scripts/jquery.js"></script>
+	<script type="text/javascript" src="./scripts/less.js"></script>
+	<script type="text/javascript" src="./scripts/handlebars-1.0.0.beta.6.js"></script>
+	<script type="text/javascript" src="./scripts/swipeview.js"></script>
+</head>
+
+<body>
+
+	<script id="tmplArticle" type="text/x-handlebars-template">
+		<h1>{{ headline }}</h1>
+		<img src="{{image}}" />
+		<div>{{{ articlebody }}}</div>
+	</script>
+	<script type="text/javascript" src="./scripts/swipeview-main.js"></script>
+
+	<ul id="nav">
+		<li id="prev" onclick="gallery.prev()">&laquo;</li>
+		<li id="currentlyAt">1</li>
+		<li id="next" onclick="gallery.next()">&raquo;</li>
+	</ul>
+
+	<div id="wrapper"></div>
+	
+</body>
+</html>

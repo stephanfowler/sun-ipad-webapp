@@ -29,6 +29,11 @@
 				// ko if: $data.caption
 				.caption(data-bind="text: caption")
 				// /ko
+		.relateds(data-bind="foreach: $data.attachments.article")
+			// ko if: $data.caption
+			p
+				a(data-bind="text: caption, attr: { href: '#' }")
+			// /ko
 
 	.colLeft
 		.articlecontent

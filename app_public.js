@@ -1,5 +1,5 @@
 
-	var allowAnyBrowser = false;
+	var allowAnyBrowser = true;
 	
 	var express = require('express'),
 		mongoose = require('mongoose'),
@@ -27,7 +27,7 @@
 	});
 
 	// Mongo setup
-	mongoose.connect( 'mongodb://localhost/thesun_04' );
+	mongoose.connect( 'mongodb://localhost/thesun_11' );
 	var Edition = require('mongoose').model('Edition');
 	var Article  = require('mongoose').model('Article');
 

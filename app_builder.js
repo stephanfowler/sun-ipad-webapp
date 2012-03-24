@@ -4,11 +4,11 @@
 	var feeds = [
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/top_stories/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/news/?iPadApp=true',
-		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/sport/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/showbiz/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/woman/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/tv/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/breaking_news/?iPadApp=true',
+		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/sport/?iPadApp=true',
 	];
 
 	var express = require('express'),
@@ -45,7 +45,7 @@
 	});
 
 	// Mongo setup
-	mongoose.connect( 'mongodb://localhost/thesun_04' );
+	mongoose.connect( 'mongodb://localhost/thesun_11' );
 	var Edition = require('mongoose').model('Edition');
 	var Article  = require('mongoose').model('Article');
 
@@ -167,6 +167,7 @@
 	};
 
 	var buildEdition = function() { 
+		var linear = { id: editionID, articles: [] };	
 		Edition.findOne( { id: editionID }, function( err, doc ) {
 			async.waterfall([
 
@@ -262,7 +263,7 @@
 							var article = articles[a];
 							article = article.toObject();
 							// strip links from articlebody;
-							article.articlebody = article.articlebody.replace(/<a\/?[^>]*>/g,'')
+							article.articlebody = article.articlebody.replace(/<a\/?[^>]*>/g,'');
 							article.section = edition.sections[s].id;
 							// Mark top stories and move them to the top
 							if ( article.isTop || us.indexOf( topStories, article.uri ) > -1 ) {
@@ -274,8 +275,14 @@
 								ordered.push( article );
 							}
 						}
+						if ( ordered.length ) {
+							ordered[0]['menuid']   = edition.sections[s].id;
+							ordered[0]['menuname'] = edition.sections[s].name;
+						}
 						edition.sections[s].articles = ordered;
 					}
+
+					/*
 					// Create a front section, using 3 interleaved articles for each section
 					var front = { name: "Front", id: "front", articles: [] };
 					for ( var a = 0; a < 3; a++ ) {
@@ -292,19 +299,32 @@
 								else {
 									plucked.isTop = 0;
 								}
-								delete plucked.articlebody;
+								//delete plucked.articlebody;
 								front.articles.push( plucked );
 							}
 						}
 					}
 					edition.sections.unshift( front );
-					callback( null, edition );
+					*/
+
+					// LINEARIZE...
+					for ( s in edition.sections ) {
+						for ( a in edition.sections[s].articles ) {
+							linear.articles.push( edition.sections[s].articles[a] );
+						}
+					}
+					
+					callback( null );
 				}
 
-			], function (err, edition ) {
+			], function (err) {
 				fs.writeFile( __dirname + '/public/editions/latest.json', JSON.stringify(edition), 'utf8', function(){
 					console.log('Saved latest to file');	
-					process.exit(code=0)
+					//process.exit(code=0)
+				});
+				fs.writeFile( __dirname + '/public/editions/latest.linear.json', JSON.stringify(linear), 'utf8', function(){
+					console.log('Saved latest.linear to file');	
+					//process.exit(code=0)
 				});
 
 			});
