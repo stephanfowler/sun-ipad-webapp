@@ -2,7 +2,7 @@
 @colorHighlight:    #f2f721;
 
 @colorNews:         #000000;
-@colorBreakingnews: #ffd500;
+@colorBreakingnews: @colorMain;
 @colorSport:        #3fa134;
 @colorShowbiz:		#4312ae; 
 @colorWoman:        #c7007d;
@@ -57,43 +57,32 @@ p {
 
 header {
 	max-width: 1024px;
-	background-color: @colorMain;
 	color: #fff;
 	clear: both;
 	height: 46px;
 	width: 100%;
 	overflow: visible;
+	z-index: 4;
+	background-color: #fff;
+}
+
+a#logo {
 	position: fixed;
 	top: 0;
 	left: 0;
-	z-index: 4;
-	a, a:visited {
-		color: #fff;
-	}
-	a.logo {
-		display: block;
-		float: left;
-		width: 129px;
-		height: 46px;
-		margin: 0 10px 0 0;
-		padding: 0 0 0 5px;
-		background-image: url('/assets/images/thesun.png');
-		background-position: 4px 0;
-		background-repeat: no-repeat;
-	}
-}
-
-#headerShadow {
-	max-width: 1024px;
-	position: fixed;
-	top: 38px;
-	left: 0;
-	height: 20px;
-	width: 100%;
-	background-image: url('/assets/images/shadow.png');
-	background-position: top;
-	background-repeat: repeat-x;
-	z-index: 3;
+	display: block;
+	float: left;
+	width: 138px;
+	height: 46px;
+	margin: 0 7px 0 0;
+	background-image: url('/assets/images/thesun.png');
+	background-position: 4px 0;
+	background-repeat: no-repeat;
+	background-color: @colorMain;
+	box-shadow:         0 0 7px #666;
+	-webkit-box-shadow: 0 0 7px #666;
+	-moz-box-shadow:    0 0 7px #666;
+	z-index: 100;
 }
 
 #wrap {
@@ -104,15 +93,19 @@ header {
 	bottom: 0px;
 }
 
-.navi_articles {
-	padding: 5px 2px 0 135px;
-	height: 43px;
+#navi_articles {
+	margin:  0 0 0 139px;
+	padding: 4px 4px 0 6px;
+	height: 42px;
+	box-shadow:         0 0 7px #666;
+	-webkit-box-shadow: 0 0 7px #666;
+	-moz-box-shadow:    0 0 7px #666;
+	overflow: hidden;
 	div {
 		display: inline-block;
-	}
-	div {
 		float: left;
-		background-color: #f87a66;
+		//background-color: #f87a66;
+		background-color: #ddd;
 		padding: 2px 2px 1px 4px;
 		margin: 0 1px 2px 0;
 		height: 15px;
@@ -125,38 +118,52 @@ header {
 		color: #CD0000;
 	}
 	.sectionStart {
-		padding: 2px 4px 1px 6px;
+		padding: 2px 5px 1px 5px;
 	}
 	.won div {
-		background-color: @colorMain;
-		color: #fff;
+		background-color: #fff;
 	}
 	.on div {
-		padding: 1px 1px 0px 3px;
-		border: 1px solid #fff;
-		background-color: @colorHighlight;
 		color: #fff;
 	}
-	.on .sectionStart {
-		padding: 1px 3px 0px 5px;
-	}
-	.on .news, .won .news {
+	.on .news {
 		background-color: @colorNews;
 	}
-	.on .sport, .won .sport {
+	.won .news {
+		color: @colorNews;
+	}
+	.on .sport {
 		background-color: @colorSport;
 	}
-	.on .showbiz, .won .showbiz {
+	.won .sport {
+		color: @colorSport;
+	}
+	.on .showbiz {
 		background-color: @colorShowbiz;
 	}
-	.on .woman, .won .woman {
+	.won .showbiz {
+		color: @colorShowbiz;
+	}
+	.on .woman {
 		background-color: @colorWoman;
 	}
-	.on .tv, .won .tv {
+	.won .woman {
+		color: @colorWoman;
+	}
+	.on .tv {
 		background-color: @colorTv;
 	}
-	.on .breaking-news, .won .breaking-news {
+	.won .tv {
+		color: @colorTv;
+	}
+	.on .breaking-news {
 		background-color: @colorBreakingnews;
+	}
+	.won .breaking-news {
+		color: @colorBreakingnews;
+	}
+	.breaking-news.sectionStart {
+		clear: left;
 	}
 }
 
@@ -594,91 +601,87 @@ ARTICLE
 	}
 }
 
-#pageWrap.front {
-	.teasers {
-		.news {
-			.teaser {
-				.news {
-					background-color: @colorMain;
-					a { color: #fff; }
-				}
-				.sport {
-					background-color: @colorSport;
-					a { color: #fff; }
-				}
-				.woman {
-					background-color: @colorWoman;
-					a { color: #fff; }
-				}
-				.tv {
-					background-color: @colorTv;
-					a { color: #fff; }
-				}
-				.breaking-news {
-					position: relative;
-					.breaking-news-extra {
-						position: absolute;
-						top: -6px;
-						left: -6px;
-						width: 72px;
-						height: 72px;
-						background-image: url('/assets/images/breaking.png');
-						background-repeat: no-repeat;
-					}
+.teasers {
+	.news {
+		.teaser {
+			.news {
+				background-color: @colorMain;
+				a { color: #fff; }
+			}
+			.sport {
+				background-color: @colorSport;
+				a { color: #fff; }
+			}
+			.woman {
+				background-color: @colorWoman;
+				a { color: #fff; }
+			}
+			.tv {
+				background-color: @colorTv;
+				a { color: #fff; }
+			}
+			.breaking-news {
+				position: relative;
+				.breaking-news-extra {
+					position: absolute;
+					top: -6px;
+					left: -6px;
+					width: 72px;
+					height: 72px;
+					background-image: url('/assets/images/breaking.png');
+					background-repeat: no-repeat;
 				}
 			}
 		}
-	}
-	.badge {
-		position: absolute;
-		left: 455px;
-		top: -26px;
-		width:  100px;
-		height: 100px;
-		background-image: url('/assets/images/star.png');
-		z-index: 1;
 	}
 }
 
 #pageWrap.sport {
-	header { 
-		background: @colorSport;
-		a {
-			color: #fff;
-		} 
+	#logo { 
+		background-color: @colorSport;
+		background-image: url('/assets/images/thesun-sport.png');
 	}
-	#navContentPages {
-		li.on {
-			a {
-				color: @colorSport;
-			}
-		}
+	.article {
+		border-left-color: @colorSport;
 	}
-	#seqContentPages li,
-	.navi_articles,
-	.article { 
-		border-color: @colorSport; 
+}
+
+#pageWrap.showbiz {
+	#logo { 
+		background-color: @colorShowbiz;
+		background-image: url('/assets/images/thesun-showbiz.png');
+	}
+	.article {
+		border-left-color: @colorShowbiz;
 	}
 }
 
 #pageWrap.woman {
-	header { 
-		background: @colorWoman;
-		a {
-			color: #fff;
-		} 
+	#logo { 
+		background-color: @colorWoman;
+		background-image: url('/assets/images/thesun-woman.png');
 	}
-	#navContentPages {
-		li.on {
-			a {
-				color: @colorWoman;
-			}
-		}
+	.article {
+		border-left-color: @colorWoman;
 	}
-	#seqContentPages li,
-	.navi_articles,
-	.article { 
-		border-color: @colorWoman; 
+}
+
+#pageWrap.tv {
+	#logo { 
+		background-color: @colorTv;
+		background-image: url('/assets/images/thesun-tv.png');
+	}
+	.article {
+		border-left-color: @colorTv;
+	}
+}
+
+#pageWrap.breaking-news {
+	#logo { 
+		background-color: @colorBreakingnews;
+	}
+	.article {
+		border-left-color: @colorBreakingnews;
 	}
 }
 
@@ -686,18 +689,14 @@ ARTICLE
 
 #currentPage {
     position:absolute;
-    top: 28px;
-    right: 6px;
+    top: 4px;
+    right: 4px;
 	text-transform: uppercase;
 	font-family: myriad-pro-condensed;
-	font-weight: 700;
 	font-size: 15px;
 	line-height: 12px;
 	letter-spacing: 1px;
-	font-weight: 300;
-	#num {
-		font-weight: 700;
-	}
+	color: #999;
 }
 
 #wrapper {

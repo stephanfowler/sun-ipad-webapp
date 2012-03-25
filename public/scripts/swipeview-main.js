@@ -50,6 +50,7 @@
 					}
 				}
 			}
+			$('#pageWrap').removeClass().addClass( edition.pages[gallery.pageIndex].section );
 			$('#currentPage #num').html( gallery.pageIndex+1 );
 			$('#navi_articles a.on').removeClass().addClass('won');
 			$('#navi_articles a').eq(gallery.pageIndex).removeClass().addClass('on');
@@ -61,7 +62,7 @@
 			}, 300);
 		};
 
-		$('#navi_articles a').eq(0).addClass('on');
+		$('#navi_articles a').eq(0).removeClass().addClass('on');
 
 		$('#navi_articles a').live( 'click', function(){
 			gallery.goToPage( $(this).index() );

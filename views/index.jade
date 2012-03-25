@@ -1,19 +1,16 @@
 #addToHomeScreen
 #pageWrap.front
 	header
-		a.logo(href="/") &nbsp;
+		a#logo(href="/") &nbsp;
 		#navi_articles
-		#currentPage Page&nbsp;
+		#currentPage
 			span#num 1
-		#debug
-	#headerShadow
 	#wrap
 		script#tmplNavi(type="text/x-handlebars-template")
-			.navi_articles
-				{{#each pages}}
-				a(href="#", class="{{#if menuid}}won{{/if}}")
-					div(class="{{section}} {{#if menuid}}sectionStart{{/if}}") {{menuname}}
-				{{/each}}
+			{{#each pages}}
+			a(href="#", class="{{#if menuid}}won{{/if}}")
+				div(class="{{section}} {{#if menuid}}sectionStart{{/if}}") {{menuname}}
+			{{/each}}
 		script#tmplArticle(type="text/x-handlebars-template")
 			{{#if isArticle}}
 			div(class="article{{#if imageportrait}} article_top{{/if}}")
@@ -56,6 +53,10 @@
 							.title {{headline}}
 							.subdeck {{subdeck}}
 						{{/unless}}
+						{{#each attachments.video}}
+						//.videoWrap
+							script(src="{{uri}}")
+						{{/each}}
 						.articlebody {{{articlebody}}}
 			{{/if}}
 			{{#if isTeasers}}

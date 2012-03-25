@@ -6,8 +6,8 @@
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/news/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/showbiz/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/woman/?iPadApp=true',
-		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/tv/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/breaking_news/?iPadApp=true',
+		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/tv/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/sport/?iPadApp=true',
 	];
 
@@ -115,7 +115,13 @@
 				if ( typeof ats[at.type] == 'undefined' ) {
 					ats[at.type] = [];
 				}
-				var attSpec = { uri: at.uri }
+				var attSpec = {};
+				if ( at.type == 'video' ) {
+					attSpec.uri = 'http://player.ooyala.com/player.js?embedCode=' + at.uri + '&deepLinkEmbedCode=' + at.uri;
+				}
+				else {
+					attSpec.uri = at.uri;
+				}
 				if ( typeof at.caption === 'string') {
 					attSpec.caption = at.caption
 				}
@@ -302,9 +308,10 @@
 								featured.section        = source.section;
 								featured.position       = position + a + 1;
 								if ( a == 0 && s == 0 ) {
+									//featured.priority = 'toptop';
 									featured.priority = 'top';
 								}
-								else if ( a == 0 && s < 3 ) {
+								else if ( a == 0 && s < 2 ) {
 									featured.priority = 'top';
 								}
 								frontpage.teasers.push( featured );
