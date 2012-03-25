@@ -173,8 +173,7 @@ h2 {
 
 .teasers {
 	display: none;
-	padding: 0;
-	margin: 0;
+	border-left: 15px solid @colorMain;
 	.teaser {
 		margin: 10px 0 0 10px;
 		float: left;
@@ -597,7 +596,7 @@ ARTICLE
 
 #pageWrap.front {
 	.teasers {
-		.front {
+		.news {
 			.teaser {
 				.news {
 					background-color: @colorMain;
@@ -609,6 +608,10 @@ ARTICLE
 				}
 				.woman {
 					background-color: @colorWoman;
+					a { color: #fff; }
+				}
+				.tv {
+					background-color: @colorTv;
 					a { color: #fff; }
 				}
 				.breaking-news {

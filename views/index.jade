@@ -10,11 +10,12 @@
 	#wrap
 		script#tmplNavi(type="text/x-handlebars-template")
 			.navi_articles
-				{{#each articles}}
-				a(href="#/{{section}}/{{id}}", class="{{#if menuid}}won{{/if}}")
+				{{#each pages}}
+				a(href="#", class="{{#if menuid}}won{{/if}}")
 					div(class="{{section}} {{#if menuid}}sectionStart{{/if}}") {{menuname}}
 				{{/each}}
 		script#tmplArticle(type="text/x-handlebars-template")
+			{{#if isArticle}}
 			div(class="article{{#if imageportrait}} article_top{{/if}}")
 				{{#if imagelarge}}
 				.hero
@@ -56,5 +57,23 @@
 							.subdeck {{subdeck}}
 						{{/unless}}
 						.articlebody {{{articlebody}}}
+			{{/if}}
+			{{#if isTeasers}}
+			.teasers
+				div(class="{{section}}")
+					{{#each teasers}}
+					.teaser(class="{{priority}}")
+						div(class="{{section}}")
+							a(href="#/{{position}}", position="{{position}}")
+								div(class="{{section}}-extra")
+								{{#if image}}
+								img(src="{{image}}")
+								{{/if}}
+								.text
+									.strapline {{strapline}}
+									.title {{headline}}
+									.excerpt {{teaser}}
+					{{/each}}
+			{{/if}}
 		#wrapper
 		script(type="text/javascript", src="./scripts/swipeview-main.js")

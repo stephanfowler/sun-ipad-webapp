@@ -167,7 +167,7 @@
 	};
 
 	var buildEdition = function() { 
-		var linear = { id: editionID, articles: [] };	
+		var linear = { id: editionID, pages: [] };	
 		Edition.findOne( { id: editionID }, function( err, doc ) {
 			async.waterfall([
 
@@ -264,64 +264,66 @@
 							article = article.toObject();
 							// strip links from articlebody;
 							article.articlebody = article.articlebody.replace(/<a\/?[^>]*>/g,'');
+							article.isArticle = true;
 							article.section = edition.sections[s].id;
 							// Mark top stories and move them to the top
-							if ( article.isTop || us.indexOf( topStories, article.uri ) > -1 ) {
-								article.isTop = 1;
+							if ( us.indexOf( topStories, article.uri ) > -1 ) {
+								article.priority = 'top';
 								ordered.unshift( article );
 							}
 							else {
-								article.isTop = 0;
 								ordered.push( article );
 							}
 						}
-						if ( ordered.length ) {
+						// Set the menu id/name for the first story in each section, except the first section, since we've got a frontpage to add before it 
+						if ( s > 0 && ordered.length ) {
 							ordered[0]['menuid']   = edition.sections[s].id;
 							ordered[0]['menuname'] = edition.sections[s].name;
 						}
 						edition.sections[s].articles = ordered;
 					}
 
-					/*
-					// Create a front section, using 3 interleaved articles for each section
-					var front = { name: "Front", id: "front", articles: [] };
+					// Create a frontpage section, using 3 interleaved articles from each section
+					var frontpage = { section: 'news', menuid: 'news', menuname: 'News', isTeasers: true, teasers: [] };
 					for ( var a = 0; a < 3; a++ ) {
+						var position = 0;
 						for ( var s = 0; s < edition.sections.length; s++ ) {
-							var plucked = us.clone( edition.sections[s].articles[a] );
-							// Add article to front if not already in there
-							if ( ! us.include( us.pluck(front.articles, 'id'), plucked.id ) ) {
+							position = ( s == 0 ? 0 : position + edition.sections[ s - 1 ].articles.length );
+							var source = us.clone( edition.sections[s].articles[a] );
+							var featured = {};
+							// Add article to frontpage if not already in there
+							if ( ! us.include( us.pluck(frontpage.teasers, 'id'), source.id ) ) {
+								featured.id             = source.id;
+								featured.headline       = source.headline;
+								featured.strapline      = source.strapline;
+								featured.teaser         = source.teaser;
+								featured.image          = source.image;
+								featured.imageportrait  = source.imageportrait;
+								featured.section        = source.section;
+								featured.position       = position + a + 1;
 								if ( a == 0 && s == 0 ) {
-									plucked.isTop = 2;
+									featured.priority = 'top';
 								}
-								else if ( a == 0 && s == 1 ) {
-									plucked.isTop = 1;
+								else if ( a == 0 && s < 3 ) {
+									featured.priority = 'top';
 								}
-								else {
-									plucked.isTop = 0;
-								}
-								//delete plucked.articlebody;
-								front.articles.push( plucked );
+								frontpage.teasers.push( featured );
 							}
 						}
 					}
-					edition.sections.unshift( front );
-					*/
+					linear.pages.push( frontpage );
 
-					// LINEARIZE...
+					// Now add each article 
 					for ( s in edition.sections ) {
 						for ( a in edition.sections[s].articles ) {
-							linear.articles.push( edition.sections[s].articles[a] );
+							linear.pages.push( edition.sections[s].articles[a] );
 						}
 					}
-					
+
 					callback( null );
 				}
 
 			], function (err) {
-				fs.writeFile( __dirname + '/public/editions/latest.json', JSON.stringify(edition), 'utf8', function(){
-					console.log('Saved latest to file');	
-					//process.exit(code=0)
-				});
 				fs.writeFile( __dirname + '/public/editions/latest.linear.json', JSON.stringify(linear), 'utf8', function(){
 					console.log('Saved latest.linear to file');	
 					//process.exit(code=0)
