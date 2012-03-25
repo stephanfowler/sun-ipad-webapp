@@ -1,5 +1,5 @@
 
-	var allowAnyBrowser = true;
+	var allowAnyBrowser = false;
 	
 	var express = require('express'),
 		mongoose = require('mongoose'),

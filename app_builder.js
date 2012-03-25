@@ -333,7 +333,7 @@
 			], function (err) {
 				fs.writeFile( __dirname + '/public/editions/latest.linear.json', JSON.stringify(linear), 'utf8', function(){
 					console.log('Saved latest.linear to file');	
-					//process.exit(code=0)
+					process.exit(code=0)
 				});
 
 			});
@@ -342,7 +342,7 @@
 	};
 
 	// Routes
-
+	/*
 	app.get('/:article?', function(req,res){
 		fs.readFile( __dirname + '/public/editions/latest.json', function( err, docEdition ) {
 			if (err) res.writeHead(500, err.message)
@@ -392,9 +392,10 @@
 		});
 	});
 
-	app.listen(8081);
-	console.log('Listening...');
+	//app.listen(8081);
+	//console.log('Listening...');
 	//setInterval( buildEdition, 600000 ); // 10 minutes
+	*/
 
 	buildEdition();
     
