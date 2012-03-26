@@ -1,7 +1,7 @@
 
 $(document).ready( function() {
 
-	if ( ! window.navigator.standalone ) {
+	if ( 0 && ! window.navigator.standalone ) {
 		$('#addToHomeScreen').show();
 	}
 	else {
@@ -16,7 +16,8 @@ $(document).ready( function() {
 			el,
 			i,
 			page,
-			dots = document.querySelectorAll('#nav li');
+			prevSection = 'front',
+			prevTime = new Date().getTime();
 
 		$.getJSON( '/editions/latest.linear.json?' + new Date().getTime(), function(edition){
 
@@ -59,16 +60,16 @@ $(document).ready( function() {
 						}
 					}
 				}
-				
 				var section = edition.pages[gallery.pageIndex].section;
-				
 				$('#pageWrap').removeClass().addClass( section );
 				$('#currentPage #num').html( gallery.pageIndex+1 );
-
-				_gaq.push(['_trackEvent', 'iPad', 'PageRead', section, gallery.pageIndex+1 ]);
-
 				$('#navi_articles a.on').removeClass().addClass('won');
 				$('#navi_articles a').eq(gallery.pageIndex).removeClass().addClass('on');
+				// GA
+				var newTime = new Date().getTime();
+				_gaq.push(['_trackEvent', 'iPad', 'PageRead', prevSection, Math.floor((newTime - prevTime) / 1000) ]);
+				prevTime = newTime;
+				prevSection = section;
 			});
 
 			var resetScroll = function() {
