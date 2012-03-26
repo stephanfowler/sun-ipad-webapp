@@ -282,13 +282,15 @@
 							}
 						}
 						// Set the menu id/name for the first story in each section, except the first section, since we've got a frontpage to add before it 
-						if ( s > 0 && ordered.length ) {
+						//if ( s > 0 && ordered.length ) {
+						if ( ordered.length ) {
 							ordered[0]['menuid']   = edition.sections[s].id;
 							ordered[0]['menuname'] = edition.sections[s].name;
 						}
 						edition.sections[s].articles = ordered;
 					}
 
+					/*
 					// Create a frontpage section, using 3 interleaved articles from each section
 					var frontpage = { section: 'news', menuid: 'news', menuname: 'News', isTeasers: true, teasers: [] };
 					for ( var a = 0; a < 3; a++ ) {
@@ -319,8 +321,9 @@
 						}
 					}
 					linear.pages.push( frontpage );
+					*/
 
-					// Now add each article 
+					// Add each article 
 					for ( s in edition.sections ) {
 						for ( a in edition.sections[s].articles ) {
 							linear.pages.push( edition.sections[s].articles[a] );

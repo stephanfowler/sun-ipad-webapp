@@ -1,7 +1,7 @@
 @colorMain:         #cd0000;
 @colorHighlight:    #f2f721;
 
-@colorNews:         #000000;
+@colorNews:         #666;
 @colorBreakingnews: @colorMain;
 @colorSport:        #3fa134;
 @colorShowbiz:		#4312ae; 
@@ -112,7 +112,7 @@ a#logo {
 	bottom: 0px;
 }
 
-#navi_articles {
+#navbar {
 	margin:  0 0 0 139px;
 	padding: 4px 4px 0 6px;
 	height: 42px;
@@ -120,69 +120,78 @@ a#logo {
 	-webkit-box-shadow: 0 0 7px #666;
 	-moz-box-shadow:    0 0 7px #666;
 	overflow: hidden;
-	div {
+	.section:nth-child(odd) {
+		.singles {
+			a {
+				background-color: #ccc;
+			}
+		}
+	}
+	.section {
 		display: inline-block;
 		float: left;
-		//background-color: #f87a66;
-		background-color: #ddd;
-		padding: 2px 2px 1px 4px;
-		margin: 0 1px 2px 0;
-		height: 15px;
-		text-transform: uppercase;
-		font-family: myriad-pro-condensed;
-		font-weight: 700;
-		font-size: 15px;
-		line-height: 12px;
-		letter-spacing: 1px;
-		color: #CD0000;
-	}
-	.sectionStart {
-		padding: 2px 5px 1px 5px;
-	}
-	.won div {
-		background-color: #fff;
-	}
-	.on div {
-		color: #fff;
-	}
-	.on .news {
-		background-color: @colorNews;
-	}
-	.won .news {
-		color: @colorNews;
-	}
-	.on .sport {
-		background-color: @colorSport;
-	}
-	.won .sport {
-		color: @colorSport;
-	}
-	.on .showbiz {
-		background-color: @colorShowbiz;
-	}
-	.won .showbiz {
-		color: @colorShowbiz;
-	}
-	.on .woman {
-		background-color: @colorWoman;
-	}
-	.won .woman {
-		color: @colorWoman;
-	}
-	.on .tv {
-		background-color: @colorTv;
-	}
-	.won .tv {
-		color: @colorTv;
-	}
-	.on .breaking-news {
-		background-color: @colorBreakingnews;
-	}
-	.won .breaking-news {
-		color: @colorBreakingnews;
-	}
-	.breaking-news.sectionStart {
-		clear: left;
+		margin: 0 2px 0 0;
+		.multi {
+			text-transform: uppercase;
+			font-family: myriad-pro-condensed;
+			font-weight: 700;
+			font-size: 15px;
+			line-height: 12px;
+			letter-spacing: 0;
+		}
+		.singles { 
+			a {
+				display: inline-block;
+				float: left;
+				background-color: #ddd;
+				padding: 2px 0 1px 0;
+				margin: 0 0 2px 0;
+				width: 5px;
+				height: 15px;
+			}
+			a.won {
+				background-color: #999;
+			}
+			a.on {
+				background-color: #000;
+			}
+		}
+		.news {
+			color: @colorNews;
+			a.won {
+				background-color: @colorNews;
+			}
+		}
+		.sport {
+			color: @colorSport;
+			a.won {
+				background-color: @colorSport;
+			}
+		}
+		.showbiz {
+			color: @colorShowbiz;
+			a.won {
+				background-color: @colorShowbiz;
+			}
+		}
+		.woman {
+			color: @colorWoman;
+			a.won {
+				background-color: @colorWoman;
+			}
+		}
+		.tv {
+			color: @colorTv;
+			a.won {
+				background-color: @colorTv;
+			}
+		}
+		.breaking-news {
+			color: @colorBreakingnews;
+			a.won {
+				background-color: @colorBreakingnews;
+			}
+		}
 	}
 }
 
@@ -383,6 +392,10 @@ h2 {
 	}
 }
 
+.page {
+	border-left: 15px solid @colorMain;
+}
+
 /**********************
 ARTICLE
 ***********************/
@@ -395,7 +408,6 @@ ARTICLE
 .article {
 	padding: 0;
 	overflow: auto;
-	border-left: 15px solid @colorMain;
 	.hero {
 		display: inline-block;
 		float:left;
@@ -660,7 +672,7 @@ ARTICLE
 		background-color: @colorSport;
 		background-image: url('/assets/images/thesun-sport.png');
 	}
-	.article {
+	.page {
 		border-left-color: @colorSport;
 	}
 }
@@ -670,7 +682,7 @@ ARTICLE
 		background-color: @colorShowbiz;
 		background-image: url('/assets/images/thesun-showbiz.png');
 	}
-	.article {
+	.page {
 		border-left-color: @colorShowbiz;
 	}
 }
@@ -680,7 +692,7 @@ ARTICLE
 		background-color: @colorWoman;
 		background-image: url('/assets/images/thesun-woman.png');
 	}
-	.article {
+	.page {
 		border-left-color: @colorWoman;
 	}
 }
@@ -690,7 +702,7 @@ ARTICLE
 		background-color: @colorTv;
 		background-image: url('/assets/images/thesun-tv.png');
 	}
-	.article {
+	.page {
 		border-left-color: @colorTv;
 	}
 }
@@ -699,7 +711,7 @@ ARTICLE
 	#logo { 
 		background-color: @colorBreakingnews;
 	}
-	.article {
+	.page {
 		border-left-color: @colorBreakingnews;
 	}
 }
@@ -718,13 +730,9 @@ ARTICLE
 	color: #999;
 }
 
-#wrapper {
+#teasersWrapper,
+#articlesWrapper {
     max-width: 1024px;
     height: 2500px;
     overflow: visible;
 }
-
-#wrapper > div > .swipeview-loading {
-    background-color: #eee;
-}
-

@@ -2,18 +2,31 @@
 #pageWrap.front
 	header
 		a#logo(href="/") &nbsp;
-		#navi_articles
+		#navbar
 		#currentPage
-			span#num 1
+			#num 1
+			//
+				a(href="#", onclick="teasersPanes.prev()") &laquo;
+				span &nbsp;
+				a(href="#", onclick="teasersPanes.next()") &raquo;
+				br
+				a(href="#", onclick="articlesPanes.prev()") &laquo;
+				span &nbsp;
+				a(href="#", onclick="articlesPanes.next()") &raquo;
 	#wrap
-		script#tmplNavi(type="text/x-handlebars-template")
+
+		script#tmplNavbar(type="text/x-handlebars-template")
 			{{#each pages}}
-			a(href="#", class="{{#if menuid}}won{{/if}}")
-				div(class="{{section}} {{#if menuid}}sectionStart{{/if}}") {{menuname}}
+			.section
+				a.multi(class="{{section}}", href="#", position="{{position}}") {{section}}
+				.singles(class="{{section}}")
+					{{#each teasers}}
+					a.single(href="#", position="{{position}}")
+					{{/each}}
 			{{/each}}
+
 		script#tmplArticle(type="text/x-handlebars-template")
-			{{#if isArticle}}
-			div(class="article{{#if imageportrait}} article_top{{/if}}")
+			.page.article(class="{{#if imageportrait}}article_top{{/if}}")
 				{{#if imagelarge}}
 				.hero
 					.deck	
@@ -58,9 +71,9 @@
 							script(src="{{uri}}")
 						{{/each}}
 						.articlebody {{{articlebody}}}
-			{{/if}}
-			{{#if isTeasers}}
-			.teasers
+
+		script#tmplTeasers(type="text/x-handlebars-template")
+			.page.teasers
 				div(class="{{section}}")
 					{{#each teasers}}
 					.teaser(class="{{priority}}")
@@ -75,6 +88,7 @@
 									.title {{headline}}
 									.excerpt {{teaser}}
 					{{/each}}
-			{{/if}}
-		#wrapper
+
+		#articlesWrapper
+		#teasersWrapper
 		script(type="text/javascript", src="./scripts/swipeview-main.js")
