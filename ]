@@ -55,7 +55,7 @@ html {
 }
 
 body {
-	max-width: 1024px;
+	//max-width: 1024px;
 	word-wrap:break-word;
 	-webkit-text-size-adjust: none;
 	-ms-text-size-adjust: none;
@@ -280,16 +280,11 @@ h2 {
 			background-color: transparent;
 			width: @gridColumn * 3;
 			padding-right: 5px;
+			text-align: right;
 			.title {
 				font-size: 80px;
 				line-height: 60px;
 				text-shadow: 0px 2px 10px #000;
-				margin: 0 0 5px 0;
-			}
-			.excerpt {
-				font-size: 34px;
-				font-weight: 400;
-				line-height: 28px;	 
 			}
 		}
 		img {
@@ -375,7 +370,7 @@ h2 {
 	.teasers {
 		.top_0 {
 			.imgWrap {
-				max-height: 727px;
+				max-height: 775px;
 			}
 		}
 	}
@@ -758,7 +753,6 @@ ARTICLE
 #pageWrap.breaking-news {
 	#logo { 
 		background-color: @colorBreakingnews;
-		background-image: url('/assets/images/thesun-breakingnews.png');
 	}
 	.page {
 		border-left-color: @colorBreakingnews;

@@ -1,7 +1,15 @@
+#preloads(style="display: none")
+	img(src="/assets/images/thesun-sport.png")
+	img(src="/assets/images/thesun-showbiz.png")
+	img(src="/assets/images/thesun-woman.png")
+	img(src="/assets/images/thesun-tv.png")
+	img(src="/assets/images/thesun-breakingnews.png")
+
 #addToHomeScreen
 #pageWrap.front
 	header
-		a#logo(href="/") &nbsp;
+		a#logo(href="/") 
+			#todayis
 		#navbar
 		#currentPage
 			#num 1
@@ -18,77 +26,80 @@
 		script#tmplNavbar(type="text/x-handlebars-template")
 			{{#each pages}}
 			.section
-				a.multi(class="{{section}}", href="#", position="{{position}}") {{section}}
 				.singles(class="{{section}}")
 					{{#each teasers}}
-					a.single(href="#", position="{{position}}")
+					a.single(href="#/{{position}}", position="{{position}}")
 					{{/each}}
+				a.multi(class="{{section}}", href="#", position="{{position}}") {{section}}
 			{{/each}}
 
-		script#tmplArticle(type="text/x-handlebars-template")
-			.page.article(class="{{#if imageportrait}}article_top{{/if}}")
-				{{#if imagelarge}}
-				.hero
-					.deck	
-						.strapline {{strapline}}
-						.title {{headline}}
-						.subdeck {{subdeck}}
-					.imgWrap
-						img(src="{{image}}")
-				{{/if}}
-				.colRight
-					{{#if bylineimage}}
-					.bylineWrap
-							img.bylineimage(src="{{bylineimage}}")
-							.byline {{byline}}
-					{{else}}
-					{{#if byline}}
-					.byline {{byline}}
-					{{/if}}
-					{{/if}}
-					{{#if quote}}
-					.quote {{quote}}
-					{{/if}}
-					.images
-						{{#each attachments.image}}
-						.imageWrap
-								img(src="{{uri}}")
-								{{#if caption}}
-								.caption(data-bind="text: caption")
-								{{/if}}
-						{{/each}}
-				.colLeft
-					.articlecontent
-						{{#unless imagelarge}}
-						img(src="{{image}}")
+		script#tmplPage(type="text/x-handlebars-template")
+			.page
+				{{#if headline}}
+				.article(class="{{#if imageportrait}}article_portrait{{/if}}")
+					{{#if imagelarge}}
+					.hero
 						.deck	
 							.strapline {{strapline}}
 							.title {{headline}}
 							.subdeck {{subdeck}}
-						{{/unless}}
-						{{#each attachments.video}}
-						//.videoWrap
-							script(src="{{uri}}")
+						.imgWrap
+							img(src="{{image}}")
+					{{/if}}
+					.colRight
+						{{#if bylineimage}}
+						.bylineWrap
+								img.bylineimage(src="{{bylineimage}}")
+								.byline {{byline}}
+						{{else}}
+						{{#if byline}}
+						.byline {{byline}}
+						{{/if}}
+						{{/if}}
+						{{#if quote}}
+						.quote {{quote}}
+						{{/if}}
+						.images
+							{{#each attachments.image}}
+							.imageWrap
+									img(src="{{uri}}")
+									{{#if caption}}
+									.caption(data-bind="text: caption")
+									{{/if}}
+							{{/each}}
+					.colLeft
+						.articlecontent
+							{{#unless imagelarge}}
+							img(src="{{image}}")
+							.deck	
+								.strapline {{strapline}}
+								.title {{headline}}
+								.subdeck {{subdeck}}
+							{{/unless}}
+							{{#each attachments.video}}
+							//.videoWrap
+								script(src="{{uri}}")
+							{{/each}}
+							.articlebody {{{articlebody}}}
+				{{/if}}
+				{{#if teasers }}
+				.teasers
+					div(class="{{section}}")
+						{{#each teasers}}
+						.teaser(class="{{priority}}")
+							div(class="{{section}}")
+								a(href="#/{{position}}", position="{{position}}")
+									div(class="{{section}}-extra")
+									{{#if image}}
+									.imgWrap
+										img(src="{{image}}")
+									{{/if}}
+									.text
+										.strapline {{strapline}}
+										.title {{headline}}
+										.excerpt {{teaser}}
 						{{/each}}
-						.articlebody {{{articlebody}}}
-
-		script#tmplTeasers(type="text/x-handlebars-template")
-			.page.teasers
-				div(class="{{section}}")
-					{{#each teasers}}
-					.teaser(class="{{priority}}")
-						div(class="{{section}}")
-							a(href="#/{{position}}", position="{{position}}")
-								div(class="{{section}}-extra")
-								{{#if image}}
-								img(src="{{image}}")
-								{{/if}}
-								.text
-									.strapline {{strapline}}
-									.title {{headline}}
-									.excerpt {{teaser}}
-					{{/each}}
-
+				{{/if}}
 		#articlesWrapper
 		#teasersWrapper
 		script(type="text/javascript", src="./scripts/swipeview-main.js")

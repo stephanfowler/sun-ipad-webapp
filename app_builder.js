@@ -270,7 +270,6 @@
 							article = article.toObject();
 							// strip links from articlebody;
 							article.articlebody = article.articlebody.replace(/<a\/?[^>]*>/g,'');
-							article.isArticle = true;
 							article.section = edition.sections[s].id;
 							// Mark top stories and move them to the top
 							if ( us.indexOf( topStories, article.uri ) > -1 ) {
@@ -280,12 +279,6 @@
 							else {
 								ordered.push( article );
 							}
-						}
-						// Set the menu id/name for the first story in each section, except the first section, since we've got a frontpage to add before it 
-						//if ( s > 0 && ordered.length ) {
-						if ( ordered.length ) {
-							ordered[0]['menuid']   = edition.sections[s].id;
-							ordered[0]['menuname'] = edition.sections[s].name;
 						}
 						edition.sections[s].articles = ordered;
 					}
