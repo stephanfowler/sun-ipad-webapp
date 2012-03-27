@@ -1,7 +1,7 @@
 
 $(document).ready( function() {
 
-	if ( ! window.navigator.standalone ) {
+	if ( 0 && ! window.navigator.standalone ) {
 		$('#addToHomeScreen').show();
 	}
 	else {

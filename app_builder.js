@@ -4,9 +4,9 @@
 	var feeds = [
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/top_stories/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/news/?iPadApp=true',
+		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/breaking_news/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/showbiz/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/woman/?iPadApp=true',
-		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/breaking_news/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/tv/?iPadApp=true',
 		'http://www.thesun.co.uk/sol/homepage/feeds/iPad/sport/?iPadApp=true',
 	];
@@ -254,6 +254,7 @@
 				},
 
 				function( edition, callback ) {
+					/*
 					// Get a list of the top stories
 					var topStories = us.find( edition.sections, function(s){ return s.id === 'top-stories'} );
 					if( topStories ) {
@@ -282,44 +283,30 @@
 						}
 						edition.sections[s].articles = ordered;
 					}
-
-					/*
-					// Create a frontpage section, using 3 interleaved articles from each section
-					var frontpage = { section: 'news', menuid: 'news', menuname: 'News', isTeasers: true, teasers: [] };
-					for ( var a = 0; a < 3; a++ ) {
-						var position = 0;
-						for ( var s = 0; s < edition.sections.length; s++ ) {
-							position = ( s == 0 ? 0 : position + edition.sections[ s - 1 ].articles.length );
-							var source = us.clone( edition.sections[s].articles[a] );
-							var featured = {};
-							// Add article to frontpage if not already in there
-							if ( ! us.include( us.pluck(frontpage.teasers, 'id'), source.id ) ) {
-								featured.id             = source.id;
-								featured.headline       = source.headline;
-								featured.strapline      = source.strapline;
-								featured.teaser         = source.teaser;
-								featured.image          = source.image;
-								featured.imageportrait  = source.imageportrait;
-								featured.section        = source.section;
-								featured.position       = position + a + 1;
-								if ( a == 0 && s == 0 ) {
-									//featured.priority = 'toptop';
-									featured.priority = 'top';
-								}
-								else if ( a == 0 && s < 2 ) {
-									featured.priority = 'top';
-								}
-								frontpage.teasers.push( featured );
-							}
-						}
-					}
-					linear.pages.push( frontpage );
 					*/
 
-					// Add each article 
+					var uniqueIDs = [];
 					for ( s in edition.sections ) {
-						for ( a in edition.sections[s].articles ) {
-							linear.pages.push( edition.sections[s].articles[a] );
+						var section = edition.sections[s].id;
+						var articles = edition.sections[s].articles;
+						for ( a in articles ) {
+							var article = articles[a];
+							// Avoid duplicates
+							if ( ! uniqueIDs[article.id] ) {
+								uniqueIDs[article.id] = 1;
+								article = article.toObject();
+								if ( us.include( [ 'top-stories', 'news', 'breaking-news' ], section ) ) {
+									article.section = 'news';
+								}
+								else {
+									article.section = section;
+								}
+								// strip links from articlebody;
+								article.articlebody = article.articlebody.replace(/<a\/?[^>]*>/g,'');
+								delete article.uri;
+								//delete article.id;
+								linear.pages.push( article );
+							}
 						}
 					}
 
