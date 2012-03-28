@@ -1,8 +1,7 @@
 @colorMain:         #cd0000;
 @colorHighlight:    #f2f721;
 
-@colorNews:         #666;
-@colorBreakingnews: @colorMain;
+@colorNews:         @colorMain;
 @colorSport:        #3fa134;
 @colorShowbiz:		#4312ae; 
 @colorWoman:        #c7007d;
@@ -106,8 +105,8 @@ p {
 
 #navbar {
 	margin:  0 0 0 139px;
-	padding: 6px 4px 0 6px;
-	height: 40px;
+	padding: 4px 4px 0 6px;
+	height: 41px;
 	box-shadow:         0 0 7px #666;
 	-webkit-box-shadow: 0 0 7px #666;
 	-moz-box-shadow:    0 0 7px #666;
@@ -128,17 +127,27 @@ p {
 			text-transform: uppercase;
 			font-family: myriad-pro-condensed;
 			font-weight: 700;
-			font-size: 15px;
-			line-height: 21px;
+			font-size: 16px;
+			line-height: 17px;
+			padding: 2px 0 2px 2px;
+		}
+		.multi.on {
+			background-color: #999;
+			color: #fff;
+		}
+		.multi.pressed {
+			background-color: #666;
+			color: #fff;
 		}
 		.singles { 
 			a {
 				display: inline-block;
 				float: left;
 				background-color: #ddd;
-				padding: 2px 0 1px 0;
+				padding: 2px 0 2px 0;
 				width: 5px;
-				height: 15px;
+				height: 12px;
+				border-bottom: 2px solid #fff;
 			}
 			a.won {
 				background-color: #999;
@@ -153,36 +162,31 @@ p {
 				background-color: @colorNews;
 			}
 		}
-		.sport {
-			color: @colorSport;
-			a.won {
-				background-color: @colorSport;
-			}
-		}
-		.showbiz {
-			color: @colorShowbiz;
-			a.won {
-				background-color: @colorShowbiz;
-			}
-		}
-		.woman {
-			color: @colorWoman;
-			a.won {
-				background-color: @colorWoman;
-			}
-		}
-		.tv {
-			color: @colorTv;
-			a.won {
-				background-color: @colorTv;
-			}
-		}
-		.breaking-news {
-			color: @colorBreakingnews;
-			a.won {
-				background-color: @colorBreakingnews;
-			}
-		}
+	}
+	.news {
+		.multi { color: @colorNews; }
+		.multi.on { background-color: @colorNews; }
+		.singles { a.won { background-color: @colorNews; } }
+	}
+	.showbiz {
+		.multi { color: @colorShowbiz; }
+		.multi.on { background-color: @colorShowbiz; }
+		.singles { a.won { background-color: @colorShowbiz; } }
+	}
+	.woman {
+		.multi { color: @colorWoman; }
+		.multi.on { background-color: @colorWoman; }
+		.singles { a.won { background-color: @colorWoman; } }
+	}
+	.tv {
+		.multi { color: @colorTv; }
+		.multi.on { background-color: @colorTv; }
+		.singles { a.won { background-color: @colorTv; } }
+	}
+	.sport {
+		.multi { color: @colorSport; }
+		.multi.on { background-color: @colorSport; }
+		.singles { a.won { background-color: @colorSport; } }
 	}
 }
 
@@ -690,9 +694,9 @@ ARTICLE
 			display: none
 		}
 		.multi {
-			background-color: #fff;
 			float: left;
-			padding: 16px 20px 0 0;
+			margin: 13px 20px 0 0;
+			padding: 3px 4px;
 			font-size: 22px;
 		}
 	}
@@ -738,16 +742,6 @@ ARTICLE
 	}
 }
 
-#pageWrap.breaking-news {
-	#logo { 
-		background-color: @colorBreakingnews;
-		background-image: url('/assets/images/thesun-breakingnews.png');
-	}
-	.page {
-		border-left-color: @colorBreakingnews;
-	}
-}
-
 /* SWIPER */
 
 #currentPage {
@@ -765,6 +759,6 @@ ARTICLE
 #teasersWrapper,
 #articlesWrapper {
     max-width: 1024px;
-    height: 2500px;
+    height: 4000px;
     overflow: visible;
 }

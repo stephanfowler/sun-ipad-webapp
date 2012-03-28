@@ -1,24 +1,20 @@
 
 $(document).ready( function() {
 
-	if ( 0 && ! window.navigator.standalone ) {
+	if ( ! window.navigator.standalone ) {
 		$('#addToHomeScreen').show();
 	}
 	else {
 		$('#pageWrap').show();
 
+		// Object cloner
 		function clone(obj) {
-			// Handle the 3 simple types, and null or undefined
 			if (null == obj || "object" != typeof obj) return obj;
-
-			// Handle Date
 			if (obj instanceof Date) {
 				var copy = new Date();
 				copy.setTime(obj.getTime());
 				return copy;
 			}
-
-			// Handle Array
 			if (obj instanceof Array) {
 				var copy = [];
 				for (var i = 0, len = obj.length; i < len; ++i) {
@@ -26,8 +22,6 @@ $(document).ready( function() {
 				}
 				return copy;
 			}
-
-			// Handle Object
 			if (obj instanceof Object) {
 				var copy = {};
 				for (var attr in obj) {
@@ -35,21 +29,63 @@ $(document).ready( function() {
 				}
 				return copy;
 			}
-
 			throw new Error("Unable to copy obj! Its type isn't supported.");
 		}
 
-		var tmplNavbar  = Handlebars.compile( $('#tmplNavbar').html() );
-		var tmplPage = Handlebars.compile( $('#tmplPage').html() );
-		//var tmplTeasers = Handlebars.compile( $('#tmplTeasers').html() );
+		function NoClickDelay(el) {
+			this.element = typeof el == 'object' ? el : document.getElementById(el);
+			if( window.Touch ) this.element.addEventListener('touchstart', this, false);
+		}
 
-		//document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+		NoClickDelay.prototype = {
+			handleEvent: function(e) {
+				switch(e.type) {
+					case 'touchstart': this.onTouchStart(e); break;
+					case 'touchmove': this.onTouchMove(e); break;
+					case 'touchend': this.onTouchEnd(e); break;
+				}
+			},
+
+			onTouchStart: function(e) {
+				e.preventDefault();
+				this.moved = false;
+
+				this.theTarget = document.elementFromPoint(e.targetTouches[0].clientX, e.targetTouches[0].clientY);
+				if(this.theTarget.nodeType == 3) this.theTarget = theTarget.parentNode;
+				this.theTarget.className+= ' pressed';
+
+				this.element.addEventListener('touchmove', this, false);
+				this.element.addEventListener('touchend', this, false);
+			},
+
+			onTouchMove: function(e) {
+				this.moved = true;
+				this.theTarget.className = this.theTarget.className.replace(/ ?pressed/gi, '');
+			},
+
+			onTouchEnd: function(e) {
+				this.element.removeEventListener('touchmove', this, false);
+				this.element.removeEventListener('touchend', this, false);
+
+				if( !this.moved && this.theTarget ) {
+					this.theTarget.className = this.theTarget.className.replace(/ ?pressed/gi, '');
+					var theEvent = document.createEvent('MouseEvents');
+					theEvent.initEvent('click', true, true);
+					this.theTarget.dispatchEvent(theEvent);
+				}
+
+				this.theTarget = undefined;
+			}
+		};
+		new NoClickDelay(document.getElementById('navbar'));
 
 		var
-			el, i, p, k,
+			el, i, p, q, k,
 			page,
 			prevSection = 'front',
 			prevTime = new Date().getTime();
+		var tmplNavbar  = Handlebars.compile( $('#tmplNavbar').html() );
+		var tmplPage = Handlebars.compile( $('#tmplPage').html() );
 
 		$.getJSON( '/editions/latest.linear.json?' + new Date().getTime(), function(edition){
 
@@ -78,6 +114,8 @@ $(document).ready( function() {
 			}
 			var n = 0;
 			for ( i in t ) {
+				t[i][0].priority = 'top';
+				t[i][1].priority = 'top';
 				teasers.pages.push( { position: n, section: i, teasers: t[i] } );
 				n++;
 			}
@@ -85,9 +123,6 @@ $(document).ready( function() {
 			// Set front page styles
 			for ( i in front ) {
 				front[i].priority = 'top_' + i;
-				if ( i > 0 ) {
-					//delete front[i].image; 
-				}
 			}
 
 			// Render the navbar
@@ -138,8 +173,8 @@ $(document).ready( function() {
 				}
 				var section = teasers.pages[teasersPanes.pageIndex].section;
 				$('#pageWrap').removeClass().addClass( section );
-				$('#navbar a.multi.on').removeClass('on').addClass('won');
-				$('#navbar a.multi').eq(teasersPanes.pageIndex).removeClass('won').addClass('on');
+				$('#navbar a.multi.on').removeClass('on');
+				$('#navbar a.multi').eq(teasersPanes.pageIndex).addClass('on');
 				// GA
 				var newTime = new Date().getTime();
 				_gaq.push(['_trackEvent', 'iPad', 'PageRead', prevSection, Math.floor((newTime - prevTime) / 1000) ]);
@@ -167,8 +202,9 @@ $(document).ready( function() {
 					$('#pageWrap').removeClass().addClass( section );
 				}
 				$('#currentPage #num').html( articlesPanes.pageIndex+1 );
-				$('#navbar a.single.on').removeClass('on').addClass('won');
-				$('#navbar a.single').eq(articlesPanes.pageIndex).removeClass('won').addClass('on');
+				$('#navbar a.multi.on').removeClass('on');
+				$('#navbar .singles a.on').removeClass('on').addClass('won');
+				$('#navbar .singles a').eq(articlesPanes.pageIndex).removeClass('won').addClass('on');
 				// GA
 				var newTime = new Date().getTime();
 				_gaq.push(['_trackEvent', 'iPad', 'PageRead', prevSection, Math.floor((newTime - prevTime) / 1000) ]);
@@ -177,15 +213,15 @@ $(document).ready( function() {
 			});
 
 			var goToArticle = function( i ) {
-				$('#teasersWrapper:visible').slideUp();
-				$('#articlesWrapper:hidden').slideDown();
+				$('#teasersWrapper').slideUp();
+				$('#articlesWrapper').slideDown();
 				articlesPanes.goToPage(i);
 				resetScroll();
 			};
 
 			var goToTeasers = function( i ) {
-				$('#teasersWrapper:hidden').slideDown();
-				$('#articlesWrapper:visible').slideUp();
+				$('#teasersWrapper').slideDown();
+				$('#articlesWrapper').slideUp();
 				teasersPanes.goToPage(i);
 				resetScroll();
 			};
@@ -196,20 +232,26 @@ $(document).ready( function() {
 				}, 300);
 			};
 
-			$('#navbar a.single').live( 'click', function(){
-				goToArticle( parseInt($(this).attr('position')) );
-				return false;
-			});
+			var gotoHash = function() {
+				var hash = location.hash;
+				if ( hash ) {
+					var bits = hash.split( '/' );
+					if ( parseInt( bits[2] ) > -1 ) {
+						goToTeasers( parseInt( bits[2] ) );
+					}
+					else if ( parseInt( bits[1] ) > -1 ) {
+						goToArticle( parseInt( bits[1] ) );
+					}
+				}
+				else {
+					goToArticle( 0 );
+				}
 
-			$('#navbar a.multi').live( 'click', function(){
-				goToTeasers( parseInt($(this).attr('position')) );
-				return false;
+			};
+			$(window).bind( 'hashchange', function() {
+				gotoHash();
 			});
-
-			$('.teasers a').live( 'click', function(){
-				goToArticle( parseInt($(this).attr('position')) );
-				return false;
-			});
+			gotoHash();
 
 			articlesPanes.onMoveOut(function () {
 				resetScroll();
@@ -219,25 +261,37 @@ $(document).ready( function() {
 			var month=today_date.getMonth()
 			var today=today_date.getDate()
 			var year=today_date.getFullYear()
-			var months = new Array(
-				"January",
-				"February",
-				"March",
-				"April",
-				"May",
-				"June",
-				"July",
-				"August",
-				"September",
-				"October",
-				"November",
-				"December"
-			);
+			var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 			$('#todayis').html( months[month] + " " + today + ", " + year );
 
 			// last minute tweaks!
-			$('#navbar a.single').eq(0).addClass('on');
-			$('#teasersWrapper:visible').slideUp();
+			$('#navbar .singles a').eq(0).addClass('on');
+
+			// Cache images... breaks on iPad1?
+			/*
+			setTimeout ( function() {
+				var imgs = {};
+				for ( i in edition.pages ) {
+					p = edition.pages[i];
+					if ( p.image && ! imgs[p.image] ) {
+						imgs[p.image] = 1;
+					}
+					if ( p.attachments ) {
+						for ( q in p.attachments.image ) {
+							r = p.attachments.image[q];
+							if ( r.uri && ! imgs[r.uri] ) {
+								imgs[r.uri] = 1;
+								console.log( r.uri );
+							}
+						}
+					}
+				}
+				for ( i in imgs ) {
+					$('<img/>').attr('src', i ).appendTo('#preloads');
+				}
+			}, 5000 );
+			*/
+
 		});
 
 	}

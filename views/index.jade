@@ -1,10 +1,3 @@
-#preloads(style="display: none")
-	img(src="/assets/images/thesun-sport.png")
-	img(src="/assets/images/thesun-showbiz.png")
-	img(src="/assets/images/thesun-woman.png")
-	img(src="/assets/images/thesun-tv.png")
-	img(src="/assets/images/thesun-breakingnews.png")
-
 #addToHomeScreen
 #pageWrap.front
 	header
@@ -25,12 +18,12 @@
 
 		script#tmplNavbar(type="text/x-handlebars-template")
 			{{#each pages}}
-			.section
-				.singles(class="{{section}}")
+			.section(class="{{section}}")
+				.singles
 					{{#each teasers}}
-					a.single(href="#/{{position}}", position="{{position}}")
+					a(href="#/{{position}}")
 					{{/each}}
-				a.multi(class="{{section}}", href="#", position="{{position}}") {{section}}
+				a.multi(href="#/{{section}}/{{position}}") {{section}}
 			{{/each}}
 
 		script#tmplPage(type="text/x-handlebars-template")
@@ -88,7 +81,7 @@
 						{{#each teasers}}
 						.teaser(class="{{priority}}")
 							div(class="{{section}}")
-								a(href="#/{{position}}", position="{{position}}")
+								a(href="#/{{position}}")
 									div(class="{{section}}-extra")
 									{{#if image}}
 									.imgWrap
@@ -102,4 +95,13 @@
 				{{/if}}
 		#articlesWrapper
 		#teasersWrapper
-		script(type="text/javascript", src="./scripts/swipeview-main.js")
+
+script(type="text/javascript", src="./scripts/swipeview-main.js")
+
+#preloads(style="display: none")
+	img(src="/assets/images/thesun-sport.png")
+	img(src="/assets/images/thesun-showbiz.png")
+	img(src="/assets/images/thesun-woman.png")
+	img(src="/assets/images/thesun-tv.png")
+	img(src="/assets/images/thesun-breakingnews.png")
+

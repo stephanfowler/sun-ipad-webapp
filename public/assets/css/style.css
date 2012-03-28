@@ -176,8 +176,8 @@ p {
 }
 #navbar {
   margin: 0 0 0 139px;
-  padding: 6px 4px 0 6px;
-  height: 40px;
+  padding: 4px 4px 0 6px;
+  height: 41px;
   box-shadow: 0 0 7px #666;
   -webkit-box-shadow: 0 0 7px #666;
   -moz-box-shadow: 0 0 7px #666;
@@ -196,16 +196,26 @@ p {
   text-transform: uppercase;
   font-family: myriad-pro-condensed;
   font-weight: 700;
-  font-size: 15px;
-  line-height: 21px;
+  font-size: 16px;
+  line-height: 17px;
+  padding: 2px 0 2px 2px;
+}
+#navbar .section .multi.on {
+  background-color: #999;
+  color: #fff;
+}
+#navbar .section .multi.pressed {
+  background-color: #666;
+  color: #fff;
 }
 #navbar .section .singles a {
   display: inline-block;
   float: left;
   background-color: #ddd;
-  padding: 2px 0 1px 0;
+  padding: 2px 0 2px 0;
   width: 5px;
-  height: 15px;
+  height: 12px;
+  border-bottom: 2px solid #fff;
 }
 #navbar .section .singles a.won {
   background-color: #999;
@@ -214,40 +224,55 @@ p {
   background-color: #000;
 }
 #navbar .section .news {
-  color: #666666;
-}
-#navbar .section .news a.won {
-  background-color: #666666;
-}
-#navbar .section .sport {
-  color: #3fa134;
-}
-#navbar .section .sport a.won {
-  background-color: #3fa134;
-}
-#navbar .section .showbiz {
-  color: #4312ae;
-}
-#navbar .section .showbiz a.won {
-  background-color: #4312ae;
-}
-#navbar .section .woman {
-  color: #c7007d;
-}
-#navbar .section .woman a.won {
-  background-color: #c7007d;
-}
-#navbar .section .tv {
-  color: #ffa200;
-}
-#navbar .section .tv a.won {
-  background-color: #ffa200;
-}
-#navbar .section .breaking-news {
   color: #cd0000;
 }
-#navbar .section .breaking-news a.won {
+#navbar .section .news a.won {
   background-color: #cd0000;
+}
+#navbar .news .multi {
+  color: #cd0000;
+}
+#navbar .news .multi.on {
+  background-color: #cd0000;
+}
+#navbar .news .singles a.won {
+  background-color: #cd0000;
+}
+#navbar .showbiz .multi {
+  color: #4312ae;
+}
+#navbar .showbiz .multi.on {
+  background-color: #4312ae;
+}
+#navbar .showbiz .singles a.won {
+  background-color: #4312ae;
+}
+#navbar .woman .multi {
+  color: #c7007d;
+}
+#navbar .woman .multi.on {
+  background-color: #c7007d;
+}
+#navbar .woman .singles a.won {
+  background-color: #c7007d;
+}
+#navbar .tv .multi {
+  color: #ffa200;
+}
+#navbar .tv .multi.on {
+  background-color: #ffa200;
+}
+#navbar .tv .singles a.won {
+  background-color: #ffa200;
+}
+#navbar .sport .multi {
+  color: #3fa134;
+}
+#navbar .sport .multi.on {
+  background-color: #3fa134;
+}
+#navbar .sport .singles a.won {
+  background-color: #3fa134;
 }
 #navContentPages {
   border-top: 0;
@@ -707,9 +732,9 @@ ARTICLE
   display: none;
 }
 #pageWrap.front #navbar .multi {
-  background-color: #fff;
   float: left;
-  padding: 16px 20px 0 0;
+  margin: 13px 20px 0 0;
+  padding: 3px 4px;
   font-size: 22px;
 }
 #pageWrap.sport #logo {
@@ -740,13 +765,6 @@ ARTICLE
 #pageWrap.tv .page {
   border-left-color: #ffa200;
 }
-#pageWrap.breaking-news #logo {
-  background-color: #cd0000;
-  background-image: url('/assets/images/thesun-breakingnews.png');
-}
-#pageWrap.breaking-news .page {
-  border-left-color: #cd0000;
-}
 /* SWIPER */
 #currentPage {
   position: absolute;
@@ -762,6 +780,6 @@ ARTICLE
 #teasersWrapper,
 #articlesWrapper {
   max-width: 1024px;
-  height: 2500px;
+  height: 4000px;
   overflow: visible;
 }
