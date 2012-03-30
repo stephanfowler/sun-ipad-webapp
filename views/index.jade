@@ -3,6 +3,7 @@
 	header
 		a#logo(href="/") 
 			#todayis
+			#logomessage
 		#navbar
 		#currentPage
 			#num 1
@@ -28,6 +29,12 @@
 
 		script#tmplPage(type="text/x-handlebars-template")
 			.page
+				{{#if adlink}}
+				a.ad(href="{{adlink}}")
+					img.portrait(src="{{adportrait}}")
+					img.landscape(src="{{adlandscape}}")
+				{{/if}}
+
 				{{#if headline}}
 				.article(class="{{#if imageportrait}}article_portrait{{/if}}")
 					{{#if imagelarge}}
@@ -36,34 +43,39 @@
 							.strapline {{strapline}}
 							.title {{headline}}
 							.subdeck {{subdeck}}
+						{{#if image}}
 						.imgWrap
 							img(src="{{image}}")
+						{{/if}}
 					{{/if}}
 					.colRight
+						.subdeck {{subdeck}}
 						{{#if bylineimage}}
 						.bylineWrap
 								img.bylineimage(src="{{bylineimage}}")
 								.byline {{byline}}
 						{{else}}
 						{{#if byline}}
-						.byline {{byline}}
+						.byline {{{byline}}}
 						{{/if}}
 						{{/if}}
 						{{#if quote}}
 						.quote {{quote}}
 						{{/if}}
-						.images
+						//.images
 							{{#each attachments.image}}
 							.imageWrap
-									img(src="{{uri}}")
-									{{#if caption}}
-									.caption(data-bind="text: caption")
-									{{/if}}
+								img(src="{{uri}}")
+								{{#if caption}}
+								.caption(data-bind="text: caption")
+								{{/if}}
 							{{/each}}
 					.colLeft
 						.articlecontent
 							{{#unless imagelarge}}
+							{{#if image}}
 							img(src="{{image}}")
+							{{/if}}
 							.deck	
 								.strapline {{strapline}}
 								.title {{headline}}
@@ -71,10 +83,14 @@
 							{{/unless}}
 							{{#each attachments.video}}
 							//.videoWrap
-								script(src="{{uri}}")
+								{{{src}}}
 							{{/each}}
 							.articlebody {{{articlebody}}}
+							{{#each attachments.image}}
+							img.pull(src="{{uri}}")
+							{{/each}}
 				{{/if}}
+
 				{{#if teasers }}
 				.teasers
 					div(class="{{section}}")
@@ -92,6 +108,20 @@
 										.title {{headline}}
 										.excerpt {{teaser}}
 						{{/each}}
+				{{/if}}
+
+				{{#if nibs }}
+				.nibsHeader NEWS IN BRIEF...
+				.teasers
+					{{#each nibs}}
+					.teaser.nib
+						{{#if image}}
+						.imgWrap
+							img(src="{{image}}")
+						{{/if}}
+						.title {{headline}}
+						.articlebody {{{articlebody}}}
+					{{/each}}
 				{{/if}}
 		#articlesWrapper
 		#teasersWrapper

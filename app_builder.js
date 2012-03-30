@@ -115,14 +115,11 @@
 				if ( typeof ats[at.type] == 'undefined' ) {
 					ats[at.type] = [];
 				}
-				var attSpec = {};
+				var attSpec = { uri: at.uri };
 				if ( at.type == 'video' ) {
-					attSpec.uri = 'http://player.ooyala.com/player.js?embedCode=' + at.uri + '&deepLinkEmbedCode=' + at.uri;
+					attSpec.js = '<script type="text/javascript" src="http://player.ooyala.com/player.js?embedCode=' + at.uri + '&deepLinkEmbedCode=' + at.uri + '"></script>';
 				}
-				else {
-					attSpec.uri = at.uri;
-				}
-				if ( typeof at.caption === 'string') {
+				if ( at.caption ) {
 					attSpec.caption = at.caption
 				}
 				ats[at.type].push( attSpec );
@@ -254,38 +251,8 @@
 				},
 
 				function( edition, callback ) {
-					/*
-					// Get a list of the top stories
-					var topStories = us.find( edition.sections, function(s){ return s.id === 'top-stories'} );
-					if( topStories ) {
-						topStories = us.pluck( topStories.articles, 'uri' )
-						// Remove the actual Top Stories section (the articles all appear elsewhere) (hopefully!)
-						edition.sections  = us.reject( edition.sections, function(s){ return s.id === 'top-stories'}  );
-					}
-					// Shuffle up top stories within their sections
-					for ( s in edition.sections ) {
-						var ordered = [];	
-						var articles = edition.sections[s].articles;
-						for ( a in articles ) {
-							var article = articles[a];
-							article = article.toObject();
-							// strip links from articlebody;
-							article.articlebody = article.articlebody.replace(/<a\/?[^>]*>/g,'');
-							article.section = edition.sections[s].id;
-							// Mark top stories and move them to the top
-							if ( us.indexOf( topStories, article.uri ) > -1 ) {
-								article.priority = 'top';
-								ordered.unshift( article );
-							}
-							else {
-								ordered.push( article );
-							}
-						}
-						edition.sections[s].articles = ordered;
-					}
-					*/
 
-					var uniqueIDs = [];
+					var uniqueIDs = [], nibs = [];
 					for ( s in edition.sections ) {
 						var section = edition.sections[s].id;
 						var articles = edition.sections[s].articles;
@@ -301,15 +268,27 @@
 								else {
 									article.section = section;
 								}
-								// strip links from articlebody;
-								article.articlebody = article.articlebody.replace(/<a\/?[^>]*>/g,'');
+								var paras;
+								if ( article.articlebody ) {
+									// strip links from articlebody;
+									article.articlebody = article.articlebody.replace(/<a\/?[^>]*>/g,'');
+									paras = article.articlebody.match(/<p>/g).length;
+								}
 								delete article.uri;
-								//delete article.id;
-								linear.pages.push( article );
+								delete article.id;
+								// Pick some nibs...
+								if ( paras && paras < 16 && ( ! article.image || ! article.imagelarge ) ) {
+									nibs.push( article );
+									console.log( "NIB: " + article.headline );
+								}
+								else {
+									linear.pages.push( article );
+								}
 							}
 						}
 					}
-
+					// add nibs at page 6...
+					linear.pages.splice( 5, 0, { section: 'news', nibs: nibs } );
 					callback( null );
 				}
 

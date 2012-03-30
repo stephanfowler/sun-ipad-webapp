@@ -1,7 +1,6 @@
-
 $(document).ready( function() {
 
-	if ( ! window.navigator.standalone ) {
+	if ( 0 && ! window.navigator.standalone ) {
 		$('#addToHomeScreen').show();
 	}
 	else {
@@ -95,21 +94,24 @@ $(document).ready( function() {
 			var keys = [ 'section', 'position', 'headline', 'image', 'strapline', 'teaser', 'priority' ];
 			
 			edition.pages.unshift( { section: 'news', teasers: front } );
+			edition.pages.push( { section: 'ad', adlink:'http://www.britishgas.co.uk/', adportrait: '/ads/1_portrait.jpg', adlandscape: '/ads/1_landscape.jpg'  } );
 
 			// Create the "teasers pages" object
 			for ( i in edition.pages ) {
 				edition.pages[i].position = i; // +1 because we add a front page, later...
 				var section = edition.pages[i].section;
-				if ( ! t[section] ) {
-					t[section] = [];
-				}
-				var p = {};
-				for ( k in keys ) {
-					p[ keys[k] ] = edition.pages[i][ keys[k] ];
-				}
-				t[section].push(p);
-				if ( i > 0 && i <= 4 ) {
-					front.push( clone(p) );
+				if ( section != 'ad' ) {
+					if ( ! t[section] ) {
+						t[section] = [];
+					}
+					var p = {};
+					for ( k in keys ) {
+						p[ keys[k] ] = edition.pages[i][ keys[k] ];
+					}
+					t[section].push(p);
+					if ( i > 0 && i <= 4 ) {
+						front.push( clone(p) );
+					}
 				}	
 			}
 			var n = 0;
@@ -124,6 +126,7 @@ $(document).ready( function() {
 			for ( i in front ) {
 				front[i].priority = 'top_' + i;
 			}
+			//front.push( { headline: "Britain's most popular paper", priority: "britainsMostpopular" } )
 
 			// Render the navbar
 			$('#navbar').html( tmplNavbar( teasers ) );
@@ -134,7 +137,7 @@ $(document).ready( function() {
 			teasersPanes  = new SwipeView('#teasersWrapper',  { numberOfPages: teasers.pages.length  });
 			articlesPanes = new SwipeView('#articlesWrapper', { numberOfPages: edition.pages.length });
 
-			var renderTeasers = function( context ){
+			var renderExtras = function( context ){
 				$('.teasers', context).not('[isRendered]').waitForImages( function() {
 					$(this).show();
 					$(this).masonry({
@@ -142,6 +145,17 @@ $(document).ready( function() {
 						columnWidth: 249
 					});
 					$(this).attr('isRendered','1');
+				});
+				// Shuffle images between article paragraphs
+				var numP = $('.articlecontent p', context).length;
+				var numImgs  = $('.articlecontent img.pull', context).length;
+				var per = Math.ceil( ( numP - 2 ) / ( numImgs + 1 ) );
+				$('.articlecontent img.pull', context).each( function( i, el ){
+					var pull = $(this).detach();
+					if ( i > 0 ) { // first image is already used in the header
+						
+						$('.articlecontent p', context).eq( (i-1)*per ).after( pull );
+					}
 				});
 			};
 
@@ -151,9 +165,7 @@ $(document).ready( function() {
 					el = document.createElement('div');
 					el.innerHTML = tmpl( pages[page] );
 					swipeview.masterPages[i].appendChild(el)
-					if( pages[page].teasers ) {
-						renderTeasers( el );
-					}
+					renderExtras( el );
 				}
 			}
 			loadInitialPanes( teasers.pages,  teasersPanes,  tmplPage );
@@ -166,9 +178,7 @@ $(document).ready( function() {
 					if (upcoming != teasersPanes.masterPages[i].dataset.pageIndex) {
 						el = teasersPanes.masterPages[i].querySelector('div');
 						el.innerHTML = tmplPage( teasers.pages[upcoming] );
-						if( teasers.pages[upcoming].teasers ) {
-							renderTeasers( el );
-						}
+						renderExtras( el );
 					}
 				}
 				var section = teasers.pages[teasersPanes.pageIndex].section;
@@ -189,9 +199,7 @@ $(document).ready( function() {
 					if (upcoming != articlesPanes.masterPages[i].dataset.pageIndex) {
 						el = articlesPanes.masterPages[i].querySelector('div');
 						el.innerHTML = tmplPage( edition.pages[upcoming] );
-						if( edition.pages[upcoming].teasers ) {
-							renderTeasers();
-						}
+						renderExtras( el );
 					}
 				}
 				var section = edition.pages[articlesPanes.pageIndex].section;
@@ -246,7 +254,6 @@ $(document).ready( function() {
 				else {
 					goToArticle( 0 );
 				}
-
 			};
 			$(window).bind( 'hashchange', function() {
 				gotoHash();
@@ -257,12 +264,20 @@ $(document).ready( function() {
 				resetScroll();
 			});
 
-			var today_date= new Date()
-			var month=today_date.getMonth()
-			var today=today_date.getDate()
-			var year=today_date.getFullYear()
+			var today = new Date()
+			var month = today.getMonth();
+			var wkDay = today.getDay();
+			var day   = today.getDate();
+			var year  = today.getFullYear();
+			var days   = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
 			var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-			$('#todayis').html( months[month] + " " + today + ", " + year );
+			$('#todayis').html( days[wkDay] + ", " + months[month] + " " + day + ", " + year );
+
+			var olympics = new Date( 2012, 6, 27 );
+			//if ( today < olympics ) {
+				var one_day=1000*60*60*24 // 1 day in milliseconds
+				$('#logomessage').html( Math.ceil( ( olympics.getTime() - today.getTime() ) / (one_day) ) + " days to go" );
+			//}
 
 			// last minute tweaks!
 			$('#navbar .singles a').eq(0).addClass('on');
