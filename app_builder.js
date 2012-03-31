@@ -171,6 +171,7 @@
 
 	var buildEdition = function() { 
 		var linear = { id: editionID, pages: [] };	
+		var imgCache = {};	
 		Edition.findOne( { id: editionID }, function( err, doc ) {
 			async.waterfall([
 
@@ -274,12 +275,25 @@
 									article.articlebody = article.articlebody.replace(/<a\/?[^>]*>/g,'');
 									paras = article.articlebody.match(/<p>/g).length;
 								}
+								// Collect images for the cache manifest
+								if ( article.image ) {
+									imgCache[article.image] = 1;
+								}
+								if ( article.attachments && article.attachments.image ) {
+									for ( q in article.attachments.image ) {
+										var r = article.attachments.image[q];
+										if ( r.uri ) {
+											imgCache[r.uri] = 1;
+										}
+									}
+								}
+								// Clean up
 								delete article.uri;
 								delete article.id;
 								// Pick some nibs...
 								if ( paras && paras < 16 && ( ! article.image || ! article.imagelarge ) ) {
 									nibs.push( article );
-									console.log( "NIB: " + article.headline );
+									//console.log( "NIB: " + article.headline );
 								}
 								else {
 									linear.pages.push( article );
@@ -294,8 +308,33 @@
 
 			], function (err) {
 				fs.writeFile( __dirname + '/public/editions/latest.linear.json', JSON.stringify(linear), 'utf8', function(){
-					console.log('Saved latest.linear to file');	
-					process.exit(code=0)
+					if(err) {
+						console.error("Could not write file: %s", err);
+						process.exit(1);
+					}
+					console.log('Saved latest.linear to file');
+					// Open the cache-manifest base file, add images, save a copy
+					fs.readFile( __dirname + '/public/cache-manifest-base', 'utf8', function(err,data) {
+						if(err) {
+							console.error("Could not open file: %s", err);
+							process.exit(1);
+						}
+						// Use toString on the buffer
+						var out = "CACHE MANIFEST\n# " + new Date() + "\n\n"; 
+						out = out + data.toString('utf8');
+						for ( i in imgCache ) {
+							out = out + i + "\n";
+						}
+						fs.writeFile( __dirname + '/public/cache-manifest', out, function(err,data) {
+							if(err) {
+								console.error("Could not write file: %s", err);
+								process.exit(1);
+							}
+							console.log( 'Saved cache manifest file' );
+							process.exit(code=0)
+						});
+					});
+
 				});
 
 			});

@@ -5,7 +5,9 @@
 		mongoose = require('mongoose'),
 		gzippo = require('gzippo'),
 		us = require('underscore'),
-		models = require('./models'); 
+		models = require('./models'),
+		util = require('util'),
+		fs = require('fs');
 
 	var app = module.exports = express.createServer();
 
@@ -39,6 +41,12 @@
 		else { 
 			res.end('Sorry... this URL only works on iPads!')
 		}
+	});
+
+	app.get("/offline.manifest", function(req, res){
+		var readStream = fs.createReadStream( __dirname + '/public/cache-manifest' );
+		res.header("Content-Type", "text/cache-manifest");
+	    util.pump(readStream, res);
 	});
 
 	app.listen(8080);

@@ -94,7 +94,7 @@ $(document).ready( function() {
 			var keys = [ 'section', 'position', 'headline', 'image', 'strapline', 'teaser', 'priority' ];
 			
 			edition.pages.unshift( { section: 'news', teasers: front } );
-			edition.pages.push( { section: 'ad', adlink:'http://www.britishgas.co.uk/', adportrait: '/ads/1_portrait.jpg', adlandscape: '/ads/1_landscape.jpg'  } );
+			edition.pages.splice( 7, 0, { section: 'ad', adlink:'http://www.britishgas.co.uk/', adportrait: '/ads/1_portrait.jpg', adlandscape: '/ads/1_landscape.jpg'  } );
 
 			// Create the "teasers pages" object
 			for ( i in edition.pages ) {
@@ -168,7 +168,8 @@ $(document).ready( function() {
 					renderExtras( el );
 				}
 			}
-			loadInitialPanes( teasers.pages,  teasersPanes,  tmplPage );
+
+			loadInitialPanes( teasers.pages, teasersPanes,  tmplPage );
 			loadInitialPanes( edition.pages, articlesPanes, tmplPage );
 
 			teasersPanes.onFlip( function () {
@@ -182,6 +183,7 @@ $(document).ready( function() {
 					}
 				}
 				var section = teasers.pages[teasersPanes.pageIndex].section;
+				window.location.hash = '#/' + section + '/' + teasersPanes.pageIndex;
 				$('#pageWrap').removeClass().addClass( section );
 				$('#navbar a.multi.on').removeClass('on');
 				$('#navbar a.multi').eq(teasersPanes.pageIndex).addClass('on');
@@ -203,6 +205,7 @@ $(document).ready( function() {
 					}
 				}
 				var section = edition.pages[articlesPanes.pageIndex].section;
+				window.location.hash = '#/' + articlesPanes.pageIndex;
 				if ( 0 == articlesPanes.pageIndex ) {
 					$('#pageWrap').removeClass().addClass( 'front' );
 				}
@@ -221,15 +224,15 @@ $(document).ready( function() {
 			});
 
 			var goToArticle = function( i ) {
-				$('#teasersWrapper').slideUp();
-				$('#articlesWrapper').slideDown();
+				$('#teasersWrapper').fadeOut();
+				$('#articlesWrapper').fadeIn();
 				articlesPanes.goToPage(i);
 				resetScroll();
 			};
 
 			var goToTeasers = function( i ) {
-				$('#teasersWrapper').slideDown();
-				$('#articlesWrapper').slideUp();
+				$('#teasersWrapper').fadeIn();
+				$('#articlesWrapper').fadeOut();
 				teasersPanes.goToPage(i);
 				resetScroll();
 			};
@@ -249,6 +252,9 @@ $(document).ready( function() {
 					}
 					else if ( parseInt( bits[1] ) > -1 ) {
 						goToArticle( parseInt( bits[1] ) );
+					}
+					else {
+						goToArticle( 0 );
 					}
 				}
 				else {
