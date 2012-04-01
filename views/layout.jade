@@ -1,13 +1,13 @@
 !!! 5
-html(lang="en", xx-manifest="offline.manifest")
+html(lang="en", manifest="offline.manifest")
 	head
 		title TheSun
 
 		script(type="text/javascript", src="http://use.typekit.com/vvj2ldj.js")
 		script(type="text/javascript") try{Typekit.load();}catch(e){}
 
-		link(type='text/css', rel='stylesheet', href='/assets/css/style.css?v11.03')
-		//link(type='text/css', rel='stylesheet/less', href='/assets/css/style.less?v11')
+		link(type='text/css', rel='stylesheet', href='/assets/css/style.css')
+		//link(type='text/css', rel='stylesheet/less', href='/assets/css/style.less')
 		//script(type='text/javascript', src='/scripts/less.js')
 
 		link(rel="apple-touch-icon", href="./assets/images/apple-touch-icon.png")
@@ -25,7 +25,7 @@ html(lang="en", xx-manifest="offline.manifest")
 
 		script(type='text/javascript', src='/scripts/jquery.js') 
 		script(type='text/javascript', src='/scripts/jquery.waitforimages.js')
-		script(type='text/javascript', src='/scripts/underscore-min.js')
+		//script(type='text/javascript', src='/scripts/underscore-min.js')
 		script(type='text/javascript', src='/scripts/handlebars-1.0.0.beta.6.js')
 		script(type='text/javascript', src='/scripts/swipeview.js')
 		script(type='text/javascript', src='/scripts/jquery.masonry.min.js')
@@ -35,7 +35,7 @@ html(lang="en", xx-manifest="offline.manifest")
 			_gaq.push(['_trackPageview']);
 			(function() {
 				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/u/ga_debug.js';
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 			})();
 	body

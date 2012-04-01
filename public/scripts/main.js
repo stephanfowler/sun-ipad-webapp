@@ -86,7 +86,8 @@ $(document).ready( function() {
 		var tmplNavbar  = Handlebars.compile( $('#tmplNavbar').html() );
 		var tmplPage = Handlebars.compile( $('#tmplPage').html() );
 
-		$.getJSON( '/editions/latest.linear.json?' + new Date().getTime(), function(edition){
+		//$.getJSON( '/editions/latest.linear.json?' + new Date().getTime(), function(edition){
+		$.getJSON( '/editions/latest.linear.json', function(edition){
 
 			var teasers = { pages: [] };
 			var t = [];
@@ -287,31 +288,6 @@ $(document).ready( function() {
 
 			// last minute tweaks!
 			$('#navbar .singles a').eq(0).addClass('on');
-
-			// Cache images... breaks on iPad1?
-			/*
-			setTimeout ( function() {
-				var imgs = {};
-				for ( i in edition.pages ) {
-					p = edition.pages[i];
-					if ( p.image && ! imgs[p.image] ) {
-						imgs[p.image] = 1;
-					}
-					if ( p.attachments ) {
-						for ( q in p.attachments.image ) {
-							r = p.attachments.image[q];
-							if ( r.uri && ! imgs[r.uri] ) {
-								imgs[r.uri] = 1;
-								console.log( r.uri );
-							}
-						}
-					}
-				}
-				for ( i in imgs ) {
-					$('<img/>').attr('src', i ).appendTo('#preloads');
-				}
-			}, 5000 );
-			*/
 
 		});
 

@@ -1,28 +1,29 @@
+NETWORK:
+//use.typekit.com/k/vvj2ldj-d.css?3bb2a6e53c9684ffdc9a9bf11a5b2a629cccc1f92a347488eddb8c1604ea861ad93d0b5bed6a29ddca6c63f209d5fee6d95a003fef5c92d9c27f875e058f6315d073c4dd6db6b26a6f2d0e750f9380b53f897f13b48b16e2db993ec0bdd6e41f880e322c5a109f43a93fdcad5cf2a03e1d1e2d8ffc2c987304372ebaa6271f64c136cefe7de85118cc4e3305a9ce2578eeb2a5a17a1f89cf1e37865ad4e25df64766b10da5ea3c920bd4
 
 CACHE:
-#//use.typekit.com/xxx#xxx.js
-
 /assets/css/style.css
+/assets/css/style.less
+/scripts/less.js
 /scripts/jquery.js
 /scripts/jquery.waitforimages.js
-/scripts/underscore-min.js
 /scripts/handlebars-1.0.0.beta.6.js
 /scripts/swipeview.js
 /scripts/jquery.masonry.min.js
-/scripts/swipeview-main.js
+/scripts/main.js
 
-http://www.google-analytics.com/u/ga_debug.js
-#http://use.typekit.com/k/vvj2ldj-d.css?3bb2a6e53c9684ffdc9a9bf11a5b2a629cccc1f92a347488eddb8c1604ea861ad93d0b5bed6a29ddca6c63f209d5fee6d95a003fef5c92d9c27f875e058f6315d073c4dd6db6b26a6f2d0e750f9380b53f897f13b48b16e2db993ec0bdd6e41f880e322c5a109f43a93fdcad5cf2a03e1d1e2d8ffc2c987304372ebaa6271f64c136cefe7de85118cc4e3305a9ce2578eeb2a5a17a1f89cf1e37865ad4e25df64766b10da5ea3c920bd4
+//www.google-analytics.com/ga.js
+//use.typekit.com/vvj2ldj.js
 
 /editions/latest.linear.json
 
 /assets/images/addToHomescreen.png
+/assets/images/thesun.png
+/assets/images/thesun-large.png
 /assets/images/thesun-sport.png
 /assets/images/thesun-showbiz.png
 /assets/images/thesun-woman.png
 /assets/images/thesun-tv.png
-/assets/images/thesun-breakingnews.png
-/assets/images/thesun-large.png
 /assets/images/olympics.png
 /ads/1_portrait.jpg
 /ads/1_landscape.jpg

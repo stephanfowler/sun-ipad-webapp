@@ -18,8 +18,8 @@
 		app.use(express.bodyParser());
 		app.use(express.methodOverride());
 		app.use(app.router);
-		app.use(express.static(__dirname + '/public'));
-		//app.use( gzippo.staticGzip(__dirname + '/public', { maxAge:0, clientMaxAge:0 } ) );
+		//app.use(express.static(__dirname + '/public'));
+		app.use( gzippo.staticGzip(__dirname + '/public', { maxAge:1, clientMaxAge:1 } ) );
 	});
 	app.configure('development', function(){
 		app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
