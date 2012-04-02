@@ -1,6 +1,3 @@
-NETWORK:
-//use.typekit.com/k/vvj2ldj-d.css?3bb2a6e53c9684ffdc9a9bf11a5b2a629cccc1f92a347488eddb8c1604ea861ad93d0b5bed6a29ddca6c63f209d5fee6d95a003fef5c92d9c27f875e058f6315d073c4dd6db6b26a6f2d0e750f9380b53f897f13b48b16e2db993ec0bdd6e41f880e322c5a109f43a93fdcad5cf2a03e1d1e2d8ffc2c987304372ebaa6271f64c136cefe7de85118cc4e3305a9ce2578eeb2a5a17a1f89cf1e37865ad4e25df64766b10da5ea3c920bd4
-
 CACHE:
 /assets/css/style.css
 /assets/css/style.less
@@ -12,11 +9,13 @@ CACHE:
 /scripts/jquery.masonry.min.js
 /scripts/main.js
 
+# GA. But why?
 //www.google-analytics.com/ga.js
-//use.typekit.com/vvj2ldj.js
 
+# edition
 /editions/latest.linear.json
 
+# furnitire
 /assets/images/addToHomescreen.png
 /assets/images/thesun.png
 /assets/images/thesun-large.png
@@ -27,5 +26,19 @@ CACHE:
 /assets/images/olympics.png
 /ads/1_portrait.jpg
 /ads/1_landscape.jpg
+/ads/lucosade.png 
+# fonts
 
-# images...
+#/assets/fonts/futura/embedded-opentype
+/assets/fonts/futura/2190B4_0_0.eot
+/assets/fonts/futura/2190B4_0_0.eot?#iefix
+/assets/fonts/futura/2190B4_0_0.woff
+/assets/fonts/futura/2190B4_0_0.ttf
+
+/assets/fonts/merriweather/Merriweather-webfont.woff
+/assets/fonts/merriweather/Merriweather-webfont.svg#MerriweatherRegular
+/assets/fonts/merriweather/Merriweather-Bold-webfont.woff
+/assets/fonts/merriweather/Merriweather-Bold-webfont.svg#MerriweatherBold
+
+# images
+

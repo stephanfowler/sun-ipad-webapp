@@ -1,6 +1,6 @@
 $(document).ready( function() {
 
-	if ( 0 && ! window.navigator.standalone ) {
+	if ( 0 && !window.navigator.standalone ) {
 		$('#addToHomeScreen').show();
 	}
 	else {
@@ -95,13 +95,13 @@ $(document).ready( function() {
 			var keys = [ 'section', 'position', 'headline', 'image', 'strapline', 'teaser', 'priority' ];
 			
 			edition.pages.unshift( { section: 'news', teasers: front } );
-			edition.pages.splice( 7, 0, { section: 'ad', adlink:'http://www.britishgas.co.uk/', adportrait: '/ads/1_portrait.jpg', adlandscape: '/ads/1_landscape.jpg'  } );
+			edition.pages.splice( 7, 0, { section: 'news', adlink:'http://www.britishgas.co.uk/', adportrait: '/ads/1_portrait.jpg', adlandscape: '/ads/1_landscape.jpg'  } );
 
 			// Create the "teasers pages" object
 			for ( i in edition.pages ) {
 				edition.pages[i].position = i; // +1 because we add a front page, later...
 				var section = edition.pages[i].section;
-				if ( section != 'ad' ) {
+				//if ( section != 'ad' ) {
 					if ( ! t[section] ) {
 						t[section] = [];
 					}
@@ -113,12 +113,16 @@ $(document).ready( function() {
 					if ( i > 0 && i <= 4 ) {
 						front.push( clone(p) );
 					}
-				}	
+				//}	
 			}
 			var n = 0;
 			for ( i in t ) {
-				t[i][0].priority = 'top';
-				t[i][1].priority = 'top';
+				if ( t[i][0] ) {
+					t[i][0].priority = 'top';
+				}
+				if ( t[i][1] ) {
+					t[i][1].priority = 'top';
+				}
 				teasers.pages.push( { position: n, section: i, teasers: t[i] } );
 				n++;
 			}

@@ -1,3 +1,22 @@
+@font-face {
+  font-family: 'MerriweatherRegular';
+  src: url('/assets/fonts/merriweather/Merriweather-webfont.eot');
+  src: url('/assets/fonts/merriweather/Merriweather-webfont.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/merriweather/Merriweather-webfont.woff') format('woff'), url('/assets/fonts/merriweather/Merriweather-webfont.ttf') format('truetype'), url('/assets/fonts/merriweather/Merriweather-webfont.svg#MerriweatherRegular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'MerriweatherBold';
+  src: url('/assets/fonts/merriweather/Merriweather-Bold-webfont.eot');
+  src: url('/assets/fonts/merriweather/Merriweather-Bold-webfont.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/merriweather/Merriweather-Bold-webfont.woff') format('woff'), url('/assets/fonts/merriweather/Merriweather-Bold-webfont.ttf') format('truetype'), url('/assets/fonts/merriweather/Merriweather-Bold-webfont.svg#MerriweatherBold') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'FuturaBT-BoldCondensed';
+  src: url('/assets/fonts/futura/2190B4_0_0.eot');
+  src: url('/assets/fonts/futura/2190B4_0_0.eot?#iefix') format('/assets/fonts/futura/embedded-opentype'), url('/assets/fonts/futura/2190B4_0_0.woff') format('woff'), url('/assets/fonts/futura/2190B4_0_0.ttf') format('truetype');
+}
 html,
 body,
 div,
@@ -136,7 +155,7 @@ body {
   -ms-text-size-adjust: none;
   color: #000;
   background: #fff;
-  font-family: chaparral-pro, serif;
+  font-family: MerriweatherRegular, chaparral-pro, serif;
   position: relative;
 }
 a {
@@ -145,6 +164,29 @@ a {
 }
 p {
   margin-bottom: 10px;
+}
+#teasersWrapper,
+#articlesWrapper {
+  width: 1224px;
+  height: 4000px;
+  overflow: visible;
+}
+.page {
+  border-left: 15px solid #cd0000;
+  width: 1009px;
+  position: relative;
+}
+.interstitial {
+  position: absolute;
+  right: -200px;
+  top: 0px;
+  width: 200px;
+  height: 1000px;
+  background-image: url('/ads/lucosade.png');
+  background-position: 15px 30px;
+  background-repeat: no-repeat;
+  background-color: #fdeba3;
+  z-index: -100;
 }
 #logo {
   position: fixed;
@@ -195,13 +237,13 @@ p {
   margin: 0 2px 0 0;
 }
 #navbar .section .multi {
+  clear: both;
   display: block;
   text-transform: uppercase;
-  font-family: myriad-pro-condensed;
-  font-weight: 700;
+  font-family: FuturaBT-BoldCondensed;
   font-size: 16px;
-  line-height: 17px;
-  padding: 2px 0 2px 2px;
+  height: 17px;
+  padding: 3px 0 0 2px;
 }
 #navbar .section .multi.on {
   background-color: #999;
@@ -308,19 +350,18 @@ h2 {
   padding: 0 0 10px 0;
 }
 .teasers .teaser .text .title {
-  margin: -4px 0 0 0;
-  padding: 10px 10px 5px 10px;
+  padding: 10px 10px 0 10px;
   text-transform: uppercase;
-  font-size: 30px;
+  font-size: 24px;
   line-height: 23px;
-  font-family: myriad-pro-condensed;
-  font-weight: 900;
+  font-family: FuturaBT-BoldCondensed;
   font-style: normal;
+  letter-spacing: -1px;
 }
 .teasers .teaser .text .excerpt {
-  font-size: 18px;
-  line-height: 18px;
-  font-family: chaparral-pro;
+  font-size: 15px;
+  line-height: 19px;
+  font-family: MerriweatherRegular, chaparral-pro;
   font-weight: 400;
   font-style: normal;
   padding: 0 10px 5px 10px;
@@ -344,20 +385,23 @@ h2 {
   position: absolute;
   bottom: 0;
   left: 0;
-  padding: 2px 0 0 10px;
+  padding: 0 0 0 10px;
   width: 478px;
 }
 .teasers .top .text .title {
   font-size: 40px;
   line-height: 34px;
   letter-spacing: -1px;
-  padding: 10px 5px 5px 0;
+  padding: 0 5px 0 0;
   color: #fff;
   text-shadow: 0px 2px 10px #000;
 }
 .teasers .top .text .excerpt {
   color: #fff;
+  font-size: 18px;
+  line-height: 18px;
   padding: 0 10px 10px 0;
+  text-shadow: 0px 2px 10px #000;
 }
 .teasers .top_0 {
   width: 737px;
@@ -372,14 +416,16 @@ h2 {
 }
 .teasers .top_0 .text .title {
   font-size: 80px;
-  line-height: 60px;
+  letter-spacing: -1px;
+  line-height: 66px;
   text-shadow: 0px 2px 10px #000;
-  margin: 0 0 5px 0;
+  margin: 10px 0 0 0;
 }
 .teasers .top_0 .text .excerpt {
-  font-size: 34px;
+  font-size: 30px;
   font-weight: 400;
-  line-height: 28px;
+  line-height: 30px;
+  text-shadow: 0px 2px 10px #000;
 }
 .teasers .top_0 img {
   width: 737px;
@@ -398,8 +444,7 @@ h2 {
   text-transform: uppercase;
   font-size: 20px;
   line-height: 18px;
-  font-family: myriad-pro-condensed;
-  font-weight: 900;
+  font-family: FuturaBT-BoldCondensed;
   font-style: normal;
   margin: 0 0 10px 0;
 }
@@ -411,26 +456,23 @@ h2 {
   margin: 0 0 0 0;
   font-size: 18px;
   line-height: 24px;
-  font-weight: 400;
   font-style: normal;
 }
 .nibsHeader {
   color: #cd0000;
-  font-family: myriad-pro-condensed;
-  font-weight: 900;
+  font-family: FuturaBT-BoldCondensed;
   font-style: normal;
   font-size: 50px;
   line-height: 40px;
-  padding: 15px 0 15px 10px;
+  padding: 20px 0 15px 10px;
 }
 .editor {
   height: 700px;
   padding: 20px;
 }
 .editor h1 {
-  font-family: myriad-pro-condensed;
+  font-family: FuturaBT-BoldCondensed;
   font-size: 50px;
-  font-weight: 900;
   font-style: normal;
 }
 .editor form {
@@ -468,14 +510,11 @@ h2 {
           transition-property: left, right, top;
 }
 */
-.page {
-  border-left: 15px solid #cd0000;
-}
 /**********************
 ARTICLE
 ***********************/
 .articleWrap {
-  font-family: chaparral-pro;
+  font-family: MerriweatherRegular, chaparral-pro;
   padding: 0;
   margin: 0 auto;
 }
@@ -488,6 +527,7 @@ ARTICLE
   float: left;
   position: relative;
   margin: 14px 0 0 0;
+  width: 753px;
 }
 .article .hero .imgWrap {
   max-height: 800px;
@@ -496,18 +536,10 @@ ARTICLE
 .article .hero .imgWrap img {
   width: 753px;
 }
-.article .hero .deck {
-  width: 753px;
-}
-.article .hero .deck .title {
-  font-size: 70px;
-  line-height: 53px;
-}
 .article .deck .strapline {
   color: #cd0000;
   text-transform: uppercase;
   font-size: 34px;
-  font-weight: 700;
   letter-spacing: -1px;
   margin: 0 0 0 10px;
 }
@@ -515,18 +547,16 @@ ARTICLE
   letter-spacing: -2px;
   text-transform: uppercase;
   color: #000;
-  font-family: myriad-pro-condensed;
-  font-weight: 900;
+  font-family: FuturaBT-BoldCondensed;
   font-style: normal;
-  font-size: 50px;
-  line-height: 40px;
-  margin: 0 0 10px 10px;
+  font-size: 64px;
+  line-height: 52px;
+  margin: 5px 0 0 10px;
 }
 .article .subdeck {
   color: #666;
-  font-size: 34px;
-  font-weight: 400;
-  line-height: 28px;
+  font-size: 30px;
+  line-height: 30px;
   letter-spacing: -2px;
   margin: 0 0 10px 10px;
 }
@@ -580,13 +610,12 @@ ARTICLE
 }
 .article .articlebody p {
   margin: 0 0 0 0;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 26px;
-  font-weight: 400;
   font-style: normal;
 }
 .article .articlebody p:first-child {
-  font-weight: 700;
+  font-weight: bold;
   margin-bottom: 5px;
 }
 .article .articlebody:first-child {
@@ -595,15 +624,15 @@ ARTICLE
 .article .articlebody:first-letter {
   display: block;
   float: left;
-  margin: 36px 2px 30px -2px;
+  margin: 32px 2px 10px -4px;
   text-transform: uppercase;
-  font-size: 145px;
-  font-family: myriad-pro-condensed;
-  font-weight: 900;
+  font-size: 92px;
+  font-family: FuturaBT-BoldCondensed;
+  font-weight: normal;
 }
 .article .relateds p {
   font-size: 16px;
-  font-family: chaparral-pro;
+  font-family: MerriweatherRegular, chaparral-pro;
   font-weight: 400;
   font-style: normal;
 }
@@ -624,7 +653,7 @@ ARTICLE
   font-size: 16px;
   font-weight: 600;
   line-height: 16px;
-  font-family: chaparral-pro;
+  font-family: MerriweatherRegular, chaparral-pro;
   color: #fff;
 }
 .article .images .imageWrap:first-child {
@@ -667,7 +696,7 @@ ARTICLE
   position: absolute;
   bottom: 0;
   left: 0;
-  padding: 10px;
+  padding: 0 10px 10px 20px;
   width: 733px;
 }
 .article_portrait .hero .deck .strapline {
@@ -675,17 +704,25 @@ ARTICLE
 }
 .article_portrait .hero .deck .title {
   color: #fff;
-  font-size: 90px;
+  font-size: 86px;
+  letter-spacing: -1px;
   line-height: 70px;
   margin: 0;
   text-shadow: 0px 2px 10px #000;
 }
 .article_portrait .hero .deck .subdeck {
   color: #fff;
-  margin: 10px 0 10px 0;
+  margin: 0 0 10px 0;
   text-shadow: 0px 2px 10px #000;
 }
 @media only screen and (max-device-width: 1024px) and (orientation: portrait) {
+  #teasersWrapper,
+  #articlesWrapper {
+    width: 968px;
+  }
+  .page {
+    width: 753px;
+  }
   .article .articlebody {
     width: 443px;
     padding-right: 20px;
@@ -707,19 +744,28 @@ ARTICLE
   }
 }
 @media only screen and (max-device-width: 1024px) and (orientation: landscape) {
+  #teasersWrapper,
+  #articlesWrapper {
+    width: 1224px;
+  }
+  .page {
+    width: 1009px;
+  }
   #navbar .section .singles a {
     width: 7px;
   }
-  .article .images,
   .article .articlebody {
     padding-right: 20px;
-    border-right: 1px solid #ccc;
   }
   .article .hero .imgWrap {
     max-height: 702px;
   }
   .article .deck .subdeck {
     display: none;
+  }
+  .article .title {
+    border-right: 2px solid #bbbbbb;
+    padding: 0 0 10px 0;
   }
   .article .colLeft {
     width: 741px;
@@ -788,24 +834,23 @@ ARTICLE
   position: absolute;
   bottom: 22px;
   right: 26px;
-  font-size: 15px;
-  font-weight: 700;
+  font-family: FuturaBT-BoldCondensed;
+  font-size: 14px;
 }
 #pageWrap.front #logo #logomessage {
   display: block;
   background-color: #fff;
   color: #333;
   text-transform: uppercase;
-  font-family: myriad-pro-condensed;
-  font-weight: 700;
+  font-family: FuturaBT-BoldCondensed;
   font-size: 14px;
   letter-spacing: 2px;
-  line-height: 17px;
   position: absolute;
   bottom: 0;
   left: 0;
   width: 268px;
-  height: 20px;
+  height: 16px;
+  padding: 4px 0 0 0;
   background-image: url('/assets/images/olympics.png');
   background-repeat: no-repeat;
   background-position: right;
@@ -858,15 +903,9 @@ ARTICLE
   top: 28px;
   right: 4px;
   text-transform: uppercase;
-  font-family: myriad-pro-condensed;
+  font-family: FuturaBT-BoldCondensed;
   font-size: 15px;
   line-height: 12px;
   letter-spacing: 1px;
   color: #999;
-}
-#teasersWrapper,
-#articlesWrapper {
-  max-width: 1024px;
-  height: 4000px;
-  overflow: visible;
 }
