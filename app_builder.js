@@ -108,29 +108,32 @@
 			// Rejig the attachments. TODO: could do this with a map instead? 
 			article.attachments = {};
 			var ats = {};
-			// a fix for when attachments has only one attachemt child. What's a better way?
-			var attachments = typeof a.attachments.attachment[1] == 'undefined' ? a.attachments : a.attachments.attachment;
-			for ( i in attachments ) {
-				var at = attachments[i];
-				if ( typeof ats[at.type] == 'undefined' ) {
-					ats[at.type] = [];
+			var attachments;
+			if ( a.attachments && a.attachments.attachment ) {
+				// a fix for when attachments has only one attachemt child. What's a better way?
+				attachments = typeof a.attachments.attachment[1] == 'undefined' ? a.attachments : a.attachments.attachment;
+				for ( i in attachments ) {
+					var at = attachments[i];
+					if ( typeof ats[at.type] == 'undefined' ) {
+						ats[at.type] = [];
+					}
+					var attSpec = { uri: at.uri };
+					if ( at.type == 'video' ) {
+						attSpec.js = '<script type="text/javascript" src="http://player.ooyala.com/player.js?embedCode=' + at.uri + '&deepLinkEmbedCode=' + at.uri + '"></script>';
+					}
+					if ( at.caption ) {
+						attSpec.caption = at.caption
+					}
+					ats[at.type].push( attSpec );
 				}
-				var attSpec = { uri: at.uri };
-				if ( at.type == 'video' ) {
-					attSpec.js = '<script type="text/javascript" src="http://player.ooyala.com/player.js?embedCode=' + at.uri + '&deepLinkEmbedCode=' + at.uri + '"></script>';
+				if ( ats.image && ats.image[0] ) {
+					article.image = ats.image[0].uri.replace( /[a-z]{1,1}\.(jpg|png)$/, "a.jpg" )
+					if ( ats.image[0].caption ) {
+						article.subdeck = ats.image[0].caption;
+					}
 				}
-				if ( at.caption ) {
-					attSpec.caption = at.caption
-				}
-				ats[at.type].push( attSpec );
+				article.attachments = ats;
 			}
-			if ( ats.image && ats.image[0] ) {
-				article.image = ats.image[0].uri.replace( /[a-z]{1,1}\.(jpg|png)$/, "a.jpg" )
-				if ( ats.image[0].caption ) {
-					article.subdeck = ats.image[0].caption;
-				}
-			}
-			article.attachments = ats;
 			async.waterfall(
 				[
 					function( callback ) {

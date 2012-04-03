@@ -1,6 +1,6 @@
 $(document).ready( function() {
 
-	if ( 0 && !window.navigator.standalone ) {
+	if ( !window.navigator.standalone ) {
 		$('#addToHomeScreen').show();
 	}
 	else {
@@ -94,7 +94,7 @@ $(document).ready( function() {
 			var front = [];
 			var keys = [ 'section', 'position', 'headline', 'image', 'strapline', 'teaser', 'priority' ];
 			
-			edition.pages.unshift( { section: 'news', teasers: front } );
+			edition.pages.unshift( { section: 'news', teasers: front } ); // add a front page
 			edition.pages.splice( 7, 0, { section: 'news', adlink:'http://www.britishgas.co.uk/', adportrait: '/ads/1_portrait.jpg', adlandscape: '/ads/1_landscape.jpg'  } );
 
 			// Create the "teasers pages" object
@@ -138,6 +138,8 @@ $(document).ready( function() {
 
 			// Now remove the ghost front page teaser from the fist page of teasers..!	
 			teasers.pages[0].teasers.shift();
+			edition.pages[1].attachments.image.unshift( { uri: edition.pages[1].image } );
+			delete edition.pages[1].image;
 
 			teasersPanes  = new SwipeView('#teasersWrapper',  { numberOfPages: teasers.pages.length  });
 			articlesPanes = new SwipeView('#articlesWrapper', { numberOfPages: edition.pages.length });
@@ -192,6 +194,13 @@ $(document).ready( function() {
 				$('#pageWrap').removeClass().addClass( section );
 				$('#navbar a.multi.on').removeClass('on');
 				$('#navbar a.multi').eq(teasersPanes.pageIndex).addClass('on');
+
+                // Fix page height
+                /* Broken. Perhaps because masonry hasn't rendered yet?
+				var pageHeight = $('#teasersWrapper .swipeview-active .page' ).height();
+                $('#teasersWrapper').height( pageHeight );
+				*/
+
 				// GA
 				var newTime = new Date().getTime();
 				_gaq.push(['_trackEvent', 'iPad', 'PageRead', prevSection, Math.floor((newTime - prevTime) / 1000) ]);
@@ -221,6 +230,11 @@ $(document).ready( function() {
 				$('#navbar a.multi.on').removeClass('on');
 				$('#navbar .singles a.on').removeClass('on').addClass('won');
 				$('#navbar .singles a').eq(articlesPanes.pageIndex).removeClass('won').addClass('on');
+
+                // Fix page height
+                var pageHeight = $('#articlesWrapper .swipeview-active .page' ).height();
+                $('#articlesWrapper').height( pageHeight );
+				
 				// GA
 				var newTime = new Date().getTime();
 				_gaq.push(['_trackEvent', 'iPad', 'PageRead', prevSection, Math.floor((newTime - prevTime) / 1000) ]);
@@ -229,17 +243,26 @@ $(document).ready( function() {
 			});
 
 			var goToArticle = function( i ) {
-				$('#teasersWrapper').fadeOut();
-				$('#articlesWrapper').fadeIn();
-				articlesPanes.goToPage(i);
-				resetScroll();
+				i = parseInt( i );
+				// goto if not current page, or if panes are hidden
+				if ( articlesPanes.pageIndex != i || $('#articlesWrapper:hidden').length ) {
+					$('#teasersWrapper:visible').fadeOut();
+					$('#articlesWrapper:hidden').fadeIn();
+					articlesPanes.goToPage(i);
+					resetScroll();
+					setTimeout( function(){}, 1000 );
+				}
 			};
 
 			var goToTeasers = function( i ) {
-				$('#teasersWrapper').fadeIn();
-				$('#articlesWrapper').fadeOut();
-				teasersPanes.goToPage(i);
-				resetScroll();
+				i = parseInt( i );
+				// goto if front page, if not current page, or if panes are hidden
+				if ( i == 0 || teasersPanes.pageIndex != i || $('#teasersWrapper:hidden').length ) {
+					$('#teasersWrapper:hidden').fadeIn();
+					$('#articlesWrapper:visible').fadeOut();
+					teasersPanes.goToPage(i);
+					resetScroll();
+				}
 			};
 
 			var resetScroll = function() {
@@ -253,10 +276,10 @@ $(document).ready( function() {
 				if ( hash ) {
 					var bits = hash.split( '/' );
 					if ( parseInt( bits[2] ) > -1 ) {
-						goToTeasers( parseInt( bits[2] ) );
+						goToTeasers( bits[2] );
 					}
 					else if ( parseInt( bits[1] ) > -1 ) {
-						goToArticle( parseInt( bits[1] ) );
+						goToArticle( bits[1] );
 					}
 					else {
 						goToArticle( 0 );
@@ -285,14 +308,18 @@ $(document).ready( function() {
 			$('#todayis').html( days[wkDay] + ", " + months[month] + " " + day + ", " + year );
 
 			var olympics = new Date( 2012, 6, 27 );
-			//if ( today < olympics ) {
+			if ( today < olympics ) {
 				var one_day=1000*60*60*24 // 1 day in milliseconds
 				$('#logomessage').html( Math.ceil( ( olympics.getTime() - today.getTime() ) / (one_day) ) + " days to go" );
-			//}
+			}
 
 			// last minute tweaks!
 			$('#navbar .singles a').eq(0).addClass('on');
 
+			// Fix page height
+			var pageHeight = $('#articlesWrapper .swipeview-active .page' ).height();
+			$('#articlesWrapper').height( pageHeight );
+				
 		});
 
 	}

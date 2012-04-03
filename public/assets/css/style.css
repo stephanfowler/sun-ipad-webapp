@@ -167,13 +167,13 @@ p {
 }
 #teasersWrapper,
 #articlesWrapper {
-  width: 1224px;
+  width: 1024px;
   height: 4000px;
   overflow: visible;
 }
 .page {
-  border-left: 15px solid #cd0000;
   width: 1009px;
+  border-left: 15px solid #cd0000;
   position: relative;
 }
 .interstitial {
@@ -182,10 +182,7 @@ p {
   top: 0px;
   width: 200px;
   height: 1000px;
-  background-image: url('/ads/lucosade.png');
-  background-position: 15px 30px;
   background-repeat: no-repeat;
-  background-color: #fdeba3;
   z-index: -100;
 }
 #logo {
@@ -589,11 +586,13 @@ ARTICLE
 }
 .article .articlecontent {
   margin: 0;
+  padding: 0 0 50px 0;
   margin: 20px 0 0 15px;
 }
-.article .articlecontent img {
+.article .articlecontent img.small {
+  width: 250px;
   float: left;
-  margin: 0 15px 0 0;
+  margin: 0 15px 10px 0;
 }
 .article .articlecontent img.pull {
   display: block;
@@ -844,13 +843,13 @@ ARTICLE
   text-transform: uppercase;
   font-family: FuturaBT-BoldCondensed;
   font-size: 14px;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
   position: absolute;
   bottom: 0;
   left: 0;
   width: 268px;
   height: 16px;
-  padding: 4px 0 0 0;
+  padding: 2px 0 0 0;
   background-image: url('/assets/images/olympics.png');
   background-repeat: no-repeat;
   background-position: right;
@@ -866,35 +865,54 @@ ARTICLE
 #pageWrap.front #navbar .multi {
   float: left;
   margin: 13px 20px 0 0;
-  padding: 3px 4px;
+  padding: 0 4px 3px 4px;
   font-size: 22px;
+  height: 20px;
+}
+page.front .interstitial {
+  background-image: url('/ads/interstitial_news.png');
+}
+.page.news .interstitial {
+  background-image: url('/ads/interstitial_news.png');
 }
 #pageWrap.sport #logo {
   background-color: #3fa134;
   background-image: url('/assets/images/thesun-sport.png');
 }
-#pageWrap.sport .page {
+.page.sport {
   border-left-color: #3fa134;
+}
+.page.sport .interstitial {
+  background-image: url('/ads/interstitial_sport.png');
 }
 #pageWrap.showbiz #logo {
   background-color: #4312ae;
   background-image: url('/assets/images/thesun-showbiz.png');
 }
-#pageWrap.showbiz .page {
+.page.showbiz {
   border-left-color: #4312ae;
+}
+.page.showbiz .interstitial {
+  background-image: url('/ads/interstitial_showbiz.png');
 }
 #pageWrap.woman #logo {
   background-color: #c7007d;
   background-image: url('/assets/images/thesun-woman.png');
 }
-#pageWrap.woman .page {
+.page.woman {
   border-left-color: #c7007d;
+}
+.page.woman .interstitial {
+  background-image: url('/ads/interstitial_woman.png');
 }
 #pageWrap.tv #logo {
   background-color: #ffa200;
   background-image: url('/assets/images/thesun-tv.png');
 }
-#pageWrap.tv .page {
+#pageWrap.tv .interstitial {
+  background-image: url('/ads/interstitial_tv.png');
+}
+.page.tv {
   border-left-color: #ffa200;
 }
 /* SWIPER */

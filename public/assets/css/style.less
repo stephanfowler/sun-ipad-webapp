@@ -109,15 +109,14 @@ p {
 
 #teasersWrapper,
 #articlesWrapper {
-    //max-width: 1024px;
-    width: 1224px;
+	width: @iPadWide;
     height: 4000px;
     overflow: visible;
 }
 
 .page {
+	width: @iPadWide - @pageSeperatorWidth;
 	border-left: @pageSeperatorWidth solid @colorMain;
-    width: 1009px;
 	position: relative;
 }
 
@@ -127,10 +126,7 @@ p {
 	top: 0px;
 	width: 200px;
 	height: 1000px;
-	background-image: url('/ads/lucosade.png');
-	background-position: 15px 30px;
 	background-repeat: no-repeat;
-	background-color: #fdeba3;
 	z-index: -100;
 }
 
@@ -534,10 +530,12 @@ ARTICLE
 	}
 	.articlecontent {
 		margin: 0;
+		padding: 0 0 50px 0;
 		margin: 20px 0 0 15px;
-		img {
+		img.small {
+			width: 250px;
 			float: left;
-			margin: 0 15px 0 0;
+			margin: 0 15px 10px 0;
 		}
 		img.pull {
 			display: block;
@@ -668,8 +666,7 @@ ARTICLE
 }
 
 @media only screen and (max-device-width: 1024px) and (orientation:portrait) { 
-	#teasersWrapper,
-	#articlesWrapper {
+	#teasersWrapper, #articlesWrapper {
 		width: @iPadTall + @interstitiallWidth;
 	}
 	.page {
@@ -705,8 +702,7 @@ ARTICLE
 }
 
 @media only screen and (max-device-width: 1024px) and (orientation:landscape) { 
-	#teasersWrapper,
-	#articlesWrapper {
+	#teasersWrapper, #articlesWrapper {
 		width: @iPadWide + @interstitiallWidth;
 	}
 	.page {
@@ -819,13 +815,13 @@ ARTICLE
 			text-transform: uppercase;
 			font-family: FuturaBT-BoldCondensed;
 			font-size: 14px;
-			letter-spacing: 2px;
+			letter-spacing: 3px;
 			position: absolute;
 			bottom: 0;
 			left: 0;
 			width: 268px;
 			height: 16px;
-			padding: 4px 0 0 0;
+			padding: 2px 0 0 0;
 			background-image: url('/assets/images/olympics.png');
 			background-repeat: no-repeat;
 			background-position: right;
@@ -841,9 +837,23 @@ ARTICLE
 		.multi {
 			float: left;
 			margin: 13px 20px 0 0;
-			padding: 3px 4px;
+			padding: 0 4px 3px 4px;
 			font-size: 22px;
+			height: 20px;
 		}
+	}
+}
+page.front {
+	.interstitial {
+		background-image: url('/ads/interstitial_news.png');
+	}
+}
+
+#pageWrap.news {
+}
+.page.news {
+	.interstitial {
+		background-image: url('/ads/interstitial_news.png');
 	}
 }
 
@@ -852,8 +862,11 @@ ARTICLE
 		background-color: @colorSport;
 		background-image: url('/assets/images/thesun-sport.png');
 	}
-	.page {
-		border-left-color: @colorSport;
+}
+.page.sport {
+	border-left-color: @colorSport;
+	.interstitial {
+		background-image: url('/ads/interstitial_sport.png');
 	}
 }
 
@@ -862,8 +875,11 @@ ARTICLE
 		background-color: @colorShowbiz;
 		background-image: url('/assets/images/thesun-showbiz.png');
 	}
-	.page {
-		border-left-color: @colorShowbiz;
+}
+.page.showbiz {
+	border-left-color: @colorShowbiz;
+	.interstitial {
+		background-image: url('/ads/interstitial_showbiz.png');
 	}
 }
 
@@ -872,8 +888,11 @@ ARTICLE
 		background-color: @colorWoman;
 		background-image: url('/assets/images/thesun-woman.png');
 	}
-	.page {
-		border-left-color: @colorWoman;
+}
+.page.woman {
+	border-left-color: @colorWoman;
+	.interstitial {
+		background-image: url('/ads/interstitial_woman.png');
 	}
 }
 
@@ -882,9 +901,12 @@ ARTICLE
 		background-color: @colorTv;
 		background-image: url('/assets/images/thesun-tv.png');
 	}
-	.page {
-		border-left-color: @colorTv;
+	.interstitial {
+		background-image: url('/ads/interstitial_tv.png');
 	}
+}
+.page.tv {
+	border-left-color: @colorTv;
 }
 
 /* SWIPER */

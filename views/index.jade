@@ -28,7 +28,7 @@
 			{{/each}}
 
 		script#tmplPage(type="text/x-handlebars-template")
-			.page
+			.page(class="{{section}}")
 				.interstitial
 				{{#if adlink}}
 				a.ad(href="{{adlink}}")
@@ -75,7 +75,7 @@
 						.articlecontent
 							{{#unless imagelarge}}
 							{{#if image}}
-							img(src="{{image}}")
+							img.small(src="{{image}}")
 							{{/if}}
 							.deck	
 								.strapline {{strapline}}

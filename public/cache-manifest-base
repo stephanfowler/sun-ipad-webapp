@@ -26,7 +26,12 @@ CACHE:
 /assets/images/olympics.png
 /ads/1_portrait.jpg
 /ads/1_landscape.jpg
-/ads/lucosade.png 
+/ads/interstitial_news.png
+/ads/interstitial_tv.png
+/ads/interstitial_showbiz.png
+/ads/interstitial_woman.png
+/ads/interstitial_sport.png
+
 # fonts
 
 #/assets/fonts/futura/embedded-opentype
