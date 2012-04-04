@@ -96,7 +96,7 @@
 				.teasers
 					div(class="{{section}}")
 						{{#each teasers}}
-						.teaser(class="{{priority}}")
+						.teaser(class="{{priority}} {{#if imageportrait}}portrait{{/if}}")
 							div(class="{{section}}")
 								a(href="#/{{position}}")
 									div(class="{{section}}-extra")

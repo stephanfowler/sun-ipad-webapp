@@ -13,7 +13,7 @@
 
 	var express = require('express'),
 		mongoose = require('mongoose'),
-		xml2js = require('xml2js'),
+		xml2js = require('xml2js-expat'),
 		http = require('http'),
 		us = require('underscore'),
 		async = require('async'),
@@ -75,15 +75,15 @@
 		if ( getHost(url) && getPath(url) ) {
 			var request = client.request('GET', getPath(url), {'host': getHost(url)});
 			request.on('response', function (response) {
-                response.setEncoding("binary");
+                //response.setEncoding("binary");
 				var data = '';
 				response.on('data', function(chunk){ 
 					data += chunk; 
 				});
 				response.on('end', function(){
-					var parser = new xml2js.Parser();
+					var parser = new xml2js.Parser('UTF-8');
 					parser.on('end', function( json ) {
-						schemaProcessor( url, json, callback ) 
+						schemaProcessor( url, json, callback );
 					});
 					parser.parseString(data);
 				});

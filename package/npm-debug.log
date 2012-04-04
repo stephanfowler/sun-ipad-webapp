@@ -1,0 +1,470 @@
+info it worked if it ends with ok
+verbose cli [ 'node', '/usr/bin/npm', 'install' ]
+info using npm@1.1.1
+info using node@v0.6.13
+verbose /usr/bin/node node symlink
+verbose config file /home/stephan/.npmrc
+verbose config file /usr/etc/npmrc
+verbose config file /usr/lib/node_modules/npm/npmrc
+verbose has wscript [ undefined,
+verbose has wscript   { dev: true,
+verbose has wscript     file: '/home/stephan/Dropbox/www/thesun/v11/package/package.json',
+verbose has wscript     contributors: false,
+verbose has wscript     serverjs: false,
+verbose has wscript     wscript: true } ]
+verbose caching /home/stephan/Dropbox/www/thesun/v11/package/package.json
+verbose loadDefaults node-expat@1.4.3
+verbose where, deps [ '/home/stephan/Dropbox/www/thesun/v11/package', [ 'vows' ] ]
+verbose from cache /home/stephan/Dropbox/www/thesun/v11/package/package.json
+info preinstall node-expat@1.4.3
+verbose from cache /home/stephan/Dropbox/www/thesun/v11/package/package.json
+verbose cache add [ 'vows@>=0.5.12', null ]
+silly cache add: name, spec, args [ undefined, 'vows@>=0.5.12', [ 'vows@>=0.5.12', null ] ]
+verbose parsed url { pathname: 'vows@', path: 'vows@', href: 'vows@' }
+silly cache add: name, spec, args [ 'vows', '>=0.5.12', [ 'vows', '>=0.5.12' ] ]
+verbose parsed url { pathname: '=0.5.12', path: '=0.5.12', href: '=0.5.12' }
+verbose addNamed [ 'vows', '>=0.5.12' ]
+verbose addNamed [ null, '>=0.5.12' ]
+silly name, range, hasData [ 'vows', '>=0.5.12', false ]
+verbose raw, before any munging vows
+verbose url resolving [ 'https://registry.npmjs.org/', './vows' ]
+verbose url resolved https://registry.npmjs.org/vows
+http GET https://registry.npmjs.org/vows
+http 200 https://registry.npmjs.org/vows
+silly get cb [ 200,
+silly get cb   { vary: 'Accept',
+silly get cb     server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"BGULMLOLD2UJKOKKFW6CLA2AA"',
+silly get cb     date: 'Wed, 04 Apr 2012 14:26:23 GMT',
+silly get cb     'content-type': 'application/json',
+silly get cb     'content-length': '23681' } ]
+verbose mkdir (expected) error ENOENT, stat '/home/stephan/.npm/vows'
+verbose mkdir done: /home/stephan/.npm/vows 755
+silly name, range, hasData 2 [ 'vows', '>=0.5.12', true ]
+silly versions [ 'vows',
+silly versions   [ '0.2.5',
+silly versions     '0.3.0',
+silly versions     '0.3.1',
+silly versions     '0.3.2',
+silly versions     '0.3.3',
+silly versions     '0.3.4',
+silly versions     '0.3.5',
+silly versions     '0.4.0',
+silly versions     '0.4.1',
+silly versions     '0.4.2',
+silly versions     '0.4.3',
+silly versions     '0.4.4',
+silly versions     '0.4.5',
+silly versions     '0.4.6',
+silly versions     '0.5.0',
+silly versions     '0.5.5',
+silly versions     '0.5.6',
+silly versions     '0.5.8',
+silly versions     '0.5.9',
+silly versions     '0.5.10',
+silly versions     '0.5.11',
+silly versions     '0.5.12',
+silly versions     '0.5.13',
+silly versions     '0.6.0',
+silly versions     '0.6.1',
+silly versions     '0.6.2' ] ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl1.0.0e-v83.6.6.24-linux-ia32-3.0.0-16-generic-pae',
+verbose bin dist   { shasum: 'c591930c64e6245266ffe12d2761cf45748df5a5',
+verbose bin dist     tarball: 'http://registry.npmjs.org/vows/-/vows-0.6.2.tgz' } ]
+verbose addRemoteTarball [ 'https://registry.npmjs.org/vows/-/vows-0.6.2.tgz',
+verbose addRemoteTarball   'c591930c64e6245266ffe12d2761cf45748df5a5' ]
+verbose mkdir (expected) error ENOENT, stat '/tmp/npm-1333549583629'
+verbose mkdir (expected) error ENOENT, stat '/tmp/npm-1333549583629/1333549583629-0.9078154091257602'
+verbose mkdir done: /tmp/npm-1333549583629/1333549583629-0.9078154091257602 755
+verbose fetch to /tmp/npm-1333549583629/1333549583629-0.9078154091257602/tmp.tgz
+http GET https://registry.npmjs.org/vows/-/vows-0.6.2.tgz
+http 200 https://registry.npmjs.org/vows/-/vows-0.6.2.tgz
+silly updated sha bytes 26990
+info shasum c591930c64e6245266ffe12d2761cf45748df5a5
+info shasum /tmp/npm-1333549583629/1333549583629-0.9078154091257602/tmp.tgz
+verbose mkdir (expected) error ENOENT, stat '/tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm'
+verbose mkdir done: /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm 755
+verbose unpack_ uid, gid [ undefined, undefined ]
+verbose unpackTarget /tmp/npm-1333549583629/1333549583629-0.9078154091257602/package
+silly gunzTarPerm modes [ '755', '644' ]
+silly afterUntar undefined
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/.travis.yml
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/LICENSE
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/.npmignore
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/Makefile
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/package.json
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/README.md
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/bin
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/bin/vows
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/test
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/test/vows_underscore_test.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/test/isolate-test.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/test/vows-test.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/test/supress-stdout-test.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/test/assert-test.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/test/vows-error-test.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/test/fixtures
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/test/fixtures/isolate
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/test/fixtures/isolate/passing.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/test/fixtures/isolate/failing.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/test/fixtures/isolate/stderr.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/test/fixtures/isolate/log.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/test/fixtures/supress-stdout
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/test/fixtures/supress-stdout/output.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/vows.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/assert
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/assert/error.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/assert/utils.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/assert/macros.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/vows
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/vows/suite.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/vows/context.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/vows/extras.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/vows/console.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/vows/reporters
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/vows/reporters/xunit.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/vows/reporters/watch.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/vows/reporters/silent.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/vows/reporters/json.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/vows/reporters/spec.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/vows/reporters/dot-matrix.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/vows/coverage
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/vows/coverage/report-xml.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/vows/coverage/report-json.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/vows/coverage/report-html.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/vows/coverage/report-plain.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/vows/coverage/file.js
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/vows/coverage/fragments
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/vows/coverage/fragments/coverage-foot.html
+silly asyncMap in gTP /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package/lib/vows/coverage/fragments/coverage-head.html
+silly chmod package 755
+verbose gunzed /tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package
+verbose rm'ed /tmp/npm-1333549583629/1333549583629-0.9078154091257602/package
+verbose renamed [ '/tmp/npm-1333549583629/1333549583629-0.9078154091257602/___package.npm/package',
+verbose renamed   '/tmp/npm-1333549583629/1333549583629-0.9078154091257602/package' ]
+verbose caching /tmp/npm-1333549583629/1333549583629-0.9078154091257602/package/package.json
+verbose loadDefaults vows@0.6.2
+verbose tarball contents [ 'package', 'tmp.tgz' ]
+verbose from cache /tmp/npm-1333549583629/1333549583629-0.9078154091257602/package/package.json
+verbose pack /tmp/npm-1333549583629/1333549583629-0.9078154091257602/package
+verbose pack /tmp/npm-1333549583629/1333549583629-0.9078154091257602/package /home/stephan/.npm/vows/0.6.2/package.tgz
+silly makeList /tmp/npm-1333549583629/1333549583629-0.9078154091257602/package
+silly dir, dirLen [ '/tmp/npm-1333549583629/1333549583629-0.9078154091257602/package',
+silly dir, dirLen   64 ]
+verbose tarball /home/stephan/.npm/vows/0.6.2/package.tgz
+verbose parent /tmp/npm-1333549583629/1333549583629-0.9078154091257602/package
+verbose mkdir (expected) error ENOENT, stat '/home/stephan/.npm/vows/0.6.2/___package.npm'
+verbose mkdir done: /home/stephan/.npm/vows/0.6.2/___package.npm 755
+verbose unpack_ uid, gid [ undefined, undefined ]
+verbose unpackTarget /home/stephan/.npm/vows/0.6.2/package
+silly gunzTarPerm modes [ '755', '644' ]
+silly afterUntar undefined
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/.travis.yml
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/LICENSE
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/.npmignore
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/Makefile
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/package.json
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/README.md
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/bin
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/bin/vows
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/test
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/test/vows_underscore_test.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/test/isolate-test.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/test/vows-test.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/test/supress-stdout-test.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/test/assert-test.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/test/vows-error-test.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/test/fixtures
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/test/fixtures/isolate
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/test/fixtures/isolate/passing.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/test/fixtures/isolate/failing.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/test/fixtures/isolate/stderr.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/test/fixtures/isolate/log.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/test/fixtures/supress-stdout
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/test/fixtures/supress-stdout/output.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/vows.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/assert
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/assert/error.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/assert/utils.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/assert/macros.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/vows
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/vows/suite.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/vows/context.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/vows/extras.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/vows/console.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/vows/reporters
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/vows/reporters/xunit.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/vows/reporters/watch.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/vows/reporters/silent.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/vows/reporters/json.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/vows/reporters/spec.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/vows/reporters/dot-matrix.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/vows/coverage
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/vows/coverage/report-xml.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/vows/coverage/report-json.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/vows/coverage/report-html.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/vows/coverage/report-plain.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/vows/coverage/file.js
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/vows/coverage/fragments
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/vows/coverage/fragments/coverage-foot.html
+silly asyncMap in gTP /home/stephan/.npm/vows/0.6.2/___package.npm/package/lib/vows/coverage/fragments/coverage-head.html
+silly chmod package 755
+verbose gunzed /home/stephan/.npm/vows/0.6.2/___package.npm/package
+verbose rm'ed /home/stephan/.npm/vows/0.6.2/package
+verbose renamed [ '/home/stephan/.npm/vows/0.6.2/___package.npm/package',
+verbose renamed   '/home/stephan/.npm/vows/0.6.2/package' ]
+verbose caching /home/stephan/.npm/vows/0.6.2/package/package.json
+verbose loadDefaults vows@0.6.2
+silly updated sha bytes 27239
+info shasum e0ccecc4a70e9587348f495767f27eecdb331693
+info shasum /home/stephan/.npm/vows/0.6.2/package.tgz
+verbose from cache /home/stephan/.npm/vows/0.6.2/package/package.json
+verbose chmod /home/stephan/.npm/vows/0.6.2/package.tgz 644
+verbose chown [ '/home/stephan/.npm/vows/0.6.2/package.tgz', 1000, 1000 ]
+silly resolved [ { name: 'vows',
+silly resolved     description: 'Asynchronous BDD & continuous integration for node.js',
+silly resolved     url: 'http://vowsjs.org',
+silly resolved     keywords: [ 'testing', 'spec', 'test', 'BDD' ],
+silly resolved     author: { name: 'Alexis Sellier', email: 'self@cloudhead.net' },
+silly resolved     contributors: [ { name: 'Charlie Robbins', email: 'charlie.robbins@gmail.com' } ],
+silly resolved     dependencies: { eyes: '>=0.1.6' },
+silly resolved     main: './lib/vows',
+silly resolved     bin: { vows: './bin/vows' },
+silly resolved     directories: { test: './test', bin: './bin' },
+silly resolved     version: '0.6.2',
+silly resolved     scripts: { test: './bin/vows --spec' },
+silly resolved     engines: { node: '>=0.2.6' },
+silly resolved     _id: 'vows@0.6.2',
+silly resolved     devDependencies: {},
+silly resolved     optionalDependencies: {},
+silly resolved     _engineSupported: true,
+silly resolved     _npmVersion: '1.1.1',
+silly resolved     _nodeVersion: 'v0.6.13',
+silly resolved     _defaultsLoaded: true,
+silly resolved     dist: { shasum: 'e0ccecc4a70e9587348f495767f27eecdb331693' } } ]
+info into /home/stephan/Dropbox/www/thesun/v11/package vows@0.6.2
+info installOne vows@0.6.2
+info unbuild /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows
+verbose from cache /home/stephan/.npm/vows/0.6.2/package/package.json
+verbose mkdir (expected) error ENOENT, stat '/home/stephan/Dropbox/www/thesun/v11/package/node_modules'
+verbose mkdir (expected) error ENOENT, stat '/home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm'
+verbose mkdir done: /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm 755
+verbose unpack_ uid, gid [ undefined, undefined ]
+verbose unpackTarget /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows
+silly gunzTarPerm modes [ '755', '644' ]
+silly afterUntar undefined
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/.travis.yml
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/LICENSE
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/.npmignore
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/Makefile
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/package.json
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/README.md
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/bin
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/bin/vows
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/test
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/test/vows_underscore_test.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/test/isolate-test.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/test/vows-test.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/test/supress-stdout-test.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/test/assert-test.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/test/vows-error-test.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/test/fixtures
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/test/fixtures/isolate
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/test/fixtures/isolate/passing.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/test/fixtures/isolate/failing.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/test/fixtures/isolate/stderr.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/test/fixtures/isolate/log.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/test/fixtures/supress-stdout
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/test/fixtures/supress-stdout/output.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/vows.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/assert
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/assert/error.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/assert/utils.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/assert/macros.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/vows
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/vows/suite.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/vows/context.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/vows/extras.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/vows/console.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/vows/reporters
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/vows/reporters/xunit.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/vows/reporters/watch.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/vows/reporters/silent.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/vows/reporters/json.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/vows/reporters/spec.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/vows/reporters/dot-matrix.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/vows/coverage
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/vows/coverage/report-xml.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/vows/coverage/report-json.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/vows/coverage/report-html.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/vows/coverage/report-plain.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/vows/coverage/file.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/vows/coverage/fragments
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/vows/coverage/fragments/coverage-foot.html
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package/lib/vows/coverage/fragments/coverage-head.html
+silly chmod package 755
+verbose gunzed /home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package
+verbose rm'ed /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows
+verbose renamed [ '/home/stephan/Dropbox/www/thesun/v11/package/node_modules/___vows.npm/package',
+verbose renamed   '/home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows' ]
+verbose caching /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/package.json
+verbose loadDefaults vows@0.6.2
+info preinstall vows@0.6.2
+verbose from cache /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/package.json
+verbose cache add [ 'eyes@>=0.1.6', null ]
+silly cache add: name, spec, args [ undefined, 'eyes@>=0.1.6', [ 'eyes@>=0.1.6', null ] ]
+verbose parsed url { pathname: 'eyes@', path: 'eyes@', href: 'eyes@' }
+silly cache add: name, spec, args [ 'eyes', '>=0.1.6', [ 'eyes', '>=0.1.6' ] ]
+verbose parsed url { pathname: '=0.1.6', path: '=0.1.6', href: '=0.1.6' }
+verbose addNamed [ 'eyes', '>=0.1.6' ]
+verbose addNamed [ null, '>=0.1.6' ]
+silly name, range, hasData [ 'eyes', '>=0.1.6', false ]
+verbose raw, before any munging eyes
+verbose url resolving [ 'https://registry.npmjs.org/', './eyes' ]
+verbose url resolved https://registry.npmjs.org/eyes
+verbose etag "5X4OPAKEXVO4EHH2WJMVM39KA"
+http GET https://registry.npmjs.org/eyes
+http 200 https://registry.npmjs.org/eyes
+silly get cb [ 200,
+silly get cb   { vary: 'Accept',
+silly get cb     server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"8IJAILX0VOHHJ7Z8RZGHNTF8U"',
+silly get cb     date: 'Wed, 04 Apr 2012 14:26:25 GMT',
+silly get cb     'content-type': 'application/json',
+silly get cb     'content-length': '4953' } ]
+silly name, range, hasData 2 [ 'eyes', '>=0.1.6', true ]
+silly versions [ 'eyes',
+silly versions   [ '0.1.1', '0.1.2', '0.1.3', '0.1.4', '0.1.5', '0.1.6', '0.1.7' ] ]
+verbose bin dist [ '0.6-ares1.7.5-DEV-evundefined-openssl1.0.0e-v83.6.6.24-linux-ia32-3.0.0-16-generic-pae',
+verbose bin dist   { shasum: 'e9605b91d254e7375a68ee93e2a5937956b058fb',
+verbose bin dist     tarball: 'http://registry.npmjs.org/eyes/-/eyes-0.1.7.tgz' } ]
+WARN eyes@0.1.7 dependencies field should be hash of <name>:<version-range> pairs
+verbose caching /home/stephan/.npm/eyes/0.1.7/package/package.json
+verbose loadDefaults eyes@0.1.7
+silly resolved [ { name: 'eyes',
+silly resolved     description: 'a customizable value inspector',
+silly resolved     url: 'http://github.com/cloudhead/eyes.js',
+silly resolved     keywords: [ 'inspector', 'debug', 'inspect', 'print' ],
+silly resolved     author: { name: 'Alexis Sellier', email: 'self@cloudhead.net' },
+silly resolved     contributors: [ { name: 'Charlie Robbins', email: 'charlie@nodejitsu.com' } ],
+silly resolved     licenses: [ 'MIT' ],
+silly resolved     dependencies: {},
+silly resolved     main: './lib/eyes',
+silly resolved     version: '0.1.7',
+silly resolved     scripts: { test: 'node test/*-test.js' },
+silly resolved     directories: { lib: './lib', test: './test' },
+silly resolved     engines: { node: '> 0.1.90' },
+silly resolved     _id: 'eyes@0.1.7',
+silly resolved     devDependencies: {},
+silly resolved     optionalDependencies: {},
+silly resolved     _engineSupported: true,
+silly resolved     _npmVersion: '1.1.1',
+silly resolved     _nodeVersion: 'v0.6.13',
+silly resolved     _defaultsLoaded: true } ]
+info into /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows eyes@0.1.7
+info installOne eyes@0.1.7
+info unbuild /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules/eyes
+verbose from cache /home/stephan/.npm/eyes/0.1.7/package/package.json
+verbose mkdir (expected) error ENOENT, stat '/home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules'
+verbose mkdir (expected) error ENOENT, stat '/home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules/___eyes.npm'
+verbose mkdir done: /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules/___eyes.npm 755
+verbose unpack_ uid, gid [ undefined, undefined ]
+verbose unpackTarget /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules/eyes
+silly gunzTarPerm modes [ '755', '644' ]
+silly afterUntar undefined
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules/___eyes.npm/package
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules/___eyes.npm/package/LICENSE
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules/___eyes.npm/package/Makefile
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules/___eyes.npm/package/package.json
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules/___eyes.npm/package/README.md
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules/___eyes.npm/package/test
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules/___eyes.npm/package/test/eyes-test.js
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules/___eyes.npm/package/lib
+silly asyncMap in gTP /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules/___eyes.npm/package/lib/eyes.js
+silly chmod package 755
+verbose gunzed /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules/___eyes.npm/package
+verbose rm'ed /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules/eyes
+verbose renamed [ '/home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules/___eyes.npm/package',
+verbose renamed   '/home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules/eyes' ]
+verbose caching /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules/eyes/package.json
+verbose loadDefaults eyes@0.1.7
+info preinstall eyes@0.1.7
+verbose from cache /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules/eyes/package.json
+silly resolved []
+verbose about to build /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules/eyes
+info build /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules/eyes
+verbose from cache /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules/eyes/package.json
+verbose linkStuff [ false,
+verbose linkStuff   false,
+verbose linkStuff   false,
+verbose linkStuff   '/home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/node_modules' ]
+info linkStuff eyes@0.1.7
+verbose linkBins eyes@0.1.7
+verbose linkMans eyes@0.1.7
+verbose rebuildBundles eyes@0.1.7
+info install eyes@0.1.7
+info postinstall eyes@0.1.7
+verbose installOne cb eyes@0.1.7
+verbose about to build /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows
+info build /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows
+verbose from cache /home/stephan/Dropbox/www/thesun/v11/package/node_modules/vows/package.json
+verbose linkStuff [ false,
+verbose linkStuff   false,
+verbose linkStuff   false,
+verbose linkStuff   '/home/stephan/Dropbox/www/thesun/v11/package/node_modules' ]
+info linkStuff vows@0.6.2
+verbose linkBins vows@0.6.2
+verbose bins linking [ { vows: './bin/vows' },
+verbose bins linking   '/home/stephan/Dropbox/www/thesun/v11/package/node_modules/.bin',
+verbose bins linking   false ]
+verbose linkMans vows@0.6.2
+verbose rebuildBundles vows@0.6.2
+verbose rebuildBundles [ 'eyes' ]
+verbose mkdir (expected) error ENOENT, stat '/home/stephan/Dropbox/www/thesun/v11/package/node_modules/.bin'
+verbose mkdir done: /home/stephan/Dropbox/www/thesun/v11/package/node_modules/.bin 755
+info install vows@0.6.2
+info postinstall vows@0.6.2
+verbose installOne cb vows@0.6.2
+info build /home/stephan/Dropbox/www/thesun/v11/package
+verbose from cache /home/stephan/Dropbox/www/thesun/v11/package/package.json
+verbose linkStuff [ false, false, false, '/home/stephan/Dropbox/www/thesun/v11' ]
+info linkStuff node-expat@1.4.3
+verbose linkBins node-expat@1.4.3
+verbose linkMans node-expat@1.4.3
+verbose rebuildBundles node-expat@1.4.3
+verbose rebuildBundles [ '.bin', 'vows' ]
+info install node-expat@1.4.3
+verbose unsafe-perm in lifecycle true
+silly exec sh "-c" "node-waf configure build"
+silly spawning [ 'sh',
+silly spawning   [ '-c', 'node-waf configure build' ],
+silly spawning   '/home/stephan/Dropbox/www/thesun/v11/package' ]
+info node-expat@1.4.3 Failed to exec install script
+ERR! node-expat@1.4.3 install: `node-waf configure build`
+ERR! `sh "-c" "node-waf configure build"` failed with 1
+ERR! 
+ERR! Failed at the node-expat@1.4.3 install script.
+ERR! This is most likely a problem with the node-expat package,
+ERR! not with npm itself.
+ERR! Tell the author that this fails on your system:
+ERR!     node-waf configure build
+ERR! You can get their info via:
+ERR!     npm owner ls node-expat
+ERR! There is likely additional logging output above.
+ERR! 
+ERR! System Linux 3.0.0-16-generic-pae
+ERR! command "node" "/usr/bin/npm" "install"
+ERR! cwd /home/stephan/Dropbox/www/thesun/v11/package
+ERR! node -v v0.6.13
+ERR! npm -v 1.1.1
+ERR! code ELIFECYCLE
+ERR! message node-expat@1.4.3 install: `node-waf configure build`
+ERR! message `sh "-c" "node-waf configure build"` failed with 1
+ERR! errno {}
+verbose exit [ 1, true ]

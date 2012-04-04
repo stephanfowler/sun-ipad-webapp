@@ -1,5 +1,5 @@
 
-	var allowAnyBrowser = true;
+	var allowAnyBrowser = false;
 	
 	var express = require('express'),
 		mongoose = require('mongoose'),
@@ -48,6 +48,17 @@
 		res.header("Content-Type", "text/cache-manifest");
 	    util.pump(readStream, res);
 	});
+
+	/*
+	app.get("/editions/latest", function(req, res){
+		console.log( "HIT" );
+		if ( req.method == 'GET' ) {
+			var readStream = fs.createReadStream( __dirname + '/public/editions/latest.linear.json' );
+			res.header("Content-Type", "text/json");
+	   		util.pump(readStream, res);
+		}
+	});
+	*/
 
 	app.listen(8080);
 	console.log('listening...');

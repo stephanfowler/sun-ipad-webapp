@@ -86,13 +86,12 @@ $(document).ready( function() {
 		var tmplNavbar  = Handlebars.compile( $('#tmplNavbar').html() );
 		var tmplPage = Handlebars.compile( $('#tmplPage').html() );
 
-		//$.getJSON( '/editions/latest.linear.json?' + new Date().getTime(), function(edition){
 		$.getJSON( '/editions/latest.linear.json', function(edition){
 
 			var teasers = { pages: [] };
 			var t = [];
 			var front = [];
-			var keys = [ 'section', 'position', 'headline', 'image', 'strapline', 'teaser', 'priority' ];
+			var keys = [ 'section', 'position', 'headline', 'image', 'imageportrait', 'strapline', 'teaser', 'priority' ];
 			
 			edition.pages.unshift( { section: 'news', teasers: front } ); // add a front page
 			edition.pages.splice( 7, 0, { section: 'news', adlink:'http://www.britishgas.co.uk/', adportrait: '/ads/1_portrait.jpg', adlandscape: '/ads/1_landscape.jpg'  } );
