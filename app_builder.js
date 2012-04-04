@@ -140,7 +140,9 @@
 						if ( article.image ) {
 							im.identify( article.image, function(err, spec){
 								if (err) {
-									// Oh well. Couldn't retreive image?
+									// Oh well. Delete the image ref, as it'll mess up the cache manifest.
+									delete article.image;
+									console.log( "dropped an image" );
 								}
 								else {
 									article.imagelarge     = spec.width > 250;

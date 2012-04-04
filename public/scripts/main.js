@@ -144,7 +144,7 @@ $(document).ready( function() {
 			teasersPanes  = new SwipeView('#teasersWrapper',  { numberOfPages: teasers.pages.length  });
 			articlesPanes = new SwipeView('#articlesWrapper', { numberOfPages: edition.pages.length });
 
-			var renderExtras = function( context ){
+			var renderTeaserExtras = function( context ){
 				$('.teasers', context).not('[isRendered]').waitForImages( function() {
 					$(this).show();
 					$(this).masonry({
@@ -153,6 +153,10 @@ $(document).ready( function() {
 					});
 					$(this).attr('isRendered','1');
 				});
+			};
+
+			var renderArticleExtras = function( context ){
+				$('.teasers', context).show();
 				// Shuffle images between article paragraphs
 				var numP = $('.articlecontent p', context).length;
 				var numImgs  = $('.articlecontent img.pull', context).length;
@@ -166,18 +170,18 @@ $(document).ready( function() {
 				});
 			};
 
-			var loadInitialPanes = function ( pages, swipeview, tmpl ) {
+			var loadInitialPanes = function ( pages, swipeview, tmpl, callback ) {
 				for ( i=0; i<3; i++ ) {
 					page = i==0 ? pages.length-1 : i-1;
 					el = document.createElement('div');
 					el.innerHTML = tmpl( pages[page] );
 					swipeview.masterPages[i].appendChild(el)
-					renderExtras( el );
+					callback( el );
 				}
 			}
 
-			loadInitialPanes( teasers.pages, teasersPanes,  tmplPage );
-			loadInitialPanes( edition.pages, articlesPanes, tmplPage );
+			loadInitialPanes( teasers.pages, teasersPanes,  tmplPage, renderTeaserExtras );
+			loadInitialPanes( edition.pages, articlesPanes, tmplPage, renderArticleExtras );
 
 			teasersPanes.onFlip( function () {
 				var el, upcoming, i;
@@ -186,7 +190,7 @@ $(document).ready( function() {
 					if (upcoming != teasersPanes.masterPages[i].dataset.pageIndex) {
 						el = teasersPanes.masterPages[i].querySelector('div');
 						el.innerHTML = tmplPage( teasers.pages[upcoming] );
-						renderExtras( el );
+						renderTeaserExtras( el );
 					}
 				}
 				var section = teasers.pages[teasersPanes.pageIndex].section;
@@ -194,18 +198,8 @@ $(document).ready( function() {
 				$('#pageWrap').removeClass().addClass( section );
 				$('#navbar a.multi.on').removeClass('on');
 				$('#navbar a.multi').eq(teasersPanes.pageIndex).addClass('on');
-
-                // Fix page height
-                /* Broken. Perhaps because masonry hasn't rendered yet?
-				var pageHeight = $('#teasersWrapper .swipeview-active .page' ).height();
-                $('#teasersWrapper').height( pageHeight );
-				*/
-
-				// GA
-				var newTime = new Date().getTime();
-				_gaq.push(['_trackEvent', 'iPad', 'PageRead', prevSection, Math.floor((newTime - prevTime) / 1000) ]);
-				prevTime = newTime;
-				prevSection = section;
+				$('#navbar .singles a.on').removeClass('on').addClass('won');
+				fixPageHeight( $('#teasersWrapper') );
 			});
 
 			articlesPanes.onFlip( function () {
@@ -215,7 +209,7 @@ $(document).ready( function() {
 					if (upcoming != articlesPanes.masterPages[i].dataset.pageIndex) {
 						el = articlesPanes.masterPages[i].querySelector('div');
 						el.innerHTML = tmplPage( edition.pages[upcoming] );
-						renderExtras( el );
+						renderArticleExtras( el );
 					}
 				}
 				var section = edition.pages[articlesPanes.pageIndex].section;
@@ -230,27 +224,27 @@ $(document).ready( function() {
 				$('#navbar a.multi.on').removeClass('on');
 				$('#navbar .singles a.on').removeClass('on').addClass('won');
 				$('#navbar .singles a').eq(articlesPanes.pageIndex).removeClass('won').addClass('on');
-
-                // Fix page height
-                var pageHeight = $('#articlesWrapper .swipeview-active .page' ).height();
-                $('#articlesWrapper').height( pageHeight );
-				
-				// GA
-				var newTime = new Date().getTime();
-				_gaq.push(['_trackEvent', 'iPad', 'PageRead', prevSection, Math.floor((newTime - prevTime) / 1000) ]);
-				prevTime = newTime;
-				prevSection = section;
+				fixPageHeight( $('#articlesWrapper') );
 			});
+
+			var fixPageHeight = function( wrapper ) {
+				var p = $('.swipeview-active .page', wrapper );	
+				p.waitForImages( function() {
+					setTimeout( function(){
+						var height = p.height();
+						wrapper.height( height );
+					}, 1000 );
+				});
+			}
 
 			var goToArticle = function( i ) {
 				i = parseInt( i );
 				// goto if not current page, or if panes are hidden
-				if ( articlesPanes.pageIndex != i || $('#articlesWrapper:hidden').length ) {
+				if ( i == 0 || articlesPanes.pageIndex != i || $('#articlesWrapper:hidden').length ) {
 					$('#teasersWrapper:visible').fadeOut();
 					$('#articlesWrapper:hidden').fadeIn();
 					articlesPanes.goToPage(i);
 					resetScroll();
-					setTimeout( function(){}, 1000 );
 				}
 			};
 
@@ -292,7 +286,6 @@ $(document).ready( function() {
 			$(window).bind( 'hashchange', function() {
 				gotoHash();
 			});
-			gotoHash();
 
 			articlesPanes.onMoveOut(function () {
 				resetScroll();
@@ -315,11 +308,9 @@ $(document).ready( function() {
 
 			// last minute tweaks!
 			$('#navbar .singles a').eq(0).addClass('on');
-
-			// Fix page height
-			var pageHeight = $('#articlesWrapper .swipeview-active .page' ).height();
-			$('#articlesWrapper').height( pageHeight );
-				
+			setTimeout( function(){
+				gotoHash();
+			});
 		});
 
 	}
