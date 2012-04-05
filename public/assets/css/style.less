@@ -121,6 +121,7 @@ p {
 }
 
 .interstitial {
+	display: none;
 	position: absolute;
 	right: -200px;
 	top: 0px;
@@ -678,6 +679,9 @@ ARTICLE
 	.page {
 		width: @iPadTall - @pageSeperatorWidth;
 	}
+	.interstitial {
+		display: block;
+	}
 	.article {
 		.articlebody {
 			width: @gridColumn * 2 - 35;
@@ -714,6 +718,9 @@ ARTICLE
 	.page {
 		width: @iPadWide - @pageSeperatorWidth;
 	}
+	.interstitial {
+		display: block;
+	}
 	#navbar {
 		.section {
 			.singles {
@@ -738,7 +745,6 @@ ARTICLE
 			}
 		}
 		.title {
-			border-right: 2px solid @gridBorderColor;
 			padding: 0 0 10px 0;
 		}
 		.colLeft {

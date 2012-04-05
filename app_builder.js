@@ -128,7 +128,7 @@
 				}
 				if ( ats.image && ats.image[0] ) {
 					article.image = ats.image[0].uri.replace( /[a-z]{1,1}\.(jpg|png)$/, "a.jpg" )
-					if ( ats.image[0].caption ) {
+					if ( ats.image[0].caption && typeof ats.image[0].caption == 'string' ) {
 						article.subdeck = ats.image[0].caption;
 					}
 				}
@@ -295,8 +295,8 @@
 								// Clean up
 								delete article.uri;
 								delete article.id;
-								// Pick some nibs...
-								if ( paras && paras < 16 && ( ! article.image || ! article.imagelarge ) ) {
+								// Pick up to 4 nibs...
+								if ( nibs.length < 4 && paras && paras < 16 && ( ! article.image || ! article.imagelarge ) ) {
 									nibs.push( article );
 									//console.log( "NIB: " + article.headline );
 								}
@@ -307,7 +307,10 @@
 						}
 					}
 					// add nibs at page 6...
-					linear.pages.splice( 5, 0, { section: 'news', nibs: nibs } );
+					if ( nibs.length > 0 ) {
+						linear.pages.splice( 5, 0, { section: 'news', nibs: nibs } );
+					}
+					// Done
 					callback( null );
 				}
 

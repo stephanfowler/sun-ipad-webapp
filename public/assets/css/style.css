@@ -177,6 +177,7 @@ p {
   position: relative;
 }
 .interstitial {
+  display: none;
   position: absolute;
   right: -200px;
   top: 0px;
@@ -728,6 +729,9 @@ ARTICLE
   .page {
     width: 753px;
   }
+  .interstitial {
+    display: block;
+  }
   .article .articlebody {
     width: 443px;
     padding-right: 20px;
@@ -756,6 +760,9 @@ ARTICLE
   .page {
     width: 1009px;
   }
+  .interstitial {
+    display: block;
+  }
   #navbar .section .singles a {
     width: 7px;
   }
@@ -769,7 +776,6 @@ ARTICLE
     display: none;
   }
   .article .title {
-    border-right: 2px solid #bbbbbb;
     padding: 0 0 10px 0;
   }
   .article .colLeft {
