@@ -724,13 +724,10 @@ ARTICLE
 @media only screen and (max-device-width: 1024px) and (orientation: portrait) {
   #teasersWrapper,
   #articlesWrapper {
-    width: 968px;
+    width: 768px;
   }
   .page {
     width: 753px;
-  }
-  .interstitial {
-    display: block;
   }
   .article .articlebody {
     width: 443px;
@@ -755,13 +752,10 @@ ARTICLE
 @media only screen and (max-device-width: 1024px) and (orientation: landscape) {
   #teasersWrapper,
   #articlesWrapper {
-    width: 1224px;
+    width: 1024px;
   }
   .page {
     width: 1009px;
-  }
-  .interstitial {
-    display: block;
   }
   #navbar .section .singles a {
     width: 7px;
@@ -939,3 +933,23 @@ page.front .interstitial {
   letter-spacing: 1px;
   color: #999;
 }
+/* INTERSTITIALS */
+/*
+@media only screen and (max-device-width: 1024px) and (orientation:portrait) { 
+	#teasersWrapper, #articlesWrapper {
+		width: @iPadTall + @interstitiallWidth;
+	}
+	.interstitial {
+		display: block;
+	}
+}
+
+@media only screen and (max-device-width: 1024px) and (orientation:landscape) { 
+	#teasersWrapper, #articlesWrapper {
+		width: @iPadWide + @interstitiallWidth;
+	}
+	.interstitial {
+		display: block;
+	}
+}
+*/

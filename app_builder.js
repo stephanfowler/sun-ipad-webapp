@@ -278,7 +278,9 @@
 								if ( article.articlebody ) {
 									// strip links from articlebody;
 									article.articlebody = article.articlebody.replace(/<a\/?[^>]*>/g,'');
-									paras = article.articlebody.match(/<p>/g).length;
+									if ( article.articlebody.match(/<p>/g) ) {
+										paras = article.articlebody.match(/<p>/g).length;
+									}
 								}
 								// Collect images for the cache manifest
 								if ( article.image ) {

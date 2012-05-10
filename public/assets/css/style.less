@@ -674,13 +674,10 @@ ARTICLE
 
 @media only screen and (max-device-width: 1024px) and (orientation:portrait) { 
 	#teasersWrapper, #articlesWrapper {
-		width: @iPadTall + @interstitiallWidth;
+		width: @iPadTall;
 	}
 	.page {
 		width: @iPadTall - @pageSeperatorWidth;
-	}
-	.interstitial {
-		display: block;
 	}
 	.article {
 		.articlebody {
@@ -713,13 +710,10 @@ ARTICLE
 
 @media only screen and (max-device-width: 1024px) and (orientation:landscape) { 
 	#teasersWrapper, #articlesWrapper {
-		width: @iPadWide + @interstitiallWidth;
+		width: @iPadWide;
 	}
 	.page {
 		width: @iPadWide - @pageSeperatorWidth;
-	}
-	.interstitial {
-		display: block;
 	}
 	#navbar {
 		.section {
@@ -935,3 +929,23 @@ page.front {
 	color: #999;
 }
 
+/* INTERSTITIALS */
+/*
+@media only screen and (max-device-width: 1024px) and (orientation:portrait) { 
+	#teasersWrapper, #articlesWrapper {
+		width: @iPadTall + @interstitiallWidth;
+	}
+	.interstitial {
+		display: block;
+	}
+}
+
+@media only screen and (max-device-width: 1024px) and (orientation:landscape) { 
+	#teasersWrapper, #articlesWrapper {
+		width: @iPadWide + @interstitiallWidth;
+	}
+	.interstitial {
+		display: block;
+	}
+}
+*/
