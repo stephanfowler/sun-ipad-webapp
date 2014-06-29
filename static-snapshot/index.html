@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="en" manifest="offline.manifest"><head><title>TheSun</title><link type="text/css" rel="stylesheet" href="assets/css/style.css"><!--link(type='text/css', rel='stylesheet/less', href='/assets/css/style.less')--><!--script(type='text/javascript', src='/scripts/less.js')--><link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png"><meta name="description" content=""><meta name="keywords" content=""><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="HandheldFriendly" content="True"><meta name="MobileOptimized" content="320"><meta name="format-detection" content="telephone=no"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0"><meta http-equiv="cleartype" content="on"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><script type="text/javascript" src="scripts/jquery.js"></script><script type="text/javascript" src="scripts/jquery.waitforimages.js"></script><!--script(type='text/javascript', src='/scripts/underscore-min.js')--><script type="text/javascript" src="scripts/handlebars-1.0.0.beta.6.js"></script><script type="text/javascript" src="scripts/swipeview.js"></script><script type="text/javascript" src="scripts/jquery.masonry.min.js"></script></head><body><div id="addToHomeScreen"></div><div id="pageWrap" class="front"><header><a id="logo" href="index.html#/"><div id="todayis"></div><div id="logomessage"></div></a><div id="navbar"></div><div id="currentPage"><div id="num">1</div><!--<a href="#" onclick="teasersPanes.prev()">&laquo;</a><span>&nbsp;</span><a href="#" onclick="teasersPanes.next()">&raquo;</a><br/><a href="#" onclick="articlesPanes.prev()">&laquo;</a><span>&nbsp;</span><a href="#" onclick="articlesPanes.next()">&raquo;</a>--></div></header><div id="wrap"><script id="tmplNavbar" type="text/x-handlebars-template">{{#each pages}}
+<div class="section {{section}}"><div class="singles">{{#each teasers}}
+<a href="index.html#/{{position}}"></a>{{/each}}
+</div><a href="index.html#/{{section}}/{{position}}" class="multi">{{section}}</a></div>{{/each}}
+</script><script id="tmplPage" type="text/x-handlebars-template"><div class="page {{section}}"><div class="interstitial"></div>{{#if adlink}}
+<a href="http://localhost:8080/{{adlink}}" class="ad"><img src="http://localhost:8080/{{adportrait}}" class="portrait"/><img src="http://localhost:8080/{{adlandscape}}" class="landscape"/></a>{{/if}}
+{{#if headline}}
+<div class="article {{#if imageportrait}}article_portrait{{/if}}">{{#if imagelarge}}
+<div class="hero"><div class="deck"><div class="strapline">{{strapline}}</div><div class="title">{{headline}}</div><div class="subdeck">{{subdeck}}</div></div>{{#if image}}
+<div class="imgWrap"><img src="http://localhost:8080/{{image}}"/></div>{{/if}}
+</div>{{/if}}
+<div class="colRight"><div class="subdeck">{{subdeck}}</div>{{#if bylineimage}}
+<div class="bylineWrap"><img src="http://localhost:8080/{{bylineimage}}" class="bylineimage"/><div class="byline">{{byline}}</div></div>{{else}}
+{{#if byline}}
+<div class="byline">{{{byline}}}</div>{{/if}}
+{{/if}}
+{{#if quote}}
+<div class="quote">{{quote}}</div>{{/if}}
+<!--.images{{#each attachments.image}}
+<div class="imageWrap"><img src="{{uri}}"/>{{#if caption}}
+<div data-bind="text: caption" class="caption"></div>{{/if}}
+</div>{{/each}}
+--></div><div class="colLeft"><div class="articlecontent">{{#unless imagelarge}}
+{{#if image}}
+<img src="http://localhost:8080/{{image}}" class="small"/>{{/if}}
+<div class="deck"><div class="strapline">{{strapline}}</div><div class="title">{{headline}}</div><div class="subdeck">{{subdeck}}</div></div>{{/unless}}
+{{#each attachments.video}}
+<!--.videoWrap{{{src}}}
+-->{{/each}}
+<div class="articlebody">{{{articlebody}}}</div>{{#each attachments.image}}
+<img src="http://localhost:8080/{{uri}}" class="pull"/>{{/each}}
+</div></div></div>{{/if}}
+{{#if teasers }}
+<div class="teasers"><div class="{{section}}">{{#each teasers}}
+<div class="teaser {{priority}} {{#if imageportrait}}portrait{{/if}}"><div class="{{section}}"><a href="index.html#/{{position}}"><div class="{{section}}-extra"></div>{{#if image}}
+<div class="imgWrap"><img src="http://localhost:8080/{{image}}"/></div>{{/if}}
+<div class="text"><div class="strapline">{{strapline}}</div><div class="title">{{headline}}</div><div class="excerpt">{{teaser}}</div></div></a></div></div>{{/each}}
+</div></div>{{/if}}
+{{#if nibs }}
+<div class="nibsHeader">NEWS IN BRIEF...</div><div class="teasers">{{#each nibs}}
+<div class="teaser nib">{{#if image}}
+<div class="imgWrap"><img src="http://localhost:8080/{{image}}"/></div>{{/if}}
+<div class="title">{{headline}}</div><div class="articlebody">{{{articlebody}}}</div></div>{{/each}}
+</div>{{/if}}
+</div></script><div id="articlesWrapper"></div><div id="teasersWrapper"></div></div></div><script type="text/javascript" src="scripts/main.js"></script></body></html>
